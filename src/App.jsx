@@ -1,10 +1,25 @@
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import AboutMoxa from "./components/AboutMoxa";
+import ServicesGrid from "./components/ServicesGrid";
+import TrainingAcademy from "./components/TrainingAcademy";
+import Benefits from "./components/Benefits";
+import Testimonials from "./components/Testimonials";
+import ContactFooter from "./components/ContactFooter";
+
 function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-900">
-      <h1 className="text-4xl font-bold text-white">
-        Hello from Tailwind + React
-      </h1>
+    <div className="font-sans antialiased">
+      <Navbar />
+      <Hero />
+      <AboutMoxa />
+      <ServicesGrid />
+      <TrainingAcademy />
+      <Benefits />
+      <Testimonials />
+      <ContactFooter />
     </div>
   );
 }
+
 export default App;
