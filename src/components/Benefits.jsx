@@ -6,30 +6,30 @@ import { ShieldCheck, Zap, Flame, BookOpen } from "lucide-react";
 const benefits = [
   {
     icon: ShieldCheck,
-    title: "Immune Fortification",
+    title: "Wzmocnienie odporności",
     description:
-      "Regular moxibustion sessions stimulate Wei Qi — the body's protective energy — strengthening immune response and reducing vulnerability to illness.",
+      "Regularne zabiegi moksy pobudzają Wei Qi — energię obronną organizmu — wzmacniając odpowiedź immunologiczną i zmniejszając podatność na infekcje.",
     accent: "#71797E",
   },
   {
     icon: Zap,
-    title: "Pain Relief",
+    title: "Ulgę w bólu",
     description:
-      "Heat penetrates deep into muscle tissue and joints, relieving chronic pain conditions including arthritis, lower back pain, and sports injuries.",
+      "Ciepło wnika głęboko w mięśnie i stawy, łagodząc ból przewlekły, m.in. w artretyzmie, bólu krzyża i kontuzjach sportowych.",
     accent: "#C4862A",
   },
   {
     icon: Flame,
-    title: "Vitality & Energy",
+    title: "Witalność i energia",
     description:
-      "By tonifying Yang energy and improving blood circulation, moxa effectively combats fatigue, cold extremities, and lack of motivation.",
+      "Tonizując energię Yang i poprawiając krążenie krwi, moksa skutecznie wspiera przy zmęczeniu, zimnych kończynach i spadku motywacji.",
     accent: "#71797E",
   },
   {
     icon: BookOpen,
-    title: "Living Tradition",
+    title: "Żywa tradycja",
     description:
-      "Connecting with one of humanity's oldest healing arts carries profound wellbeing benefits — grounding, centering, and restoring mind-body harmony.",
+      "Kontakt z jedną z najstarszych sztuk uzdrawiania przynosi głęboki dobrostan — ugruntowanie, wyciszenie i przywrócenie harmonii ciała i umysłu.",
     accent: "#C4862A",
   },
 ];
@@ -39,8 +39,8 @@ export default function Benefits() {
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section className="py-28 bg-[#FAFAF5]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+    <section className="py-16 sm:py-20 md:py-28 bg-[#FAFAF5]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         {/* Header */}
         <motion.div
           ref={ref}
@@ -50,19 +50,19 @@ export default function Benefits() {
           className="text-center mb-16"
         >
           <span className="inline-block mb-4 text-xs uppercase tracking-widest text-[#71797E] font-medium">
-            Why Moxibustion
+            Dlaczego moksoterapia
           </span>
           <h2
-            className="text-4xl md:text-5xl font-bold text-[#333333] mb-5"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#333333] mb-5"
             style={{ fontFamily: '"Playfair Display", serif' }}
           >
-            The Four Pillars
+            Cztery filary
             <br />
-            <span className="italic text-[#71797E]">of Healing</span>
+            <span className="italic text-[#71797E]">uzdrowienia</span>
           </h2>
-          <p className="text-[#555555] text-lg max-w-xl mx-auto font-light leading-relaxed">
-            Moxibustion addresses the whole person — body, energy, and spirit — through
-            four principal areas of therapeutic action.
+          <p className="text-[#555555] text-base sm:text-lg max-w-xl mx-auto font-light leading-relaxed">
+            Moksoterapia oddziałuje na całą osobę — ciało, energię i ducha — przez
+            cztery główne obszary działania terapeutycznego.
           </p>
         </motion.div>
 
@@ -74,7 +74,7 @@ export default function Benefits() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.12 }}
-              className="group text-center p-8 rounded-3xl bg-white border border-[#71797E]/8 hover:border-[#71797E]/25 hover:shadow-lg transition-all duration-400"
+              className="group text-center p-6 sm:p-8 rounded-3xl bg-white border border-[#71797E]/8 hover:border-[#71797E]/25 hover:shadow-lg transition-all duration-400"
             >
               {/* Icon */}
               <div
@@ -108,11 +108,11 @@ export default function Benefits() {
             className="text-xl md:text-2xl text-[#71797E] italic leading-relaxed"
             style={{ fontFamily: '"Playfair Display", serif' }}
           >
-            "Needle and moxa — between the two, there is no illness that cannot
-            be addressed."
+            „Igła i moksa — między nimi nie ma choroby, której nie można by
+            uleczyć."
           </p>
           <cite className="block mt-4 text-xs uppercase tracking-widest text-[#555555]/60 not-italic">
-            — Classical Chinese Medical Text, Huangdi Neijing
+            — Klasyczny tekst medycyny chińskiej, Huangdi Neijing
           </cite>
         </motion.blockquote>
       </div>

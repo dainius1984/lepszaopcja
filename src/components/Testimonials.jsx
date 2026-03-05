@@ -1,50 +1,50 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
 const testimonials = [
   {
     name: "Marta K.",
-    role: "Yoga Teacher, Warsaw",
+    role: "Nauczycielka jogi, Warszawa",
     avatar: "M",
     rating: 5,
-    text: "After three sessions of indirect moxibustion for my chronic lower back pain, I noticed a remarkable improvement. The warmth penetrates in a way that no other therapy has managed. Absolutely transformative.",
+    text: "Po trzech sesjach moksy pośredniej przy przewlekłym bólu krzyża odczułam wyraźną poprawę. Ciepło wnika w sposób, w jaki nie udało się żadnej innej terapii. Absolutnie przełomowe.",
   },
   {
     name: "Tomasz W.",
-    role: "Software Engineer, Kraków",
+    role: "Inżynier oprogramowania, Kraków",
     avatar: "T",
     rating: 5,
-    text: "I was sceptical at first, but moxa cigar therapy completely changed my perspective on traditional medicine. My energy levels have improved significantly and I finally sleep through the night.",
+    text: "Na początku byłem sceptyczny, ale terapia cygarem moksowym całkowicie zmieniła mój pogląd na medycynę tradycyjną. Poziom energii wyraźnie wzrósł, wreszcie śpię przez całą noc.",
   },
   {
     name: "Anna B.",
-    role: "Physiotherapist, Gdańsk",
+    role: "Fizjoterapeutka, Gdańsk",
     avatar: "A",
     rating: 5,
-    text: "I completed the Clinical Practitioner course and it's the best professional decision I've made. The instructors balance classical knowledge with modern evidence seamlessly. I now integrate moxa into my practice daily.",
+    text: "Ukończyłam kurs praktyki klinicznej — to najlepsza decyzja zawodowa. Prowadzący łączą wiedzę klasyczną z nowoczesnym podejściem. Dziś stosuję moksę w praktyce na co dzień.",
   },
   {
     name: "Piotr M.",
-    role: "Marathon Runner, Łódź",
+    role: "Maratończyk, Łódź",
     avatar: "P",
     rating: 5,
-    text: "Post-injury recovery was much faster with regular moxibustion. The practitioner designed a protocol specifically for my knee condition and the results exceeded my physiotherapist's expectations.",
+    text: "Powrót do formy po kontuzji był znacznie szybszy dzięki regularnej moksoterapii. Terapeuta ułożył protokół pod moje kolano — rezultaty przerosły oczekiwania fizjoterapeuty.",
   },
   {
     name: "Karolina S.",
-    role: "New Mother, Poznań",
+    role: "Młoda mama, Poznań",
     avatar: "K",
     rating: 5,
-    text: "Moxa for postpartum recovery was a true blessing. Gentle, nurturing, and incredibly effective for rebuilding my vitality after birth. I recommend Moksy to every new mother I meet.",
+    text: "Moksa po porodzie to prawdziwe błogosławieństwo. Delikatna, wspierająca i niezwykle skuteczna w odbudowie sił. Polecam Moksy każdej młodej mamie.",
   },
   {
-    name: "Dr. Rafał N.",
-    role: "GP & Integrative Medicine, Wrocław",
+    name: "Dr Rafał N.",
+    role: "Lekarz POZ, medycyna integracyjna, Wrocław",
     avatar: "R",
     rating: 5,
-    text: "As a medical professional, I was impressed by the rigour of the Foundation course. The team's approach is grounded, ethical, and clinically coherent. I now confidently refer patients.",
+    text: "Jako lekarz doceniam poziom kursu podstawowego. Podejście zespołu jest merytoryczne, etyczne i spójne klinicznie. Z czystym sumieniem kieruję pacjentów.",
   },
 ];
 
@@ -62,17 +62,24 @@ export default function Testimonials() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
   const [activeIdx, setActiveIdx] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(3);
 
-  const visibleCount = 3;
-  const maxIdx = testimonials.length - visibleCount;
+  useEffect(() => {
+    const update = () => setVisibleCount(window.innerWidth < 768 ? 1 : 3);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const maxIdx = Math.max(0, testimonials.length - visibleCount);
 
   const prev = () => setActiveIdx((i) => Math.max(0, i - 1));
   const next = () => setActiveIdx((i) => Math.min(maxIdx, i + 1));
   const visible = testimonials.slice(activeIdx, activeIdx + visibleCount);
 
   return (
-    <section className="py-28 bg-[#F5F5DC]/40">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+    <section className="py-16 sm:py-20 md:py-28 bg-[#F5F5DC]/40">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         {/* Header */}
         <motion.div
           ref={ref}
@@ -83,15 +90,15 @@ export default function Testimonials() {
         >
           <div>
             <span className="inline-block mb-4 text-xs uppercase tracking-widest text-[#71797E] font-medium">
-              Client Stories
+              Opinie
             </span>
             <h2
-              className="text-4xl md:text-5xl font-bold text-[#333333]"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#333333]"
               style={{ fontFamily: '"Playfair Display", serif' }}
             >
-              Voices of
+              Głosy
               <br />
-              <span className="italic text-[#71797E]">Transformation</span>
+              <span className="italic text-[#71797E]">transformacji</span>
             </h2>
           </div>
 
@@ -115,7 +122,7 @@ export default function Testimonials() {
         </motion.div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-7">
           {visible.map((t, i) => (
             <motion.div
               key={t.name + activeIdx}

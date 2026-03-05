@@ -5,37 +5,37 @@ import { Calendar, Clock, Users, Award, ArrowRight } from "lucide-react";
 
 const courses = [
   {
-    level: "Foundation",
-    title: "Introduction to Moxibustion",
+    level: "Podstawowy",
+    title: "Wprowadzenie do moksoterapii",
     description:
-      "A comprehensive beginner course covering the theory of TCM, meridian systems, moxa safety, and practical application of all three primary techniques.",
-    date: "April 12–13, 2026",
-    duration: "2 days (16 hrs)",
-    spots: "8 spots left",
+      "Kompleksowy kurs dla początkujących: teoria TCM, system meridianów, bezpieczeństwo moksy oraz praktyczne zastosowanie trzech głównych technik.",
+    date: "12–13 kwietnia 2026",
+    duration: "2 dni (16 godz.)",
+    spots: "8 miejsc",
     price: "890 zł",
-    badge: "Popular",
+    badge: "Popularne",
     badgeColor: "bg-[#71797E] text-[#F5F5DC]",
   },
   {
-    level: "Advanced",
-    title: "Clinical Moxibustion Practitioner",
+    level: "Zaawansowany",
+    title: "Moksoterapia w praktyce klinicznej",
     description:
-      "Deep dive into condition-specific protocols, patient assessment frameworks, contraindications, and integrating moxa into existing clinical practice.",
-    date: "May 17–19, 2026",
-    duration: "3 days (24 hrs)",
-    spots: "5 spots left",
-    price: "1,490 zł",
-    badge: "New",
+      "Protokoły pod konkretne schorzenia, ocena pacjenta, przeciwwskazania oraz włączenie moksy do codziennej praktyki terapeutycznej.",
+    date: "17–19 maja 2026",
+    duration: "3 dni (24 godz.)",
+    spots: "5 miejsc",
+    price: "1 490 zł",
+    badge: "Nowość",
     badgeColor: "bg-[#C4862A] text-white",
   },
   {
-    level: "Specialist",
-    title: "Moxa for Women's Health",
+    level: "Specjalistyczny",
+    title: "Moksa w zdrowiu kobiety",
     description:
-      "Focused module on gynaecological applications — menstrual irregularities, fertility support, and peri/post-natal care using classical and contemporary protocols.",
-    date: "June 7–8, 2026",
-    duration: "2 days (16 hrs)",
-    spots: "10 spots left",
+      "Moduł ginekologiczny: nieregularne miesiączki, wsparcie płodności oraz opieka okołoporodowa w ujęciu klasycznym i współczesnym.",
+    date: "7–8 czerwca 2026",
+    duration: "2 dni (16 godz.)",
+    spots: "10 miejsc",
     price: "990 zł",
     badge: null,
     badgeColor: "",
@@ -47,7 +47,7 @@ export default function TrainingAcademy() {
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section id="training" className="py-28 bg-[#333333] relative overflow-hidden">
+    <section id="training" className="py-16 sm:py-20 md:py-28 bg-[#333333] relative overflow-hidden">
       {/* Background texture */}
       <div className="absolute inset-0 opacity-5"
         style={{
@@ -55,7 +55,7 @@ export default function TrainingAcademy() {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         {/* Header */}
         <motion.div
           ref={ref}
@@ -65,20 +65,19 @@ export default function TrainingAcademy() {
           className="text-center mb-16"
         >
           <span className="inline-block mb-4 text-xs uppercase tracking-widest text-[#71797E] font-medium">
-            Moksy Academy
+            Akademia Moksy
           </span>
           <h2
-            className="text-4xl md:text-5xl font-bold text-[#F5F5DC] mb-5"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#F5F5DC] mb-5"
             style={{ fontFamily: '"Playfair Display", serif' }}
           >
-            Become a Certified
+            Szkolenia praktyczne
             <br />
-            <span className="italic text-[#D4A24A]">Moxa Practitioner</span>
+            <span className="italic text-[#D4A24A]">z moksoterapii</span>
           </h2>
-          <p className="text-[#F5F5DC]/60 text-lg max-w-xl mx-auto font-light leading-relaxed">
-            Our academy offers internationally recognised training that bridges
-            ancient wisdom with modern therapeutic practice. All courses include
-            hands-on clinical hours.
+          <p className="text-[#F5F5DC]/60 text-base sm:text-lg max-w-xl mx-auto font-light leading-relaxed">
+            Oferujemy szkolenia łączące tradycyjną wiedzę z nowoczesną praktyką
+            terapeutyczną. W programie zajęcia teoretyczne i praktyka.
           </p>
         </motion.div>
 
@@ -90,9 +89,9 @@ export default function TrainingAcademy() {
           className="flex flex-wrap justify-center gap-6 mb-16"
         >
           {[
-            { icon: Award, text: "TCM Accredited" },
-            { icon: Users, text: "Small Groups (max 12)" },
-            { icon: Award, text: "Certificate Issued" },
+            { icon: Award, text: "W oparciu o TCM" },
+            { icon: Users, text: "Małe grupy (max 12)" },
+            { icon: Award, text: "Potwierdzenie ukończenia" },
           ].map((item) => (
             <div key={item.text} className="flex items-center gap-2 text-[#F5F5DC]/50 text-sm">
               <item.icon size={15} className="text-[#71797E]" />
@@ -156,7 +155,7 @@ export default function TrainingAcademy() {
                   href="#contact"
                   className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-[#71797E]/40 text-[#F5F5DC]/80 text-sm hover:bg-[#71797E] hover:text-[#F5F5DC] hover:border-[#71797E] transition-all duration-300 group/btn"
                 >
-                  Learn More
+                  Więcej informacji
                   <ArrowRight size={13} className="transition-transform group-hover/btn:translate-x-0.5" />
                 </a>
               </div>
@@ -172,13 +171,13 @@ export default function TrainingAcademy() {
           className="text-center mt-14"
         >
           <p className="text-[#F5F5DC]/40 text-sm mb-4">
-            Not sure which course is right for you?
+            Nie wiesz, który kurs wybrać?
           </p>
           <a
             href="#contact"
             className="inline-flex items-center gap-2 text-[#71797E] hover:text-[#8E9A9F] text-sm font-medium underline underline-offset-4 transition-colors"
           >
-            Request a free consultation
+            Zapytaj o bezpłatną konsultację
           </a>
         </motion.div>
       </div>

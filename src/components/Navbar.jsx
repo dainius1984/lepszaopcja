@@ -1,30 +1,62 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Flame } from "lucide-react";
 
 const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Treatments", href: "#services" },
-  { label: "Training", href: "#training" },
-  { label: "Contact", href: "#contact" },
+  { label: "O nas", href: "#about" },
+  { label: "Zabiegi", href: "#services" },
+  { label: "Szkolenia", href: "#training" },
+  { label: "Kontakt", href: "#contact" },
 ];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [navVisible, setNavVisible] = useState(true);
+  const lastScrollY = useRef(0);
+  const isMobile = useRef(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768;
+      isMobile.current = mobile;
+      if (!mobile) setNavVisible(true);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    const handleScroll = () => {
+      const y = window.scrollY;
+      setIsScrolled(y > 40);
+
+      if (isMobile.current) {
+        if (y > lastScrollY.current && y > 80) {
+          setNavVisible(false);
+        } else {
+          setNavVisible(true);
+        }
+        lastScrollY.current = y;
+      } else {
+        setNavVisible(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", checkMobile);
+    };
   }, []);
 
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      animate={{
+        y: navVisible ? 0 : -120,
+        opacity: 1,
+      }}
+      transition={{ duration: 0.35, ease: "easeOut" }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? "bg-[#FAFAF5]/95 backdrop-blur-md shadow-sm border-b border-[#71797E]/10"
           : "bg-transparent"
@@ -60,7 +92,7 @@ export default function Navbar() {
             href="#contact"
             className="ml-2 px-5 py-2.5 rounded-full bg-[#71797E] text-[#F5F5DC] text-sm font-medium hover:bg-[#5A6468] transition-colors duration-200 shadow-sm"
           >
-            Book Now
+            Umów wizytę
           </a>
         </nav>
 
@@ -68,7 +100,7 @@ export default function Navbar() {
         <button
           className="md:hidden p-2 text-[#333333]"
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
+          aria-label="Otwórz menu"
         >
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -100,7 +132,7 @@ export default function Navbar() {
                 onClick={() => setMenuOpen(false)}
                 className="mt-2 px-5 py-3 rounded-full bg-[#71797E] text-[#F5F5DC] text-sm font-medium text-center hover:bg-[#5A6468] transition-colors"
               >
-                Book Now
+                Umów wizytę
               </a>
             </div>
           </motion.div>

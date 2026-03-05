@@ -4,10 +4,10 @@ import { useRef } from "react";
 import { CheckCircle2 } from "lucide-react";
 
 const highlights = [
-  "Stimulates acupuncture points with focused warmth",
-  "Enhances Qi flow and blood circulation",
-  "Safe, non-invasive, and deeply relaxing",
-  "Backed by centuries of clinical tradition",
+  "Pobudza punkty akupunkturowe skupionym ciepłem",
+  "Wspiera przepływ Qi i krążenie krwi",
+  "Bezpieczna, nieinwazyjna i głęboko relaksująca",
+  "Oparta na wiekach tradycji klinicznej",
 ];
 
 export default function AboutMoxa() {
@@ -15,8 +15,8 @@ export default function AboutMoxa() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="about" className="py-28 bg-[#FAFAF5]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+    <section id="about" className="py-16 sm:py-20 md:py-28 bg-[#FAFAF5]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         <div ref={ref} className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Text side */}
           <motion.div
@@ -25,28 +25,27 @@ export default function AboutMoxa() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <span className="inline-block mb-4 text-xs uppercase tracking-widest text-[#71797E] font-medium">
-              Ancient Wisdom
+              Starożytna mądrość
             </span>
             <h2
-              className="text-4xl md:text-5xl font-bold text-[#333333] leading-tight mb-6"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#333333] leading-tight mb-6"
               style={{ fontFamily: '"Playfair Display", serif' }}
             >
-              What Is
+              Czym jest
               <br />
-              <span className="italic text-[#71797E]">Moxibustion?</span>
+              <span className="italic text-[#71797E]">moksoterapia?</span>
             </h2>
-            <p className="text-[#555555] text-lg leading-relaxed mb-5 font-light">
-              Moxibustion (moksa) is a form of heat therapy rooted in Traditional
-              Chinese Medicine (TCM). It involves burning dried mugwort — called
-              moxa — near or on specific acupuncture points to warm and invigorate
-              the flow of Qi, the body's vital energy.
+            <p className="text-[#555555] text-base sm:text-lg leading-relaxed mb-5 font-light">
+              Moksoterapia (moksa) to forma terapii ciepłem wywodząca się z
+              tradycyjnej medycyny chińskiej (TCM). Polega na przygrzewaniu
+              suszonym bylicą — zwaną moksą — w okolicy lub na punktach
+              akupunkturowych, by ogrzać i pobudzić przepływ Qi, życiowej energii ciała.
             </p>
-            <p className="text-[#555555] text-base leading-relaxed mb-8 font-light">
-              Used for over 3,000 years across Asia, moxibustion addresses a wide
-              range of conditions — from chronic pain and digestive disorders to
-              fatigue, fertility support, and immune strengthening. Our
-              practitioners blend classical knowledge with modern clinical
-              understanding for transformative results.
+            <p className="text-[#555555] text-sm sm:text-base leading-relaxed mb-8 font-light">
+              Stosowana od ponad 3000 lat w Azji, moksoterapia pomaga w wielu
+              dolegliwościach — od bólu przewlekłego i zaburzeń trawiennych po
+              zmęczenie, wsparcie płodności i wzmocnienie odporności. Nasi
+              praktycy łączą wiedzę klasyczną z nowoczesnym podejściem klinicznym.
             </p>
 
             <ul className="space-y-3 mb-10">
@@ -62,7 +61,7 @@ export default function AboutMoxa() {
               href="#services"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#333333] text-[#F5F5DC] text-sm font-medium hover:bg-[#555555] transition-colors duration-300"
             >
-              Explore Treatments
+              Zobacz zabiegi
             </a>
           </motion.div>
 
@@ -76,7 +75,7 @@ export default function AboutMoxa() {
             <div className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl">
               <img
                 src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900&auto=format&fit=crop"
-                alt="Moxibustion therapy being performed"
+                alt="Zabieg moksoterapii"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/30 to-transparent" />
@@ -96,7 +95,7 @@ export default function AboutMoxa() {
                 3,000+
               </div>
               <div className="text-xs text-[#555555] leading-snug">
-                Years of documented therapeutic use worldwide
+                Lat udokumentowanego stosowania na świecie
               </div>
             </motion.div>
 

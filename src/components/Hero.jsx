@@ -41,7 +41,7 @@ export default function Hero() {
           custom={0.1}
           className="inline-block mb-5 px-4 py-1.5 rounded-full border border-[#F5F5DC]/30 text-[#F5F5DC]/80 text-xs uppercase tracking-widest font-medium"
         >
-          Traditional Chinese Medicine
+          Tradycyjna Medycyna Chińska
         </motion.span>
 
         <motion.h1
@@ -49,14 +49,14 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
           custom={0.25}
-          className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#F5F5DC] leading-tight mb-6"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#F5F5DC] leading-tight mb-6"
           style={{ fontFamily: '"Playfair Display", serif' }}
         >
-          Heal from Within.
+          Uzdrowienie od środka.
           <br />
-          <span className="italic text-[#D4A24A]">The Ancient Power</span>
+          <span className="italic text-[#D4A24A]">Starożytna moc</span>
           <br />
-          of Sacred Heat.
+          świętego ciepła.
         </motion.h1>
 
         <motion.p
@@ -64,11 +64,11 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
           custom={0.45}
-          className="text-lg md:text-xl text-[#F5F5DC]/75 max-w-2xl mx-auto mb-10 leading-relaxed font-light"
+          className="text-base sm:text-lg md:text-xl text-[#F5F5DC]/75 max-w-2xl mx-auto mb-10 leading-relaxed font-light px-2"
         >
-          Rooted in thousands of years of traditional Chinese medicine,
-          moxibustion harnesses the transformative energy of heat to restore
-          balance, vitality, and deep inner harmony.
+          Zakorzeniona w tysiącach lat tradycyjnej medycyny chińskiej,
+          moksoterapia wykorzystuje uzdrawiającą energię ciepła, by przywrócić
+          równowagę, witalność i głęboką harmonię.
         </motion.p>
 
         <motion.div
@@ -82,14 +82,14 @@ export default function Hero() {
             href="#contact"
             className="group px-8 py-4 rounded-full bg-[#71797E] text-[#F5F5DC] font-medium text-base hover:bg-[#5A6468] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
           >
-            Book a Session
+            Umów sesję
           </a>
           <a
             href="#training"
-            className="group flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-[#F5F5DC]/40 text-[#F5F5DC] font-medium text-base hover:bg-[#F5F5DC]/10 transition-all duration-300"
+            className="group flex items-center justify-center gap-2 px-6 sm:px-8 py-4 rounded-full border border-[#F5F5DC]/40 text-[#F5F5DC] font-medium text-sm sm:text-base hover:bg-[#F5F5DC]/10 transition-all duration-300"
           >
             <CalendarDays size={16} />
-            Explore Courses
+            Zobacz szkolenia
           </a>
         </motion.div>
 
@@ -99,12 +99,12 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
           custom={0.8}
-          className="mt-20 grid grid-cols-3 gap-6 max-w-lg mx-auto"
+          className="mt-16 sm:mt-20 grid grid-cols-3 gap-4 sm:gap-6 max-w-lg mx-auto"
         >
           {[
-            { number: "15+", label: "Years of Practice" },
-            { number: "2,000+", label: "Clients Treated" },
-            { number: "300+", label: "Certified Students" },
+            { number: "15+", label: "Lat praktyki" },
+            { number: "2 000+", label: "Pacjentów" },
+            { number: "300+", label: "Uczestników szkoleń" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div
@@ -129,7 +129,7 @@ export default function Hero() {
         transition={{ delay: 1.4 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#F5F5DC]/50 hover:text-[#F5F5DC]/80 transition-colors"
       >
-        <span className="text-xs uppercase tracking-widest">Discover</span>
+        <span className="text-xs uppercase tracking-widest">Odkryj</span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ repeat: Infinity, duration: 1.8 }}

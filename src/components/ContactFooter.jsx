@@ -15,30 +15,30 @@ import {
 const contactInfo = [
   {
     icon: MapPin,
-    label: "Address",
-    value: "ul. Zielona 14/3, 00-001 Warsaw, Poland",
+    label: "Adres",
+    value: "ul. Zielona 14/3, 00-001 Warszawa",
   },
   {
     icon: Phone,
-    label: "Phone",
+    label: "Telefon",
     value: "+48 500 123 456",
   },
   {
     icon: Mail,
-    label: "Email",
+    label: "E-mail",
     value: "hello@moksy.pl",
   },
   {
     icon: Clock,
-    label: "Hours",
-    value: "Mon–Fri 9:00–19:00 · Sat 9:00–14:00",
+    label: "Godziny",
+    value: "Pn–Pt 9:00–19:00 · Sob 9:00–14:00",
   },
 ];
 
 const footerLinks = [
-  { title: "Explore", links: ["About Us", "Treatments", "Training", "Blog"] },
-  { title: "Legal", links: ["Privacy Policy", "Terms of Service", "Cookie Policy"] },
-  { title: "Connect", links: ["Instagram", "Facebook", "YouTube"] },
+  { title: "Strony", links: ["O nas", "Zabiegi", "Szkolenia", "Blog"] },
+  { title: "Prawne", links: ["Polityka prywatności", "Regulamin", "Cookies"] },
+  { title: "Social", links: ["Instagram", "Facebook", "YouTube"] },
 ];
 
 export default function ContactFooter() {
@@ -63,8 +63,8 @@ export default function ContactFooter() {
   return (
     <>
       {/* Contact Section */}
-      <section id="contact" className="py-28 bg-[#FAFAF5]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+      <section id="contact" className="py-16 sm:py-20 md:py-28 bg-[#FAFAF5]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
           <div ref={ref} className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Left — Info */}
             <motion.div
@@ -73,20 +73,19 @@ export default function ContactFooter() {
               transition={{ duration: 0.8 }}
             >
               <span className="inline-block mb-4 text-xs uppercase tracking-widest text-[#71797E] font-medium">
-                Get in Touch
+                Skontaktuj się
               </span>
               <h2
-                className="text-4xl md:text-5xl font-bold text-[#333333] mb-6 leading-tight"
+                className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#333333] mb-6 leading-tight"
                 style={{ fontFamily: '"Playfair Display", serif' }}
               >
-                Begin Your
+                Rozpocznij swoją
                 <br />
-                <span className="italic text-[#71797E]">Healing Journey</span>
+                <span className="italic text-[#71797E]">ścieżkę uzdrowienia</span>
               </h2>
-              <p className="text-[#555555] text-lg font-light leading-relaxed mb-10">
-                Whether you're seeking therapeutic relief or professional
-                training, we're here to guide you. Reach out and let's start a
-                conversation.
+              <p className="text-[#555555] text-base sm:text-lg font-light leading-relaxed mb-10">
+                Niezależnie od tego, czy szukasz wsparcia terapeutycznego, czy
+                szkoleń — jesteśmy tu, by Ci pomóc. Napisz do nas.
               </p>
 
               <div className="space-y-5">
@@ -138,11 +137,10 @@ export default function ContactFooter() {
                     className="text-2xl font-bold text-[#333333] mb-3"
                     style={{ fontFamily: '"Playfair Display", serif' }}
                   >
-                    Thank You!
+                    Dziękujemy!
                   </h3>
                   <p className="text-[#555555] font-light">
-                    Your message has been received. We'll be in touch within 24
-                    hours to discuss your journey.
+                    Twoja wiadomość została wysłana. Odpowiemy w ciągu 24 godzin.
                   </p>
                 </motion.div>
               ) : (
@@ -153,7 +151,7 @@ export default function ContactFooter() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                       <label className="block text-xs uppercase tracking-wider text-[#71797E] mb-2 font-medium">
-                        Full Name
+                        Imię i nazwisko
                       </label>
                       <input
                         type="text"
@@ -161,13 +159,13 @@ export default function ContactFooter() {
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        placeholder="Your name"
+                        placeholder="Twoje imię i nazwisko"
                         className="w-full px-4 py-3 rounded-xl border border-[#71797E]/20 bg-[#FAFAF5] text-[#333333] text-sm placeholder:text-[#555555]/40 focus:outline-none focus:border-[#71797E] focus:ring-1 focus:ring-[#71797E]/20 transition-colors"
                       />
                     </div>
                     <div>
                       <label className="block text-xs uppercase tracking-wider text-[#71797E] mb-2 font-medium">
-                        Email
+                        E-mail
                       </label>
                       <input
                         type="email"
@@ -183,7 +181,7 @@ export default function ContactFooter() {
 
                   <div>
                     <label className="block text-xs uppercase tracking-wider text-[#71797E] mb-2 font-medium">
-                      I'm Interested In
+                      Interesuje mnie
                     </label>
                     <select
                       name="interest"
@@ -191,25 +189,25 @@ export default function ContactFooter() {
                       onChange={handleChange}
                       className="w-full px-4 py-3 rounded-xl border border-[#71797E]/20 bg-[#FAFAF5] text-[#333333] text-sm focus:outline-none focus:border-[#71797E] focus:ring-1 focus:ring-[#71797E]/20 transition-colors appearance-none cursor-pointer"
                     >
-                      <option value="" disabled>Select an option...</option>
-                      <option value="therapy">Therapy Session</option>
-                      <option value="foundation">Foundation Course</option>
-                      <option value="advanced">Advanced Course</option>
-                      <option value="specialist">Specialist Module</option>
-                      <option value="other">General Enquiry</option>
+                      <option value="" disabled>Wybierz...</option>
+                      <option value="therapy">Zabieg terapeutyczny</option>
+                      <option value="foundation">Kurs podstawowy</option>
+                      <option value="advanced">Kurs zaawansowany</option>
+                      <option value="specialist">Moduł specjalistyczny</option>
+                      <option value="other">Inne zapytanie</option>
                     </select>
                   </div>
 
                   <div>
                     <label className="block text-xs uppercase tracking-wider text-[#71797E] mb-2 font-medium">
-                      Message
+                      Wiadomość
                     </label>
                     <textarea
                       name="message"
                       rows={4}
                       value={formData.message}
                       onChange={handleChange}
-                      placeholder="Tell us a little about yourself and how we can help..."
+                      placeholder="Opowiedz krótko o sobie i w czym możemy pomóc..."
                       className="w-full px-4 py-3 rounded-xl border border-[#71797E]/20 bg-[#FAFAF5] text-[#333333] text-sm placeholder:text-[#555555]/40 focus:outline-none focus:border-[#71797E] focus:ring-1 focus:ring-[#71797E]/20 transition-colors resize-none"
                     />
                   </div>
@@ -219,7 +217,7 @@ export default function ContactFooter() {
                     className="w-full flex items-center justify-center gap-2.5 py-4 rounded-xl bg-[#333333] text-[#F5F5DC] font-medium text-sm hover:bg-[#71797E] transition-colors duration-300"
                   >
                     <Send size={15} />
-                    Send Message
+                    Wyślij wiadomość
                   </button>
                 </form>
               )}
@@ -230,7 +228,7 @@ export default function ContactFooter() {
 
       {/* Footer */}
       <footer className="bg-[#333333] text-[#F5F5DC]/60">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pt-12 md:pt-16 pb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-14">
             {/* Brand */}
             <div className="lg:col-span-2">
@@ -246,8 +244,8 @@ export default function ContactFooter() {
                 </span>
               </div>
               <p className="text-sm leading-relaxed font-light max-w-xs mb-6">
-                Authentic moxibustion therapy and professional training rooted
-                in the classical tradition of Traditional Chinese Medicine.
+                Autentyczna moksoterapia i szkolenia praktyczne w duchu
+                tradycyjnej medycyny chińskiej.
               </p>
               <div className="flex gap-3">
                 {[Instagram, Facebook].map((Icon, i) => (
@@ -285,9 +283,9 @@ export default function ContactFooter() {
           </div>
 
           <div className="pt-8 border-t border-[#F5F5DC]/8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-            <span>© 2026 Moksy. All rights reserved.</span>
+            <span>© 2026 Moksy. Wszelkie prawa zastrzeżone.</span>
             <span className="text-[#71797E]">
-              Healing through ancient wisdom · Warsaw, Poland
+              Uzdrowienie przez starożytną mądrość · Warszawa
             </span>
           </div>
         </div>

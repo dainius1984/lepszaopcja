@@ -6,35 +6,35 @@ import { Flame, Wind, Scroll, ArrowRight } from "lucide-react";
 const services = [
   {
     icon: Flame,
-    title: "Direct Moxibustion",
-    subtitle: "Traditional & Precise",
+    title: "Moksoterapia bezpośrednia",
+    subtitle: "Tradycyjna i precyzyjna",
     description:
-      "Moxa cones are placed directly on the skin at specific acupuncture points. This classical technique delivers concentrated heat to stimulate deep healing, often used for chronic conditions and cold-natured constitutional types.",
-    benefits: ["Deep tissue warming", "Strong Qi activation", "Chronic pain relief"],
+      "Stożki moksy ustawiane są bezpośrednio na skórze w punktach akupunkturowych. Ta klasyczna technika dostarcza skupione ciepło i pobudza głęboką regenerację; polecana przy dolegliwościach przewlekłych i konstytucji „zimnej”.",
+    benefits: ["Głębokie rozgrzanie tkanek", "Silna aktywacja Qi", "Ulgę w bólu przewlekłym"],
     duration: "60 min",
-    price: "From 120 zł",
+    price: "od 120 zł",
     image: "https://images.unsplash.com/photo-1591343395082-e120087004b4?w=600&auto=format&fit=crop",
   },
   {
     icon: Wind,
-    title: "Indirect Moxibustion",
-    subtitle: "Gentle & Versatile",
+    title: "Moksoterapia pośrednia",
+    subtitle: "Delikatna i uniwersalna",
     description:
-      "A slice of ginger, garlic, or salt is placed between the moxa cone and the skin, creating a comfortable buffer. This popular technique is ideal for sensitive patients and general wellness maintenance.",
-    benefits: ["Comfortable warmth", "Ideal for beginners", "Full-body balance"],
+      "Plasterek imbiru, czosnku lub sól umieszcza się między stożkiem moksy a skórą, tworząc przyjemny bufor. Ta popularna technika idealna jest dla wrażliwych pacjentów i ogólnego wsparcia zdrowia.",
+    benefits: ["Przyjemne ciepło", "Idealna na początek", "Równowaga całego ciała"],
     duration: "75 min",
-    price: "From 100 zł",
+    price: "od 100 zł",
     image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&auto=format&fit=crop",
   },
   {
     icon: Scroll,
-    title: "Moxa Cigar Therapy",
-    subtitle: "Flexible & Relaxing",
+    title: "Terapia cygarem moksowym",
+    subtitle: "Elastyczna i relaksująca",
     description:
-      "A rolled moxa stick is held above acupuncture points without direct skin contact. This highly adaptable method allows treatment of larger body areas and is excellent for stress relief, pain management, and immune support.",
-    benefits: ["No skin contact", "Large area coverage", "Deeply relaxing"],
+      "Zwinięty cygar moksowy trzymany jest nad punktami akupunkturowymi bez kontaktu ze skórą. Ta uniwersalna metoda pozwala na pracę na większych obszarach; doskonała przy stresie, bólu i wsparciu odporności.",
+    benefits: ["Bez kontaktu ze skórą", "Duży obszar zabiegu", "Głęboki relaks"],
     duration: "50 min",
-    price: "From 85 zł",
+    price: "od 85 zł",
     image: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&auto=format&fit=crop",
   },
 ];
@@ -53,8 +53,8 @@ export default function ServicesGrid() {
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section id="services" className="py-28 bg-[#F5F5DC]/40">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+    <section id="services" className="py-16 sm:py-20 md:py-28 bg-[#F5F5DC]/40">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         {/* Header */}
         <motion.div
           ref={ref}
@@ -64,19 +64,19 @@ export default function ServicesGrid() {
           className="text-center mb-16"
         >
           <span className="inline-block mb-4 text-xs uppercase tracking-widest text-[#71797E] font-medium">
-            Our Treatments
+            Nasze zabiegi
           </span>
           <h2
-            className="text-4xl md:text-5xl font-bold text-[#333333] mb-5"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#333333] mb-5"
             style={{ fontFamily: '"Playfair Display", serif' }}
           >
-            Choose Your Path
+            Wybierz ścieżkę
             <br />
-            <span className="italic text-[#71797E]">to Healing</span>
+            <span className="italic text-[#71797E]">do uzdrowienia</span>
           </h2>
-          <p className="text-[#555555] text-lg max-w-xl mx-auto font-light leading-relaxed">
-            Each modality is carefully tailored to your constitution and
-            therapeutic goals. Our practitioners guide you every step of the way.
+          <p className="text-[#555555] text-base sm:text-lg max-w-xl mx-auto font-light leading-relaxed">
+            Każda metoda jest dopasowana do Twojej konstytucji i celów
+            terapeutycznych. Nasi praktycy poprowadzą Cię krok po kroku.
           </p>
         </motion.div>
 
@@ -132,11 +132,11 @@ export default function ServicesGrid() {
 
                 <div className="flex items-center justify-between pt-4 border-t border-[#71797E]/10">
                   <div>
-                    <div className="text-xs text-[#555555] mb-0.5">Duration</div>
+                    <div className="text-xs text-[#555555] mb-0.5">Czas</div>
                     <div className="text-sm font-medium text-[#333333]">{service.duration}</div>
                   </div>
                   <div className="text-right">
-                    <div className="text-xs text-[#555555] mb-0.5">Investment</div>
+                    <div className="text-xs text-[#555555] mb-0.5">Cena</div>
                     <div className="text-sm font-semibold text-[#71797E]">{service.price}</div>
                   </div>
                 </div>
@@ -145,7 +145,7 @@ export default function ServicesGrid() {
                   href="#contact"
                   className="mt-5 flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-[#71797E]/30 text-[#71797E] text-sm font-medium hover:bg-[#71797E] hover:text-[#F5F5DC] transition-all duration-300 group/btn"
                 >
-                  Book This Session
+                  Umów ten zabieg
                   <ArrowRight size={14} className="transition-transform group-hover/btn:translate-x-1" />
                 </a>
               </div>
