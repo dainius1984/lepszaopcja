@@ -16,17 +16,17 @@ const contactInfo = [
   {
     icon: MapPin,
     label: "Adres",
-    value: "ul. Zielona 14/3, 00-001 Warszawa",
+    value: "ul. Leśna 39, 55-330 Wilkszyn",
   },
   {
     icon: Phone,
     label: "Telefon",
-    value: "+48 500 123 456",
+    value: "690 532 778",
   },
   {
     icon: Mail,
     label: "E-mail",
-    value: "hello@moksy.pl",
+    value: "kontakt@lepszaopcja.pl",
   },
   {
     icon: Clock,
