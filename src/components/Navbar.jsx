@@ -52,20 +52,21 @@ export default function Navbar() {
         opacity: 1,
       }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-[#FAFAF5]/95 backdrop-blur-md shadow-sm border-b border-[#71797E]/10"
-          : "bg-[#333333]/60 backdrop-blur-md border-b border-[#F5F5DC]/10"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 w-full max-w-[100vw] overflow-x-hidden transition-all duration-300
+        md:border-b
+        ${isScrolled ? "md:bg-[#FAFAF5]/95 md:backdrop-blur-md md:shadow-sm md:border-[#71797E]/10" : "md:bg-[#333333]/60 md:backdrop-blur-md md:border-[#F5F5DC]/10"}
+        md:min-h-[5rem]
+      `}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
-        {/* Logo */}
-        <a href="#" className="flex items-center gap-2.5 group">
-          <div className={`w-9 h-9 rounded-full flex items-center justify-center ${isScrolled ? "bg-[#71797E]" : "bg-[#F5F5DC]/20"}`}>
+      <div className="w-full max-w-[100vw] box-border mx-auto px-4 sm:px-5 md:px-6 lg:px-10 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-3 min-w-0">
+        {/* Logo — na mobile tylko ikona (bez diva-okręgu), na desktop pełne logo */}
+        <a href="#" className="flex items-center gap-2 sm:gap-2.5 group min-w-0 shrink-0">
+          <span className={`md:flex md:w-9 md:h-9 md:rounded-full md:items-center md:justify-center hidden ${isScrolled ? "md:bg-[#71797E]" : "md:bg-[#F5F5DC]/20"}`}>
             <Flame size={18} className={isScrolled ? "text-[#F5F5DC]" : "text-[#F5F5DC]"} />
-          </div>
+          </span>
+          <Flame size={22} className={`md:hidden shrink-0 ${isScrolled ? "text-[#333333]" : "text-[#F5F5DC]"}`} />
           <span
-            className={`text-2xl font-bold tracking-tight ${isScrolled ? "text-[#333333]" : "text-[#F5F5DC]"}`}
+            className={`text-xl sm:text-2xl font-bold tracking-tight truncate ${isScrolled ? "text-[#333333]" : "text-[#F5F5DC]"}`}
             style={{ fontFamily: '"Playfair Display", serif' }}
           >
             Moksy
@@ -73,7 +74,7 @@ export default function Navbar() {
         </a>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-8 shrink-0">
           {navLinks.map((link) => (
             <a
               key={link.label}
@@ -98,7 +99,7 @@ export default function Navbar() {
 
         {/* Mobile Hamburger */}
         <button
-          className={`md:hidden p-2 ${isScrolled ? "text-[#333333]" : "text-[#F5F5DC]"}`}
+          className={`md:hidden p-2 -mr-1 shrink-0 touch-manipulation ${isScrolled ? "text-[#333333]" : "text-[#F5F5DC]"}`}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Otwórz menu"
         >
@@ -116,7 +117,7 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
             className="md:hidden bg-[#333333]/95 backdrop-blur-md border-t border-[#F5F5DC]/10 overflow-hidden"
           >
-            <div className="px-6 py-6 flex flex-col gap-5">
+            <div className="px-4 sm:px-6 py-5 flex flex-col gap-4">
               {navLinks.map((link) => (
                 <a
                   key={link.label}
