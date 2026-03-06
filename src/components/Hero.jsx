@@ -1,3 +1,4 @@
+import { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, CalendarDays } from "lucide-react";
 
@@ -11,25 +12,62 @@ const fadeUp = {
 };
 
 export default function Hero() {
+  const [activeVideo, setActiveVideo] = useState(1);
+  const video1Ref = useRef(null);
+  const video2Ref = useRef(null);
+
+  const handleVideo1Ended = useCallback(() => {
+    if (video1Ref.current) video1Ref.current.pause();
+    setActiveVideo(2);
+    if (video2Ref.current) {
+      video2Ref.current.currentTime = 0;
+      video2Ref.current.play();
+    }
+  }, []);
+
+  const handleVideo2Ended = useCallback(() => {
+    if (video2Ref.current) video2Ref.current.pause();
+    setActiveVideo(1);
+    if (video1Ref.current) {
+      video1Ref.current.currentTime = 0;
+      video1Ref.current.play();
+    }
+  }, []);
+
   return (
     <section
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background video */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-        aria-hidden="true"
-      >
-        <source src="/video/1.mp4" type="video/mp4" />
-      </video>
-      {/* Layered overlay for depth and readability */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#333333]/80 via-[#333333]/60 to-[#71797E]/50" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/70 via-transparent to-transparent" />
+      {/* Background videos — crossfade między 1.mp4 a 2.mp4 */}
+      <div className="absolute inset-0">
+        <video
+          ref={video1Ref}
+          autoPlay
+          muted
+          playsInline
+          onEnded={handleVideo1Ended}
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1200ms] ease-in-out"
+          style={{ opacity: activeVideo === 1 ? 1 : 0, zIndex: activeVideo === 1 ? 1 : 0 }}
+          aria-hidden="true"
+        >
+          <source src="/video/1.mp4" type="video/mp4" />
+        </video>
+        <video
+          ref={video2Ref}
+          muted
+          playsInline
+          onEnded={handleVideo2Ended}
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1200ms] ease-in-out"
+          style={{ opacity: activeVideo === 2 ? 1 : 0, zIndex: activeVideo === 2 ? 1 : 0 }}
+          aria-hidden="true"
+        >
+          <source src="/video/2.mp4" type="video/mp4" />
+        </video>
+      </div>
+      {/* Mocniejszy overlay — wideo bardziej w tle */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#333333]/85 via-[#333333]/70 to-[#71797E]/60" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/75 via-[#333333]/20 to-transparent" />
 
       {/* Decorative warm glow */}
       <div className="absolute bottom-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[300px] rounded-full bg-[#C4862A]/10 blur-3xl pointer-events-none" />
