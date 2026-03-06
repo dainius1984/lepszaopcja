@@ -40,15 +40,19 @@ export default function ContactFooter() {
     setSubmitting(true);
     try {
       const accessKey = "08f0b08d-81e0-4ca0-834a-c68a305f11ba";
+      const body = {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+      };
+      if (formData.interest) {
+        body.subject = formData.interest;
+        body.interest = formData.interest;
+      }
       const res = await fetch(`https://api.web3forms.com/submit/${accessKey}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          interest: formData.interest,
-          message: formData.message,
-        }),
+        body: JSON.stringify(body),
       });
       const data = await res.json().catch(() => ({}));
       if (data.success) {

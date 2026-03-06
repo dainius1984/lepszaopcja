@@ -42,16 +42,19 @@ export default function ContactFormPopup() {
     e.preventDefault();
     setSubmitError(null);
     setSubmitting(true);
-    try {
+    const body = {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+      };
+      if (formData.interest) {
+        body.subject = formData.interest;
+        body.interest = formData.interest;
+      }
       const res = await fetch(`https://api.web3forms.com/submit/${WEB3FORMS_ACCESS_KEY}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          interest: formData.interest,
-          message: formData.message,
-        }),
+        body: JSON.stringify(body),
       });
       const data = await res.json().catch(() => ({}));
       if (data.success) {
@@ -85,10 +88,12 @@ export default function ContactFormPopup() {
           transition={{ duration: 0.25 }}
           className="fixed inset-0 bg-[#333333]/70 backdrop-blur-sm z-[100] flex items-center justify-center p-4 sm:p-6"
           onClick={close}
-          aria-hidden="true"
         >
           {/* Modal — klik wewnątrz nie zamyka */}
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="popup-form-title"
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
@@ -131,6 +136,7 @@ export default function ContactFormPopup() {
                 ) : (
                   <>
                     <h2
+                      id="popup-form-title"
                       className="text-2xl sm:text-3xl font-bold text-[#333333] mb-1"
                       style={{ fontFamily: '"Playfair Display", serif' }}
                     >

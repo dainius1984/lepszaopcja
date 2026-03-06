@@ -153,10 +153,10 @@ export default function TrainingAcademy() {
                 </span>
                 <a
                   href="#contact"
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-[#71797E]/40 text-[#F5F5DC]/80 text-sm hover:bg-[#71797E] hover:text-[#F5F5DC] hover:border-[#71797E] transition-all duration-300 group/btn"
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-[#71797E]/40 text-[#F5F5DC]/80 text-sm hover:bg-[#71797E] hover:text-[#F5F5DC] hover:border-[#71797E] transition-all duration-300 group/btn whitespace-nowrap"
                 >
                   Więcej informacji
-                  <ArrowRight size={13} className="transition-transform group-hover/btn:translate-x-0.5" />
+                  <ArrowRight size={13} className="transition-transform group-hover/btn:translate-x-0.5 shrink-0" />
                 </a>
               </div>
             </motion.div>
