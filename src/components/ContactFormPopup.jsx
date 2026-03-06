@@ -42,7 +42,8 @@ export default function ContactFormPopup() {
     e.preventDefault();
     setSubmitError(null);
     setSubmitting(true);
-    const body = {
+    try {
+      const body = {
         name: formData.name,
         email: formData.email,
         message: formData.message,
