@@ -29,16 +29,12 @@ export default function Navbar() {
       const y = window.scrollY;
       setIsScrolled(y > 40);
 
-      if (isMobile.current) {
-        if (y > lastScrollY.current && y > 80) {
-          setNavVisible(false);
-        } else {
-          setNavVisible(true);
-        }
-        lastScrollY.current = y;
+      if (y > lastScrollY.current && y > 60) {
+        setNavVisible(false);
       } else {
         setNavVisible(true);
       }
+      lastScrollY.current = y;
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });

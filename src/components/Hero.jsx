@@ -39,15 +39,15 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background videos — crossfade między 1.mp4 a 2.mp4 */}
-      <div className="absolute inset-0">
+      {/* Background videos — płynny crossfade + lekkie rozmycie */}
+      <div className="absolute inset-0 [filter:blur(2px)] scale-105">
         <video
           ref={video1Ref}
           autoPlay
           muted
           playsInline
           onEnded={handleVideo1Ended}
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1200ms] ease-in-out"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
           style={{ opacity: activeVideo === 1 ? 1 : 0, zIndex: activeVideo === 1 ? 1 : 0 }}
           aria-hidden="true"
         >
@@ -58,7 +58,7 @@ export default function Hero() {
           muted
           playsInline
           onEnded={handleVideo2Ended}
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1200ms] ease-in-out"
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
           style={{ opacity: activeVideo === 2 ? 1 : 0, zIndex: activeVideo === 2 ? 1 : 0 }}
           aria-hidden="true"
         >

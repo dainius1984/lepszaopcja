@@ -89,10 +89,10 @@ export default function ServicesGrid() {
               variants={cardVariants}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="group bg-[#FAFAF5] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
+              className="group bg-[#FAFAF5] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 flex flex-col"
             >
               {/* Image */}
-              <div className="relative h-52 overflow-hidden">
+              <div className="relative h-52 overflow-hidden shrink-0">
                 <img
                   src={service.image}
                   alt={service.title}
@@ -109,15 +109,15 @@ export default function ServicesGrid() {
                 </div>
               </div>
 
-              {/* Body */}
-              <div className="p-7">
+              {/* Body — flex żeby przycisk zawsze na dole */}
+              <div className="p-7 flex flex-col flex-1 min-h-0">
                 <h3
                   className="text-xl font-bold text-[#333333] mb-3"
                   style={{ fontFamily: '"Playfair Display", serif' }}
                 >
                   {service.title}
                 </h3>
-                <p className="text-[#555555] text-sm leading-relaxed mb-5 font-light">
+                <p className="text-[#555555] text-sm leading-relaxed mb-5 font-light flex-1">
                   {service.description}
                 </p>
 
@@ -143,7 +143,7 @@ export default function ServicesGrid() {
 
                 <a
                   href="#contact"
-                  className="mt-5 flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-[#71797E]/30 text-[#71797E] text-sm font-medium hover:bg-[#71797E] hover:text-[#F5F5DC] transition-all duration-300 group/btn"
+                  className="mt-5 flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-[#71797E]/30 text-[#71797E] text-sm font-medium hover:bg-[#71797E] hover:text-[#F5F5DC] transition-all duration-300 group/btn shrink-0"
                 >
                   Umów ten zabieg
                   <ArrowRight size={14} className="transition-transform group-hover/btn:translate-x-1" />
