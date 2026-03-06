@@ -16,15 +16,17 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background placeholder with gradient overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=1800&auto=format&fit=crop')",
-        }}
+      {/* Background video */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
         aria-hidden="true"
-      />
+      >
+        <source src="/video/1.mp4" type="video/mp4" />
+      </video>
       {/* Layered overlay for depth and readability */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#333333]/80 via-[#333333]/60 to-[#71797E]/50" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/70 via-transparent to-transparent" />
