@@ -28,13 +28,40 @@ export default function ContactFooter() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
 
   const handleChange = (e) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitError(null);
+    setSubmitting(true);
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: "08f0b88d-81e8-4ca0-834a-c68a305f11ba",
+          name: formData.name,
+          email: formData.email,
+          interest: formData.interest,
+          message: formData.message,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSubmitted(true);
+        setFormData({ name: "", email: "", interest: "", message: "" });
+      } else {
+        setSubmitError("Wysłanie nie powiodło się. Spróbuj ponownie lub napisz na kontakt@lepszaopcja.pl.");
+      }
+    } catch {
+      setSubmitError("Błąd połączenia. Sprawdź internet i spróbuj ponownie.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -160,12 +187,18 @@ export default function ContactFooter() {
                     />
                   </div>
 
+                  {submitError && (
+                    <p className="text-sm text-red-600 font-medium">
+                      {submitError}
+                    </p>
+                  )}
                   <button
                     type="submit"
-                    className="w-full flex items-center justify-center gap-2.5 py-4 rounded-xl bg-[#333333] text-[#F5F5DC] font-medium text-sm hover:bg-[#71797E] transition-colors duration-300"
+                    disabled={submitting}
+                    className="w-full flex items-center justify-center gap-2.5 py-4 rounded-xl bg-[#333333] text-[#F5F5DC] font-medium text-sm hover:bg-[#71797E] transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     <Send size={15} />
-                    Wyślij wiadomość
+                    {submitting ? "Wysyłanie…" : "Wyślij wiadomość"}
                   </button>
                 </form>
               )}
