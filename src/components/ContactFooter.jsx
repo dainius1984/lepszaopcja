@@ -65,7 +65,39 @@ export default function ContactFooter() {
       {/* Contact Section */}
       <section id="contact" className="py-16 sm:py-20 md:py-28 bg-[#FAFAF5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
-          <div ref={ref} className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          {/* Map widget */}
+          <motion.div
+            ref={ref}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="mb-12 md:mb-16"
+          >
+            <div className="rounded-2xl overflow-hidden shadow-lg border border-[#71797E]/10 aspect-[16/10] min-h-[220px] sm:min-h-[280px] bg-[#71797E]/5 relative">
+              <iframe
+                title="Lokalizacja — ul. Leśna 39, Wilkszyn"
+                src="https://www.google.com/maps?q=ul.+Le%C5%9Bna+39,+55-330+Wilkszyn&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0, position: "absolute", top: 0, left: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="w-full h-full"
+              />
+            </div>
+            <a
+              href="https://maps.app.goo.gl/h2JfKP7BGbuzMzby9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-3 text-sm text-[#71797E] hover:text-[#5A6468] font-medium transition-colors"
+            >
+              <MapPin size={14} />
+              Otwórz w Google Maps
+            </a>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Left — Info */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
