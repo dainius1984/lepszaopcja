@@ -26,6 +26,15 @@ export default function ContactFormPopup() {
     return () => clearTimeout(t);
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isOpen]);
+
   const handleChange = (e) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
@@ -68,26 +77,24 @@ export default function ContactFormPopup() {
   return (
     <AnimatePresence>
       {isOpen && (
-        <>
-          {/* Backdrop — klik poza formą zamyka */}
+        <motion.div
+          key="contact-popup-backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 bg-[#333333]/70 backdrop-blur-sm z-[100] flex items-center justify-center p-4 sm:p-6"
+          onClick={close}
+          aria-hidden="true"
+        >
+          {/* Modal — klik wewnątrz nie zamyka */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 bg-[#333333]/70 backdrop-blur-sm z-[100] flex items-center justify-center p-4 sm:p-6"
-            onClick={close}
-            aria-hidden="true"
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto bg-[#FAFAF5] rounded-2xl sm:rounded-3xl shadow-2xl border border-[#71797E]/10"
           >
-            {/* Modal — klik wewnątrz nie zamyka */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto bg-[#FAFAF5] rounded-2xl sm:rounded-3xl shadow-2xl border border-[#71797E]/10"
-            >
               {/* Przycisk X */}
               <button
                 type="button"
@@ -211,8 +218,7 @@ export default function ContactFormPopup() {
                 )}
               </div>
             </motion.div>
-          </motion.div>
-        </>
+        </motion.div>
       )}
     </AnimatePresence>
   );
