@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Flame } from "lucide-react";
 
-const WEB3FORMS_ACCESS_KEY = "08f0b88d-81e8-4ca0-834a-c68a305f11ba";
+const WEB3FORMS_ACCESS_KEY = "08f0b08d-81e0-4ca0-834a-c68a305f11ba";
 
 export default function ContactFormPopup() {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,24 +43,24 @@ export default function ContactFormPopup() {
     setSubmitError(null);
     setSubmitting(true);
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch(`https://api.web3forms.com/submit/${WEB3FORMS_ACCESS_KEY}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
           name: formData.name,
           email: formData.email,
           interest: formData.interest,
           message: formData.message,
         }),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (data.success) {
         setSubmitted(true);
         setFormData({ name: "", email: "", interest: "", message: "" });
       } else {
+        const msg = data?.body?.message || data?.message;
         setSubmitError(
-          "Wysłanie nie powiodło się. Spróbuj ponownie lub napisz na kontakt@lepszaopcja.pl."
+          msg || "Wysłanie nie powiodło się. Spróbuj ponownie lub napisz na kontakt@lepszaopcja.pl."
         );
       }
     } catch {

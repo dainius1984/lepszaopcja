@@ -39,23 +39,24 @@ export default function ContactFooter() {
     setSubmitError(null);
     setSubmitting(true);
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const accessKey = "08f0b08d-81e0-4ca0-834a-c68a305f11ba";
+      const res = await fetch(`https://api.web3forms.com/submit/${accessKey}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          access_key: "08f0b88d-81e8-4ca0-834a-c68a305f11ba",
           name: formData.name,
           email: formData.email,
           interest: formData.interest,
           message: formData.message,
         }),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (data.success) {
         setSubmitted(true);
         setFormData({ name: "", email: "", interest: "", message: "" });
       } else {
-        setSubmitError("Wysłanie nie powiodło się. Spróbuj ponownie lub napisz na kontakt@lepszaopcja.pl.");
+        const msg = data?.body?.message || data?.message;
+        setSubmitError(msg || "Wysłanie nie powiodło się. Spróbuj ponownie lub napisz na kontakt@lepszaopcja.pl.");
       }
     } catch {
       setSubmitError("Błąd połączenia. Sprawdź internet i spróbuj ponownie.");
