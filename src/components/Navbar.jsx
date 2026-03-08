@@ -5,6 +5,7 @@ import { Menu, X, Flame } from "lucide-react";
 const navLinks = [
   { label: "O nas", href: "#about" },
   { label: "Zabiegi", href: "#services" },
+  { label: "Terapie Meridianowe", href: "#meridiany" },
   { label: "Szkolenia", href: "#training" },
   { label: "Kontakt", href: "#contact" },
 ];

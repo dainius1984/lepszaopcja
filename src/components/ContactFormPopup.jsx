@@ -44,6 +44,7 @@ export default function ContactFormPopup() {
     setSubmitting(true);
     try {
       const body = {
+        access_key: WEB3FORMS_ACCESS_KEY,
         name: formData.name,
         email: formData.email,
         message: formData.message,
@@ -52,20 +53,23 @@ export default function ContactFormPopup() {
         body.subject = formData.interest;
         body.interest = formData.interest;
       }
-      const res = await fetch(`https://api.web3forms.com/submit/${WEB3FORMS_ACCESS_KEY}`, {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
       const data = await res.json().catch(() => ({}));
-      if (data.success) {
+      if (res.ok && data.success) {
         setSubmitted(true);
         setFormData({ name: "", email: "", interest: "", message: "" });
       } else {
-        const msg = data?.body?.message || data?.message;
-        setSubmitError(
-          msg || "Wysłanie nie powiodło się. Spróbuj ponownie lub napisz na kontakt@lepszaopcja.pl."
-        );
+        const msg =
+          data?.message ||
+          data?.body?.message ||
+          (res.status === 500
+            ? "Błąd po stronie usługi formularza (500). Sprawdź klucz API na web3forms.com lub napisz na kontakt@lepszaopcja.pl."
+            : "Wysłanie nie powiodło się. Spróbuj ponownie lub napisz na kontakt@lepszaopcja.pl.");
+        setSubmitError(msg);
       }
     } catch {
       setSubmitError(

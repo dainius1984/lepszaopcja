@@ -41,6 +41,7 @@ export default function ContactFooter() {
     try {
       const accessKey = "08f0b08d-81e0-4ca0-834a-c68a305f11ba";
       const body = {
+        access_key: accessKey,
         name: formData.name,
         email: formData.email,
         message: formData.message,
@@ -49,18 +50,23 @@ export default function ContactFooter() {
         body.subject = formData.interest;
         body.interest = formData.interest;
       }
-      const res = await fetch(`https://api.web3forms.com/submit/${accessKey}`, {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
       const data = await res.json().catch(() => ({}));
-      if (data.success) {
+      if (res.ok && data.success) {
         setSubmitted(true);
         setFormData({ name: "", email: "", interest: "", message: "" });
       } else {
-        const msg = data?.body?.message || data?.message;
-        setSubmitError(msg || "Wysłanie nie powiodło się. Spróbuj ponownie lub napisz na kontakt@lepszaopcja.pl.");
+        const msg =
+          data?.message ||
+          data?.body?.message ||
+          (res.status === 500
+            ? "Błąd po stronie usługi formularza (500). Sprawdź klucz API na web3forms.com lub napisz na kontakt@lepszaopcja.pl."
+            : "Wysłanie nie powiodło się. Spróbuj ponownie lub napisz na kontakt@lepszaopcja.pl.");
+        setSubmitError(msg);
       }
     } catch {
       setSubmitError("Błąd połączenia. Sprawdź internet i spróbuj ponownie.");
@@ -325,7 +331,17 @@ export default function ContactFooter() {
           </div>
 
           <div className="pt-6 border-t border-[#F5F5DC]/8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-            <span>© 2026 Moksy. Wszelkie prawa zastrzeżone.</span>
+            <div className="flex flex-col gap-1">
+              <span>© 2026 Moksy. Wszelkie prawa zastrzeżone.</span>
+              <a
+                href="https://www.stalowewitryny.pl"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#F5F5DC]/50 hover:text-[#71797E] hover:underline transition-colors duration-200"
+              >
+                Projekt i realizacja: stalowewitryny.pl
+              </a>
+            </div>
             <span className="text-[#71797E]">
               Uzdrowienie przez starożytną mądrość · Wilkszyn
             </span>
