@@ -9,10 +9,13 @@ export default function ZabiegiPage() {
   const { hash } = useLocation();
 
   useEffect(() => {
-    if (hash === "#meridiany") {
+    if (hash !== "#meridiany") return;
+    const scrollToMeridiany = () => {
       const el = document.getElementById("meridiany");
-      if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 100);
-    }
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+    const t = setTimeout(scrollToMeridiany, 350);
+    return () => clearTimeout(t);
   }, [hash]);
 
   return (

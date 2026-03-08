@@ -41,7 +41,7 @@ export default function TerapieMeridianowe() {
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section id="meridiany" className="py-16 sm:py-20 md:py-28 bg-[#FAFAF5]">
+    <section id="meridiany" className="py-16 sm:py-20 md:py-28 bg-[#FAFAF5] scroll-mt-20 md:scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         <motion.div
           ref={ref}
