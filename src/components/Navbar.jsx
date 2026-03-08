@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Flame } from "lucide-react";
 
 const navLinks = [
-  { label: "O nas", href: "#about" },
-  { label: "Zabiegi", href: "#services" },
-  { label: "Terapie Meridianowe", href: "#meridiany" },
-  { label: "Szkolenia", href: "#training" },
+  { label: "O nas", href: "/#about" },
+  { label: "Zabiegi", to: "/zabiegi" },
+  { label: "Terapie Meridianowe", href: "/zabiegi#meridiany" },
+  { label: "Szkolenia", href: "/#training" },
   { label: "Kontakt", href: "#contact" },
 ];
 
@@ -59,9 +60,9 @@ export default function Navbar() {
         md:min-h-[5rem]
       `}
     >
-      <div className="w-full max-w-[100vw] box-border mx-auto px-4 sm:px-5 md:px-6 lg:px-10 h-14 sm:h-16 md:h-20 flex items-center justify-between gap-3 min-w-0">
+      <div className="w-full max-w-[100vw] box-border mx-auto px-4 sm:px-5 md:px-6 lg:px-10 h-12 sm:h-14 md:h-20 flex items-center justify-between gap-3 min-w-0">
         {/* Logo — na mobile tylko ikona (bez diva-okręgu), na desktop pełne logo */}
-        <a href="#" className="flex items-center gap-2 sm:gap-2.5 group min-w-0 shrink-0">
+        <Link to="/" className="flex items-center gap-2 sm:gap-2.5 group min-w-0 shrink-0">
           <span className={`md:flex md:w-9 md:h-9 md:rounded-full md:items-center md:justify-center hidden ${isScrolled ? "md:bg-[#71797E]" : "md:bg-[#F5F5DC]/20"}`}>
             <Flame size={18} className={isScrolled ? "text-[#F5F5DC]" : "text-[#F5F5DC]"} />
           </span>
@@ -72,22 +73,35 @@ export default function Navbar() {
           >
             Moksy
           </span>
-        </a>
+        </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8 shrink-0">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className={`text-sm font-medium transition-colors duration-200 relative group ${
-                isScrolled ? "text-[#555555] hover:text-[#71797E]" : "text-[#F5F5DC] hover:text-[#D4A24A]"
-              }`}
-            >
-              {link.label}
-              <span className={`absolute -bottom-0.5 left-0 w-0 h-px transition-all duration-300 group-hover:w-full ${isScrolled ? "bg-[#71797E]" : "bg-[#D4A24A]"}`} />
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            link.to ? (
+              <Link
+                key={link.label}
+                to={link.to}
+                className={`text-sm font-medium transition-colors duration-200 relative group ${
+                  isScrolled ? "text-[#555555] hover:text-[#71797E]" : "text-[#F5F5DC] hover:text-[#D4A24A]"
+                }`}
+              >
+                {link.label}
+                <span className={`absolute -bottom-0.5 left-0 w-0 h-px transition-all duration-300 group-hover:w-full ${isScrolled ? "bg-[#71797E]" : "bg-[#D4A24A]"}`} />
+              </Link>
+            ) : (
+              <a
+                key={link.label}
+                href={link.href}
+                className={`text-sm font-medium transition-colors duration-200 relative group ${
+                  isScrolled ? "text-[#555555] hover:text-[#71797E]" : "text-[#F5F5DC] hover:text-[#D4A24A]"
+                }`}
+              >
+                {link.label}
+                <span className={`absolute -bottom-0.5 left-0 w-0 h-px transition-all duration-300 group-hover:w-full ${isScrolled ? "bg-[#71797E]" : "bg-[#D4A24A]"}`} />
+              </a>
+            )
+          )}
           <a
             href="#contact"
             className={`ml-2 px-5 py-2.5 rounded-full text-sm font-medium transition-colors duration-200 shadow-sm ${
@@ -119,16 +133,27 @@ export default function Navbar() {
             className="md:hidden bg-[#333333]/95 backdrop-blur-md border-t border-[#F5F5DC]/10 overflow-hidden"
           >
             <div className="px-4 sm:px-6 py-5 flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="text-base font-medium text-[#F5F5DC] hover:text-[#D4A24A] transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {navLinks.map((link) =>
+                link.to ? (
+                  <Link
+                    key={link.label}
+                    to={link.to}
+                    onClick={() => setMenuOpen(false)}
+                    className="text-base font-medium text-[#F5F5DC] hover:text-[#D4A24A] transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="text-base font-medium text-[#F5F5DC] hover:text-[#D4A24A] transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                )
+              )}
               <a
                 href="#contact"
                 onClick={() => setMenuOpen(false)}

@@ -37,7 +37,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-12 sm:pt-14 md:pt-0"
     >
       {/* Background videos — płynny crossfade + lekkie rozmycie */}
       <div className="absolute inset-0 [filter:blur(2px)] scale-105">
