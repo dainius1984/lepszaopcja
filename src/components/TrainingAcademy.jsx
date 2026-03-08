@@ -1,6 +1,5 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { Calendar, Clock, Users, Award, ArrowRight } from "lucide-react";
 
 const courses = [

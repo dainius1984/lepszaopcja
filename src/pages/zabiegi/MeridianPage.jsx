@@ -1,32 +1,10 @@
 import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import {
-  Wind,
-  Flame,
-  Heart,
-  Droplets,
-  Leaf,
-  Mountain,
-  Sprout,
-  CircleDot,
-  ArrowRight,
-  Sparkles,
-} from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import Navbar from "../../components/Navbar";
 import { getMeridianBySlug } from "../../data/meridians";
-
-const iconComponents = {
-  Wind,
-  Flame,
-  Heart,
-  Droplets,
-  Leaf,
-  Mountain,
-  Sprout,
-  CircleDot,
-  Activity: Flame,
-};
+import { getMeridianIcon } from "../../utils/meridianIcons";
 
 export default function MeridianPage() {
   const { slug } = useParams();
@@ -70,7 +48,7 @@ export default function MeridianPage() {
     );
   }
 
-  const IconComponent = iconComponents[meridian.icon] || Leaf;
+  const IconComponent = getMeridianIcon(meridian.icon);
 
   return (
     <div className="min-h-screen bg-[#FAFAF5] font-sans antialiased">

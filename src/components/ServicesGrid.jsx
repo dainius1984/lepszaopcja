@@ -1,6 +1,5 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { Flame, Wind, Scroll, ArrowRight } from "lucide-react";
 
 const services = [

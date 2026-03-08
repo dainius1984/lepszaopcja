@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import {
   MapPin,
   Phone,

@@ -1,31 +1,9 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { motion, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { meridians } from "../data/meridians";
-import {
-  Wind,
-  Flame,
-  Heart,
-  Droplets,
-  Leaf,
-  Mountain,
-  Sprout,
-  CircleDot,
-} from "lucide-react";
-
-const iconComponents = {
-  Wind,
-  Flame,
-  Heart,
-  Droplets,
-  Leaf,
-  Mountain,
-  Sprout,
-  CircleDot,
-  Activity: Flame,
-};
+import { getMeridianIcon } from "../utils/meridianIcons";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 36 },
@@ -70,7 +48,7 @@ export default function TerapieMeridianowe() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {meridians.map((meridian, i) => {
-            const IconComponent = iconComponents[meridian.icon] || Leaf;
+            const IconComponent = getMeridianIcon(meridian.icon);
             return (
               <motion.div
                 key={meridian.slug}

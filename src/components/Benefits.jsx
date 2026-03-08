@@ -1,6 +1,5 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { ShieldCheck, Zap, Flame, BookOpen } from "lucide-react";
 
 const benefits = [
