@@ -12,9 +12,30 @@ import {
 } from "lucide-react";
 
 const footerLinks = [
-  { title: "Strony", links: ["O nas", "Zabiegi", "Szkolenia", "Blog"] },
-  { title: "Prawne", links: ["Polityka prywatności", "Regulamin", "Cookies"] },
-  { title: "Social", links: ["Instagram", "Facebook", "YouTube"] },
+  {
+    title: "Strony",
+    links: [
+      { label: "O nas", href: "/#about" },
+      { label: "Zabiegi", href: "/zabiegi" },
+      { label: "Szkolenia", href: "/szkolenia" },
+      { label: "Kontakt", href: "/#contact" },
+    ],
+  },
+  {
+    title: "Prawne",
+    links: [
+      { label: "Polityka prywatności", href: "#" },
+      { label: "Regulamin", href: "#" },
+      { label: "Cookies", href: "#" },
+    ],
+  },
+  {
+    title: "Social",
+    links: [
+      { label: "Instagram", href: "#" },
+      { label: "Facebook", href: "#" },
+    ],
+  },
 ];
 
 export default function ContactFooter() {
@@ -306,28 +327,33 @@ export default function ContactFooter() {
             </div>
           </div>
 
+          {/* SEO-friendly local text (visible for users and crawlers) */}
+          <p className="text-center text-sm text-[#F5F5DC]/50 max-w-2xl mx-auto py-6">
+            Gabinet moksoterapii i medycyny chińskiej. Zapraszamy pacjentów z Wrocławia, Wilkszyna i całego Dolnego Śląska.
+          </p>
+
           {/* Linki: Strony, Prawne, Social */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 py-10">
+          <nav className="grid grid-cols-1 sm:grid-cols-3 gap-8 py-10" aria-label="Stopka nawigacja">
             {footerLinks.map((col) => (
               <div key={col.title}>
-                <h4 className="text-[#F5F5DC] text-xs uppercase tracking-widest font-medium mb-4">
+                <h2 className="text-[#F5F5DC] text-xs uppercase tracking-widest font-medium mb-4">
                   {col.title}
-                </h4>
+                </h2>
                 <ul className="space-y-2.5">
                   {col.links.map((link) => (
-                    <li key={link}>
+                    <li key={link.label}>
                       <a
-                        href="#"
+                        href={link.href}
                         className="text-sm hover:text-[#F5F5DC] transition-colors duration-200"
                       >
-                        {link}
+                        {link.label}
                       </a>
                     </li>
                   ))}
                 </ul>
               </div>
             ))}
-          </div>
+          </nav>
 
           <div className="pt-6 border-t border-[#F5F5DC]/8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
             <div className="flex flex-col gap-1">
@@ -342,7 +368,7 @@ export default function ContactFooter() {
               </a>
             </div>
             <span className="text-[#71797E]">
-              Uzdrowienie przez starożytną mądrość · Wilkszyn
+              Gabinet moksoterapii i medycyny chińskiej. Zapraszamy z Wrocławia, Wilkszyna i Dolnego Śląska · Ul. Leśna 39, Wilkszyn
             </span>
           </div>
         </div>

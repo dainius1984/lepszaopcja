@@ -4,6 +4,9 @@ import Navbar from "../components/Navbar";
 import ServicesGrid from "../components/ServicesGrid";
 import TerapieMeridianowe from "../components/TerapieMeridianowe";
 import ContactFooter from "../components/ContactFooter";
+import Seo from "../components/Seo";
+import JsonLd from "../components/JsonLd";
+import { getLocalBusinessSchema } from "../seo/schemas";
 
 export default function ZabiegiPage() {
   const { hash } = useLocation();
@@ -20,6 +23,13 @@ export default function ZabiegiPage() {
 
   return (
     <div className="font-sans antialiased min-h-screen flex flex-col">
+      <Seo
+        title="Zabiegi moksy — Akupunktura bez igieł, terapia meridianowa"
+        description="Zabiegi moksoterapii: bezpośrednia, pośrednia i cygarem. Terapie meridianowe i akupunktura bez igieł w Wilkszynie k. Wrocławia. Harmonizacja energii Chi, 12 meridianów."
+        keywords="zabiegi moksy, moksoterapia zabiegi, akupunktura bez igieł, terapia meridianowa, meridiany, harmonizacja Chi, moksa Wilkszyn, zabiegi TCM"
+        url="/zabiegi"
+      />
+      <JsonLd schema={getLocalBusinessSchema()} />
       <Navbar />
       <main className="flex-1">
         {/* Nagłówek strony */}

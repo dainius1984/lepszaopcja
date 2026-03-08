@@ -46,7 +46,7 @@ export default function TrainingAcademy() {
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section id="training" className="py-16 sm:py-20 md:py-28 bg-[#333333] relative overflow-hidden">
+    <section id="training" className="py-16 sm:py-20 md:py-28 bg-[#333333] relative overflow-hidden scroll-mt-20 md:scroll-mt-24">
       {/* Background texture */}
       <div className="absolute inset-0 opacity-5"
         style={{

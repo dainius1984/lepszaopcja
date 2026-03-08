@@ -1,8 +1,8 @@
-import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Navbar from "../../components/Navbar";
+import Seo from "../../components/Seo";
 import { getMeridianBySlug } from "../../data/meridians";
 import { getMeridianIcon } from "../../utils/meridianIcons";
 
@@ -10,20 +10,10 @@ export default function MeridianPage() {
   const { slug } = useParams();
   const meridian = getMeridianBySlug(slug);
 
-  useEffect(() => {
-    if (meridian) {
-      document.title = `${meridian.title} · Moksoterapia | Moksy`;
-    } else {
-      document.title = "Nie znaleziono · Moksy";
-    }
-    return () => {
-      document.title = "Moksy · Moksoterapia";
-    };
-  }, [meridian]);
-
   if (!meridian) {
     return (
       <div className="min-h-screen bg-[#FAFAF5] font-sans antialiased">
+        <Seo title="Nie znaleziono" description="Strona o podanym adresie nie istnieje." url={`/zabiegi/${slug}`} />
         <Navbar />
         <main className="pt-24 pb-16 px-4">
           <div className="max-w-2xl mx-auto text-center">
@@ -52,6 +42,12 @@ export default function MeridianPage() {
 
   return (
     <div className="min-h-screen bg-[#FAFAF5] font-sans antialiased">
+      <Seo
+        title={meridian.title}
+        description={meridian.shortDescription}
+        keywords={`${meridian.title}, terapia meridianowa, moksoterapia, meridiany, TCM, Wilkszyn, Wrocław`}
+        url={`/zabiegi/${slug}`}
+      />
       <Navbar />
       <main className="pt-20 md:pt-24 pb-20">
         {/* Zen layout: soft gradient, plenty of whitespace */}

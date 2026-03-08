@@ -7,8 +7,8 @@ const navLinks = [
   { label: "O nas", href: "/#about" },
   { label: "Zabiegi", to: "/zabiegi" },
   { label: "Terapie Meridianowe", to: "/zabiegi#meridiany" },
-  { label: "Szkolenia", href: "/#training" },
-  { label: "Kontakt", href: "#contact" },
+  { label: "Szkolenia", to: "/szkolenia" },
+  { label: "Kontakt", href: "/#contact" },
 ];
 
 export default function Navbar() {
