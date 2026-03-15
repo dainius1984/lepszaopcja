@@ -22,6 +22,7 @@ const staticRoutes = [
   { path: "", changefreq: "weekly", priority: "1.0" },
   { path: "zabiegi", changefreq: "weekly", priority: "0.9" },
   { path: "szkolenia", changefreq: "monthly", priority: "0.9" },
+  { path: "rezerwacja", changefreq: "weekly", priority: "0.8" },
 ];
 
 const meridianRoutes = meridians.map((m) => ({

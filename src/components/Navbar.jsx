@@ -2,16 +2,19 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Flame } from "lucide-react";
+import { useReservation } from "../context/ReservationContext";
 
 const navLinks = [
   { label: "O nas", href: "/#about" },
   { label: "Zabiegi", to: "/zabiegi" },
   { label: "Terapie Meridianowe", to: "/zabiegi#meridiany" },
   { label: "Szkolenia", to: "/szkolenia" },
+  { label: "Rezerwacja", openWidget: true },
   { label: "Kontakt", href: "/#contact" },
 ];
 
 export default function Navbar() {
+  const { openWidget } = useReservation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [navVisible, setNavVisible] = useState(true);
@@ -78,7 +81,19 @@ export default function Navbar() {
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8 shrink-0">
           {navLinks.map((link) =>
-            link.to ? (
+            link.openWidget ? (
+              <button
+                key={link.label}
+                type="button"
+                onClick={() => openWidget()}
+                className={`text-sm font-medium transition-colors duration-200 relative group ${
+                  isScrolled ? "text-[#555555] hover:text-[#71797E]" : "text-[#F5F5DC] hover:text-[#D4A24A]"
+                }`}
+              >
+                {link.label}
+                <span className={`absolute -bottom-0.5 left-0 w-0 h-px transition-all duration-300 group-hover:w-full ${isScrolled ? "bg-[#71797E]" : "bg-[#D4A24A]"}`} />
+              </button>
+            ) : link.to ? (
               <Link
                 key={link.label}
                 to={link.to}
@@ -102,14 +117,15 @@ export default function Navbar() {
               </a>
             )
           )}
-          <a
-            href="#contact"
+          <button
+            type="button"
+            onClick={() => openWidget()}
             className={`ml-2 px-5 py-2.5 rounded-full text-sm font-medium transition-colors duration-200 shadow-sm ${
               isScrolled ? "bg-[#71797E] text-[#F5F5DC] hover:bg-[#5A6468]" : "bg-[#F5F5DC] text-[#333333] hover:bg-white"
             }`}
           >
             Umów wizytę
-          </a>
+          </button>
         </nav>
 
         {/* Mobile Hamburger */}
@@ -134,7 +150,19 @@ export default function Navbar() {
           >
             <div className="px-4 sm:px-6 py-5 flex flex-col gap-4">
               {navLinks.map((link) =>
-                link.to ? (
+                link.openWidget ? (
+                  <button
+                    key={link.label}
+                    type="button"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      openWidget();
+                    }}
+                    className="text-left text-base font-medium text-[#F5F5DC] hover:text-[#D4A24A] transition-colors"
+                  >
+                    {link.label}
+                  </button>
+                ) : link.to ? (
                   <Link
                     key={link.label}
                     to={link.to}
@@ -154,13 +182,16 @@ export default function Navbar() {
                   </a>
                 )
               )}
-              <a
-                href="#contact"
-                onClick={() => setMenuOpen(false)}
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false);
+                  openWidget();
+                }}
                 className="mt-2 px-5 py-3 rounded-full bg-[#F5F5DC] text-[#333333] text-sm font-medium text-center hover:bg-white transition-colors"
               >
                 Umów wizytę
-              </a>
+              </button>
             </div>
           </motion.div>
         )}

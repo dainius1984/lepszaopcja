@@ -1,49 +1,14 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { Calendar, Clock, Users, Award, ArrowRight } from "lucide-react";
-
-const courses = [
-  {
-    level: "Podstawowy",
-    title: "Wprowadzenie do moksoterapii",
-    description:
-      "Kompleksowy kurs dla początkujących: teoria TCM, system meridianów, bezpieczeństwo moksy oraz praktyczne zastosowanie trzech głównych technik.",
-    date: "12–13 kwietnia 2026",
-    duration: "2 dni (16 godz.)",
-    spots: "8 miejsc",
-    price: "890 zł",
-    badge: "Popularne",
-    badgeColor: "bg-[#71797E] text-[#F5F5DC]",
-  },
-  {
-    level: "Zaawansowany",
-    title: "Moksoterapia w praktyce klinicznej",
-    description:
-      "Protokoły pod konkretne schorzenia, ocena pacjenta, przeciwwskazania oraz włączenie moksy do codziennej praktyki terapeutycznej.",
-    date: "17–19 maja 2026",
-    duration: "3 dni (24 godz.)",
-    spots: "5 miejsc",
-    price: "1 490 zł",
-    badge: "Nowość",
-    badgeColor: "bg-[#C4862A] text-white",
-  },
-  {
-    level: "Specjalistyczny",
-    title: "Moksa w zdrowiu kobiety",
-    description:
-      "Moduł ginekologiczny: nieregularne miesiączki, wsparcie płodności oraz opieka okołoporodowa w ujęciu klasycznym i współczesnym.",
-    date: "7–8 czerwca 2026",
-    duration: "2 dni (16 godz.)",
-    spots: "10 miejsc",
-    price: "990 zł",
-    badge: null,
-    badgeColor: "",
-  },
-];
+import { courses } from "../data/courses";
+import { useReservation } from "../context/ReservationContext";
 
 export default function TrainingAcademy() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
+  const { openWidget } = useReservation();
 
   return (
     <section id="training" className="py-16 sm:py-20 md:py-28 bg-[#333333] relative overflow-hidden scroll-mt-20 md:scroll-mt-24">
@@ -150,13 +115,14 @@ export default function TrainingAcademy() {
                 >
                   {course.price}
                 </span>
-                <a
-                  href="#contact"
+                <button
+                  type="button"
+                  onClick={() => openWidget(course.id)}
                   className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-[#71797E]/40 text-[#F5F5DC]/80 text-sm hover:bg-[#71797E] hover:text-[#F5F5DC] hover:border-[#71797E] transition-all duration-300 group/btn whitespace-nowrap"
                 >
-                  Więcej informacji
+                  Zarezerwuj miejsce
                   <ArrowRight size={13} className="transition-transform group-hover/btn:translate-x-0.5 shrink-0" />
-                </a>
+                </button>
               </div>
             </motion.div>
           ))}
@@ -172,12 +138,13 @@ export default function TrainingAcademy() {
           <p className="text-[#F5F5DC]/40 text-sm mb-4">
             Nie wiesz, który kurs wybrać?
           </p>
-          <a
-            href="#contact"
+          <button
+            type="button"
+            onClick={() => openWidget()}
             className="inline-flex items-center gap-2 text-[#71797E] hover:text-[#8E9A9F] text-sm font-medium underline underline-offset-4 transition-colors"
           >
             Zapytaj o bezpłatną konsultację
-          </a>
+          </button>
         </motion.div>
       </div>
     </section>

@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowDown, CalendarDays } from "lucide-react";
 
@@ -124,13 +125,13 @@ export default function Hero() {
           >
             Umów sesję
           </a>
-          <a
-            href="/szkolenia"
+          <Link
+            to="/szkolenia"
             className="group flex items-center justify-center gap-2 px-6 sm:px-8 py-4 rounded-full border border-[#F5F5DC]/40 text-[#F5F5DC] font-medium text-sm sm:text-base hover:bg-[#F5F5DC]/10 transition-all duration-300"
           >
             <CalendarDays size={16} />
             Zobacz szkolenia
-          </a>
+          </Link>
         </motion.div>
 
         {/* Stats strip */}

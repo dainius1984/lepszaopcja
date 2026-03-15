@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Navbar from "../../components/Navbar";
 import Seo from "../../components/Seo";
+import ContactFooter from "../../components/ContactFooter";
 import { getMeridianBySlug } from "../../data/meridians";
 import { getMeridianIcon } from "../../utils/meridianIcons";
 
@@ -49,7 +50,7 @@ export default function MeridianPage() {
         url={`/zabiegi/${slug}`}
       />
       <Navbar />
-      <main className="pt-20 md:pt-24 pb-20">
+      <main className="pt-20 md:pt-24 pb-0">
         {/* Zen layout: soft gradient, plenty of whitespace */}
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-10">
           {/* Decorative top */}
@@ -159,6 +160,7 @@ export default function MeridianPage() {
             </Link>
           </motion.div>
         </div>
+        <ContactFooter />
       </main>
     </div>
   );

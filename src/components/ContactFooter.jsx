@@ -10,6 +10,7 @@ import {
   Send,
   Flame,
 } from "lucide-react";
+import { useReservation } from "../context/ReservationContext";
 
 const footerLinks = [
   {
@@ -18,6 +19,7 @@ const footerLinks = [
       { label: "O nas", href: "/#about" },
       { label: "Zabiegi", href: "/zabiegi" },
       { label: "Szkolenia", href: "/szkolenia" },
+      { label: "Rezerwacja", href: "/rezerwacja" },
       { label: "Kontakt", href: "/#contact" },
     ],
   },
@@ -41,6 +43,7 @@ const footerLinks = [
 export default function ContactFooter() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
+  const { openWidget } = useReservation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -342,12 +345,22 @@ export default function ContactFooter() {
                 <ul className="space-y-2.5">
                   {col.links.map((link) => (
                     <li key={link.label}>
-                      <a
-                        href={link.href}
-                        className="text-sm hover:text-[#F5F5DC] transition-colors duration-200"
-                      >
-                        {link.label}
-                      </a>
+                      {link.label === "Rezerwacja" ? (
+                        <button
+                          type="button"
+                          onClick={() => openWidget()}
+                          className="text-sm hover:text-[#F5F5DC] transition-colors duration-200 cursor-pointer"
+                        >
+                          {link.label}
+                        </button>
+                      ) : (
+                        <a
+                          href={link.href}
+                          className="text-sm hover:text-[#F5F5DC] transition-colors duration-200"
+                        >
+                          {link.label}
+                        </a>
+                      )}
                     </li>
                   ))}
                 </ul>
