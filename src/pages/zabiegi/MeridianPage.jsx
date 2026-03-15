@@ -27,7 +27,7 @@ export default function MeridianPage() {
               Strona o podanym adresie nie istnieje.
             </p>
             <Link
-              to="/#meridiany"
+              to="/zabiegi#meridiany"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#71797E] text-[#F5F5DC] text-sm font-medium hover:bg-[#5A6468] transition-colors"
             >
               Wróć do terapii meridianowych
@@ -152,7 +152,7 @@ export default function MeridianPage() {
             className="mt-10 text-center"
           >
             <Link
-              to="/#meridiany"
+              to="/zabiegi#meridiany"
               className="text-[#71797E] text-sm font-medium hover:text-[#5A6468] transition-colors"
             >
               ← Wróć do wszystkich meridianów
