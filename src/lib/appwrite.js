@@ -27,14 +27,54 @@ export function isAppwriteConfigured() {
   return Boolean(endpoint && projectId && databaseId && reservationsCollectionId);
 }
 
+/** Czy Auth jest skonfigurowany (wystarczy endpoint + projectId). */
+export function isAuthConfigured() {
+  return Boolean(endpoint && projectId);
+}
+
 /**
  * Rejestracja użytkownika (email + hasło).
- * @returns {Promise<{ id: string, email: string }>}
+ * @returns {Promise<{ id: string, email: string, name?: string }>}
  */
 export async function registerUser(email, password, name) {
   if (!account) throw new Error("Appwrite nie jest skonfigurowany. Uzupełnij plik .env.");
   const user = await account.create(ID.unique(), email, password, name);
-  return { id: user.$id, email: user.email };
+  return { id: user.$id, email: user.email, name: user.name };
+}
+
+/**
+ * Logowanie (email + hasło). Tworzy sesję w Appwrite.
+ */
+export async function loginUser(email, password) {
+  if (!account) throw new Error("Appwrite nie jest skonfigurowany. Uzupełnij plik .env.");
+  await account.createEmailPasswordSession({ email, password });
+  const user = await account.get();
+  return { id: user.$id, email: user.email, name: user.name };
+}
+
+/**
+ * Wylogowanie — usuwa bieżącą sesję.
+ */
+export async function logoutUser() {
+  if (!account) return;
+  try {
+    await account.deleteSession("current");
+  } catch {
+    await account.deleteSessions();
+  }
+}
+
+/**
+ * Pobiera aktualnie zalogowanego użytkownika (null jeśli brak sesji).
+ */
+export async function getCurrentUser() {
+  if (!account) return null;
+  try {
+    const user = await account.get();
+    return { id: user.$id, email: user.email, name: user.name };
+  } catch {
+    return null;
+  }
 }
 
 /**

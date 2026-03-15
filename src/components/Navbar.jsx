@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Flame } from "lucide-react";
+import { Menu, X, Flame, LogIn, LogOut } from "lucide-react";
 import { useReservation } from "../context/ReservationContext";
+import { useAuth } from "../context/AuthContext";
 
 const navLinks = [
   { label: "O nas", href: "/#about" },
@@ -15,6 +16,7 @@ const navLinks = [
 
 export default function Navbar() {
   const { openWidget } = useReservation();
+  const { user, loading, openAuth, logout } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [navVisible, setNavVisible] = useState(true);
@@ -117,6 +119,37 @@ export default function Navbar() {
               </a>
             )
           )}
+          {!loading && (
+            user ? (
+              <span className="ml-2 flex items-center gap-2">
+                <span className={`text-sm max-w-[140px] truncate ${isScrolled ? "text-[#555555]" : "text-[#F5F5DC]/90"}`} title={user.email}>
+                  {user.email}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => logout()}
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium transition-colors ${
+                    isScrolled ? "text-[#555555] hover:bg-[#71797E]/10 hover:text-[#333333]" : "text-[#F5F5DC]/80 hover:bg-[#F5F5DC]/10 hover:text-[#F5F5DC]"
+                  }`}
+                  title="Wyloguj"
+                >
+                  <LogOut size={14} />
+                  Wyloguj
+                </button>
+              </span>
+            ) : (
+              <button
+                type="button"
+                onClick={() => openAuth("login")}
+                className={`ml-2 flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-medium transition-colors ${
+                  isScrolled ? "text-[#555555] hover:bg-[#71797E]/10 hover:text-[#333333]" : "text-[#F5F5DC] hover:bg-[#F5F5DC]/10"
+                }`}
+              >
+                <LogIn size={14} />
+                Zaloguj
+              </button>
+            )
+          )}
           <button
             type="button"
             onClick={() => openWidget()}
@@ -180,6 +213,30 @@ export default function Navbar() {
                   >
                     {link.label}
                   </a>
+                )
+              )}
+              {!loading && (
+                user ? (
+                  <div className="mt-2 flex flex-col gap-2">
+                    <span className="text-sm text-[#F5F5DC]/80 truncate px-1">{user.email}</span>
+                    <button
+                      type="button"
+                      onClick={() => { setMenuOpen(false); logout(); }}
+                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-[#F5F5DC]/20 text-[#F5F5DC] text-sm hover:bg-[#F5F5DC]/10"
+                    >
+                      <LogOut size={14} />
+                      Wyloguj
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => { setMenuOpen(false); openAuth("login"); }}
+                    className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-[#F5F5DC]/20 text-[#F5F5DC] text-sm hover:bg-[#F5F5DC]/10"
+                  >
+                    <LogIn size={14} />
+                    Zaloguj
+                  </button>
                 )
               )}
               <button
