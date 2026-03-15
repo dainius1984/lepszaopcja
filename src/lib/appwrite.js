@@ -1,4 +1,4 @@
-import { Client, Account, Databases, ID } from "appwrite";
+import { Client, Account, Databases, ID, Query } from "appwrite";
 
 const endpoint = import.meta.env.VITE_APPWRITE_ENDPOINT?.trim() || "";
 const projectId = import.meta.env.VITE_APPWRITE_PROJECT_ID?.trim() || "";
@@ -60,4 +60,31 @@ export async function createReservation(data) {
     }
   );
   return doc;
+}
+
+/**
+ * Pobiera listę zajętych godzin na dany dzień (z rezerwacji w bazie).
+ * Używane do wyświetlania tylko wolnych slotów w widgetcie.
+ * W Appwrite: w kolekcji reservations ustaw Read dla "Any" (lub "Users")
+ * oraz dodaj indeks na preferredDate (Database → reservations → Indexes).
+ */
+export async function getBookedTimesForDate(dateStr) {
+  if (!isAppwriteConfigured() || !databases) return [];
+  if (!dateStr || !dateStr.trim()) return [];
+  try {
+    const { documents } = await databases.listDocuments(
+      databaseId,
+      reservationsCollectionId,
+      [
+        Query.equal("preferredDate", dateStr.trim()),
+        Query.limit(100),
+      ]
+    );
+    const times = documents
+      .map((doc) => doc.preferredTime)
+      .filter(Boolean);
+    return [...new Set(times)];
+  } catch {
+    return [];
+  }
 }

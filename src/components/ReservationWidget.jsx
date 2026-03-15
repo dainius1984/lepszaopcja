@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Flame, Calendar, Clock } from "lucide-react";
 import { useReservation } from "../context/ReservationContext";
 import { courses } from "../data/courses";
-import { isAppwriteConfigured, createReservation } from "../lib/appwrite";
+import { isAppwriteConfigured, createReservation, getBookedTimesForDate } from "../lib/appwrite";
 
 // Godziny co 30 min od 17:00 do 20:30 (17:00, 17:30, 18:00, …, 20:30)
 const TIME_SLOTS = (() => {
@@ -34,6 +34,8 @@ export default function ReservationWidget() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
+  const [bookedSlots, setBookedSlots] = useState([]);
+  const [loadingSlots, setLoadingSlots] = useState(false);
 
   useEffect(() => {
     setFormData((prev) => ({
@@ -46,11 +48,49 @@ export default function ReservationWidget() {
     if (isOpen) {
       setSubmitted(false);
       setError(null);
+      setBookedSlots([]);
     }
   }, [isOpen]);
 
-  const handleChange = (e) =>
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  // Pobierz zajęte godziny dla wybranej daty (tylko dni od dziś w przód)
+  useEffect(() => {
+    const date = formData.preferredDate?.trim();
+    if (!date || date < todayISO()) {
+      setBookedSlots([]);
+      return;
+    }
+    let cancelled = false;
+    setLoadingSlots(true);
+    getBookedTimesForDate(date)
+      .then((booked) => {
+        if (!cancelled) setBookedSlots(booked);
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingSlots(false);
+      });
+    return () => { cancelled = true; };
+  }, [formData.preferredDate]);
+
+  const availableSlots = formData.preferredDate && formData.preferredDate >= todayISO()
+    ? TIME_SLOTS.filter((t) => !bookedSlots.includes(t))
+    : TIME_SLOTS;
+  const isTimeDisabled = !formData.preferredDate || formData.preferredDate < todayISO();
+  const selectedTimeNowBooked = formData.preferredTime && bookedSlots.includes(formData.preferredTime);
+
+  useEffect(() => {
+    if (selectedTimeNowBooked) {
+      setFormData((prev) => ({ ...prev, preferredTime: "" }));
+    }
+  }, [selectedTimeNowBooked]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => {
+      const next = { ...prev, [name]: value };
+      if (name === "preferredDate") next.preferredTime = "";
+      return next;
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -219,12 +259,21 @@ export default function ReservationWidget() {
                   <select
                     name="preferredTime"
                     required
-                    value={formData.preferredTime}
+                    value={selectedTimeNowBooked ? "" : formData.preferredTime}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#71797E]/20 bg-white text-[#333333] text-sm focus:outline-none focus:border-[#71797E] focus:ring-1 focus:ring-[#71797E]/20"
+                    disabled={isTimeDisabled}
+                    className="w-full px-4 py-2.5 rounded-xl border border-[#71797E]/20 bg-white text-[#333333] text-sm focus:outline-none focus:border-[#71797E] focus:ring-1 focus:ring-[#71797E]/20 disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    <option value="">Wybierz godzinę</option>
-                    {TIME_SLOTS.map((t) => (
+                    <option value="">
+                      {isTimeDisabled
+                        ? "Wybierz najpierw datę"
+                        : loadingSlots
+                          ? "Sprawdzam dostępność..."
+                          : availableSlots.length === 0
+                            ? "Brak wolnych godzin tego dnia"
+                            : "Wybierz godzinę"}
+                    </option>
+                    {availableSlots.map((t) => (
                       <option key={t} value={t}>
                         {t}
                       </option>

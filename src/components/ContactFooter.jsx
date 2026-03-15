@@ -1,43 +1,14 @@
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import {
-  MapPin,
-  Phone,
-  Mail,
-  Clock,
-  Instagram,
-  Facebook,
-  Send,
-  Flame,
-} from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send, Flame } from "lucide-react";
 import { useReservation } from "../context/ReservationContext";
 
-const footerLinks = [
-  {
-    title: "Strony",
-    links: [
-      { label: "O nas", href: "/#about" },
-      { label: "Zabiegi", href: "/zabiegi" },
-      { label: "Szkolenia", href: "/szkolenia" },
-      { label: "Rezerwacja", href: "/rezerwacja" },
-      { label: "Kontakt", href: "/#contact" },
-    ],
-  },
-  {
-    title: "Prawne",
-    links: [
-      { label: "Polityka prywatności", href: "#" },
-      { label: "Regulamin", href: "#" },
-      { label: "Cookies", href: "#" },
-    ],
-  },
-  {
-    title: "Social",
-    links: [
-      { label: "Instagram", href: "#" },
-      { label: "Facebook", href: "#" },
-    ],
-  },
+const footerNavLinks = [
+  { label: "O nas", href: "/#about" },
+  { label: "Zabiegi", href: "/zabiegi" },
+  { label: "Szkolenia", href: "/szkolenia" },
+  { label: "Rezerwacja", openWidget: true },
+  { label: "Kontakt", href: "/#contact" },
 ];
 
 export default function ContactFooter() {
@@ -270,119 +241,103 @@ export default function ContactFooter() {
         </div>
       </section>
 
-      {/* Footer — dane w jednej linii + linki */}
-      <footer className="bg-[#333333] text-[#F5F5DC]/60">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pt-12 md:pt-16 pb-8">
-          {/* Jedna linia: logo + dane kontaktowe + social */}
-          <div className="flex flex-wrap items-center justify-between gap-6 md:gap-8 pb-10 border-b border-[#F5F5DC]/10">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-full bg-[#71797E] flex items-center justify-center shrink-0">
-                <Flame size={18} className="text-[#F5F5DC]" />
-              </div>
-              <span
-                className="text-xl font-bold text-[#F5F5DC]"
-                style={{ fontFamily: '"Playfair Display", serif' }}
-              >
-                Moksy
-              </span>
+      {/* Footer — uproszczony, bez Prawne/Social */}
+      <footer className="bg-[#2a2a2a] text-[#F5F5DC]/70">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-10 py-12 md:py-14">
+          {/* Logo + krótka nazwa */}
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 rounded-full bg-[#71797E]/80 flex items-center justify-center shrink-0">
+              <Flame size={20} className="text-[#F5F5DC]" />
             </div>
-
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
-              <a
-                href="https://maps.app.goo.gl/h2JfKP7BGbuzMzby9"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 hover:text-[#F5F5DC] transition-colors"
-              >
-                <MapPin size={14} className="text-[#71797E] shrink-0" />
-                <span>ul. Leśna 39, 55-330 Wilkszyn</span>
-              </a>
-              <a
-                href="tel:+48690532778"
-                className="flex items-center gap-1.5 hover:text-[#F5F5DC] transition-colors"
-              >
-                <Phone size={14} className="text-[#71797E] shrink-0" />
-                <span>690 532 778</span>
-              </a>
-              <a
-                href="mailto:kontakt@lepszaopcja.pl"
-                className="flex items-center gap-1.5 hover:text-[#F5F5DC] transition-colors"
-              >
-                <Mail size={14} className="text-[#71797E] shrink-0" />
-                <span>kontakt@lepszaopcja.pl</span>
-              </a>
-              <span className="flex items-center gap-1.5">
-                <Clock size={14} className="text-[#71797E] shrink-0" />
-                <span>Pn–Pt 9:00–19:00 · Sob 9:00–14:00</span>
-              </span>
-            </div>
-
-            <div className="flex gap-3">
-              {[Instagram, Facebook].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="w-9 h-9 rounded-full border border-[#F5F5DC]/10 flex items-center justify-center hover:bg-[#71797E] hover:border-[#71797E] hover:text-[#F5F5DC] transition-all duration-200"
-                >
-                  <Icon size={14} />
-                </a>
-              ))}
-            </div>
+            <span
+              className="text-2xl font-bold text-[#F5F5DC]"
+              style={{ fontFamily: '"Playfair Display", serif' }}
+            >
+              Moksy
+            </span>
           </div>
 
-          {/* SEO-friendly local text (visible for users and crawlers) */}
-          <p className="text-center text-sm text-[#F5F5DC]/50 max-w-2xl mx-auto py-6">
-            Gabinet moksoterapii i medycyny chińskiej. Zapraszamy pacjentów z Wrocławia, Wilkszyna i całego Dolnego Śląska.
-          </p>
+          {/* Kontakt — czytelna siatka na mobile, jedna linia na desktop */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap gap-6 lg:gap-8 mb-10">
+            <a
+              href="https://maps.app.goo.gl/h2JfKP7BGbuzMzby9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-start gap-3 group"
+            >
+              <MapPin size={18} className="text-[#71797E] shrink-0 mt-0.5 group-hover:text-[#D4A24A] transition-colors" />
+              <span className="text-sm leading-snug group-hover:text-[#F5F5DC] transition-colors">
+                ul. Leśna 39, 55-330 Wilkszyn
+              </span>
+            </a>
+            <a
+              href="tel:+48690532778"
+              className="flex items-start gap-3 group"
+            >
+              <Phone size={18} className="text-[#71797E] shrink-0 mt-0.5 group-hover:text-[#D4A24A] transition-colors" />
+              <span className="text-sm leading-snug group-hover:text-[#F5F5DC] transition-colors">
+                690 532 778
+              </span>
+            </a>
+            <a
+              href="mailto:kontakt@lepszaopcja.pl"
+              className="flex items-start gap-3 group"
+            >
+              <Mail size={18} className="text-[#71797E] shrink-0 mt-0.5 group-hover:text-[#D4A24A] transition-colors" />
+              <span className="text-sm leading-snug group-hover:text-[#F5F5DC] transition-colors">
+                kontakt@lepszaopcja.pl
+              </span>
+            </a>
+            <span className="flex items-start gap-3">
+              <Clock size={18} className="text-[#71797E] shrink-0 mt-0.5" />
+              <span className="text-sm leading-snug text-[#F5F5DC]/60">
+                Pn–Pt 9:00–19:00 · Sob 9:00–14:00
+              </span>
+            </span>
+          </div>
 
-          {/* Linki: Strony, Prawne, Social */}
-          <nav className="grid grid-cols-1 sm:grid-cols-3 gap-8 py-10" aria-label="Stopka nawigacja">
-            {footerLinks.map((col) => (
-              <div key={col.title}>
-                <h2 className="text-[#F5F5DC] text-xs uppercase tracking-widest font-medium mb-4">
-                  {col.title}
-                </h2>
-                <ul className="space-y-2.5">
-                  {col.links.map((link) => (
-                    <li key={link.label}>
-                      {link.label === "Rezerwacja" ? (
-                        <button
-                          type="button"
-                          onClick={() => openWidget()}
-                          className="text-sm hover:text-[#F5F5DC] transition-colors duration-200 cursor-pointer"
-                        >
-                          {link.label}
-                        </button>
-                      ) : (
-                        <a
-                          href={link.href}
-                          className="text-sm hover:text-[#F5F5DC] transition-colors duration-200"
-                        >
-                          {link.label}
-                        </a>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          {/* Nawigacja — jedna linia z separatorem */}
+          <nav
+            className="flex flex-wrap items-center gap-x-1 gap-y-3 mb-8 pb-8 border-b border-[#F5F5DC]/10"
+            aria-label="Nawigacja stopki"
+          >
+            {footerNavLinks.map((link, i) => (
+              <span key={link.label} className="flex items-center gap-x-1">
+                {i > 0 && <span className="text-[#F5F5DC]/20 px-1">·</span>}
+                {link.openWidget ? (
+                  <button
+                    type="button"
+                    onClick={() => openWidget()}
+                    className="text-sm hover:text-[#D4A24A] transition-colors duration-200"
+                  >
+                    {link.label}
+                  </button>
+                ) : (
+                  <a
+                    href={link.href}
+                    className="text-sm hover:text-[#D4A24A] transition-colors duration-200"
+                  >
+                    {link.label}
+                  </a>
+                )}
+              </span>
             ))}
           </nav>
 
-          <div className="pt-6 border-t border-[#F5F5DC]/8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-            <div className="flex flex-col gap-1">
-              <span>© 2026 Moksy. Wszelkie prawa zastrzeżone.</span>
-              <a
-                href="https://www.stalowewitryny.pl"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#F5F5DC]/50 hover:text-[#71797E] hover:underline transition-colors duration-200"
-              >
-                Projekt i realizacja: stalowewitryny.pl
-              </a>
-            </div>
-            <span className="text-[#71797E]">
-              Gabinet moksoterapii i medycyny chińskiej. Zapraszamy z Wrocławia, Wilkszyna i Dolnego Śląska · Ul. Leśna 39, Wilkszyn
-            </span>
+          {/* Opis + copyright w jednym bloku */}
+          <p className="text-sm text-[#F5F5DC]/50 leading-relaxed max-w-xl mb-6">
+            Gabinet moksoterapii i medycyny chińskiej. Zapraszamy z Wrocławia, Wilkszyna i Dolnego Śląska.
+          </p>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs text-[#F5F5DC]/40">
+            <span>© 2026 Moksy. Wszelkie prawa zastrzeżone.</span>
+            <a
+              href="https://www.stalowewitryny.pl"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#71797E] hover:underline transition-colors"
+            >
+              Projekt i realizacja: stalowewitryny.pl
+            </a>
           </div>
         </div>
       </footer>
