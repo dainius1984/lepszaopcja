@@ -10,7 +10,6 @@ const navLinks = [
   { label: "Zabiegi", to: "/zabiegi" },
   { label: "Terapie Meridianowe", to: "/zabiegi#meridiany" },
   { label: "Szkolenia", to: "/szkolenia" },
-  { label: "Rezerwacja", openWidget: true },
   { label: "Kontakt", href: "/#contact" },
 ];
 
@@ -122,14 +121,21 @@ export default function Navbar() {
           {!loading && (
             user ? (
               <span className="ml-2 flex items-center gap-2">
-                <span className={`text-sm max-w-[140px] truncate ${isScrolled ? "text-[#555555]" : "text-[#F5F5DC]/90"}`} title={user.email}>
+                <span
+                  className={`text-sm max-w-[140px] truncate ${
+                    isScrolled ? "text-[#555555]" : "text-[#F5F5DC]/90"
+                  }`}
+                  title={user.email}
+                >
                   {user.email}
                 </span>
                 <button
                   type="button"
                   onClick={() => logout()}
                   className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium transition-colors ${
-                    isScrolled ? "text-[#555555] hover:bg-[#71797E]/10 hover:text-[#333333]" : "text-[#F5F5DC]/80 hover:bg-[#F5F5DC]/10 hover:text-[#F5F5DC]"
+                    isScrolled
+                      ? "text-[#555555] hover:bg-[#71797E]/10 hover:text-[#333333]"
+                      : "text-[#F5F5DC]/80 hover:bg-[#F5F5DC]/10 hover:text-[#F5F5DC]"
                   }`}
                   title="Wyloguj"
                 >
@@ -140,13 +146,15 @@ export default function Navbar() {
             ) : (
               <button
                 type="button"
-                onClick={() => openAuth("login")}
+                onClick={() => openAuth("register")}
                 className={`ml-2 flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-medium transition-colors ${
-                  isScrolled ? "text-[#555555] hover:bg-[#71797E]/10 hover:text-[#333333]" : "text-[#F5F5DC] hover:bg-[#F5F5DC]/10"
+                  isScrolled
+                    ? "text-[#555555] hover:bg-[#71797E]/10 hover:text-[#333333]"
+                    : "text-[#F5F5DC] hover:bg-[#F5F5DC]/10"
                 }`}
               >
                 <LogIn size={14} />
-                Zaloguj
+                Zarejestruj
               </button>
             )
           )}
@@ -218,10 +226,15 @@ export default function Navbar() {
               {!loading && (
                 user ? (
                   <div className="mt-2 flex flex-col gap-2">
-                    <span className="text-sm text-[#F5F5DC]/80 truncate px-1">{user.email}</span>
+                    <span className="text-sm text-[#F5F5DC]/80 truncate px-1">
+                      {user.email}
+                    </span>
                     <button
                       type="button"
-                      onClick={() => { setMenuOpen(false); logout(); }}
+                      onClick={() => {
+                        setMenuOpen(false);
+                        logout();
+                      }}
                       className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-[#F5F5DC]/20 text-[#F5F5DC] text-sm hover:bg-[#F5F5DC]/10"
                     >
                       <LogOut size={14} />
@@ -231,11 +244,14 @@ export default function Navbar() {
                 ) : (
                   <button
                     type="button"
-                    onClick={() => { setMenuOpen(false); openAuth("login"); }}
+                    onClick={() => {
+                      setMenuOpen(false);
+                      openAuth("register");
+                    }}
                     className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-[#F5F5DC]/20 text-[#F5F5DC] text-sm hover:bg-[#F5F5DC]/10"
                   >
                     <LogIn size={14} />
-                    Zaloguj
+                    Zarejestruj
                   </button>
                 )
               )}

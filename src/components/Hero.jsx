@@ -2,6 +2,7 @@ import { useState, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowDown, CalendarDays } from "lucide-react";
+import { useReservation } from "../context/ReservationContext";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -13,6 +14,7 @@ const fadeUp = {
 };
 
 export default function Hero() {
+  const { openWidget } = useReservation();
   const [activeVideo, setActiveVideo] = useState(1);
   const video1Ref = useRef(null);
   const video2Ref = useRef(null);
@@ -119,12 +121,13 @@ export default function Hero() {
           custom={0.6}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <a
-            href="#contact"
+          <button
+            type="button"
+            onClick={() => openWidget()}
             className="group px-8 py-4 rounded-full bg-[#71797E] text-[#F5F5DC] font-medium text-base hover:bg-[#5A6468] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
           >
             Umów sesję
-          </a>
+          </button>
           <Link
             to="/szkolenia"
             className="group flex items-center justify-center gap-2 px-6 sm:px-8 py-4 rounded-full border border-[#F5F5DC]/40 text-[#F5F5DC] font-medium text-sm sm:text-base hover:bg-[#F5F5DC]/10 transition-all duration-300"
