@@ -126,7 +126,15 @@ export default function Navbar() {
           )}
           {!loading && (
             user ? (
-              <span className="ml-2 flex items-center gap-2">
+              <span className="ml-2 flex items-center gap-3">
+                <Link
+                  to="/moje-wizyty"
+                  className={`text-xs font-medium underline underline-offset-4 ${
+                    isScrolled ? "text-[#71797E] hover:text-[#333333]" : "text-[#F5F5DC]/80 hover:text-[#F5F5DC]"
+                  }`}
+                >
+                  Moje wizyty
+                </Link>
                 <span
                   className={`text-sm max-w-[140px] truncate ${
                     isScrolled ? "text-[#555555]" : "text-[#F5F5DC]/90"
@@ -228,6 +236,15 @@ export default function Navbar() {
                     {link.label}
                   </a>
                 )
+              )}
+              {!loading && user && (
+                <Link
+                  to="/moje-wizyty"
+                  onClick={() => setMenuOpen(false)}
+                  className="mt-1 text-sm text-[#F5F5DC]/80 underline underline-offset-4"
+                >
+                  Moje wizyty
+                </Link>
               )}
               {!loading && (
                 user ? (

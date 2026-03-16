@@ -8,6 +8,7 @@ import ZabiegiPage from "./pages/ZabiegiPage";
 import SzkoleniaPage from "./pages/SzkoleniaPage";
 import MeridianPage from "./pages/zabiegi/MeridianPage";
 import RezerwacjaPage from "./pages/RezerwacjaPage";
+import MyReservationsPage from "./pages/MyReservationsPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/zabiegi/:slug" element={<MeridianPage />} />
           <Route path="/szkolenia" element={<SzkoleniaPage />} />
           <Route path="/rezerwacja" element={<RezerwacjaPage />} />
+          <Route path="/moje-wizyty" element={<MyReservationsPage />} />
         </Routes>
       </ReservationProvider>
     </AuthProvider>

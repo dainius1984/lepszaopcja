@@ -128,3 +128,30 @@ export async function getBookedTimesForDate(dateStr) {
     return [];
   }
 }
+
+/**
+ * Pobiera wszystkie rezerwacje powiązane z podanym adresem e-mail.
+ * Zwraca tablicę dokumentów (posortowanych malejąco po dacie utworzenia).
+ */
+export async function getReservationsForEmail(email) {
+  if (!isAppwriteConfigured() || !databases) return [];
+  if (!email || !email.trim()) return [];
+  try {
+    const { documents } = await databases.listDocuments(
+      databaseId,
+      reservationsCollectionId,
+      [
+        Query.equal("email", email.trim().toLowerCase()),
+        Query.limit(200),
+      ]
+    );
+    // Posortuj lokalnie po preferredDate + preferredTime, najbliższe na górze
+    return documents.slice().sort((a, b) => {
+      const ad = `${a.preferredDate || ""} ${a.preferredTime || ""}`;
+      const bd = `${b.preferredDate || ""} ${b.preferredTime || ""}`;
+      return ad.localeCompare(bd);
+    });
+  } catch {
+    return [];
+  }
+}
