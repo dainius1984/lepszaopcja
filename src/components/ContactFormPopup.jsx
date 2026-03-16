@@ -26,6 +26,16 @@ export default function ContactFormPopup() {
     return () => clearTimeout(t);
   }, []);
 
+  // Pozwala otworzyć popup programowo (np. z przycisku "Zapytaj o bezpłatną konsultację")
+  useEffect(() => {
+    const handler = () => {
+      hasShownRef.current = true;
+      setIsOpen(true);
+    };
+    window.addEventListener("open-contact-popup", handler);
+    return () => window.removeEventListener("open-contact-popup", handler);
+  }, []);
+
   useEffect(() => {
     if (!isOpen) return;
     const prev = document.body.style.overflow;

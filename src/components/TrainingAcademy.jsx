@@ -140,8 +140,8 @@ export default function TrainingAcademy() {
           </p>
           <button
             type="button"
-            onClick={() => openWidget()}
-            className="inline-flex items-center gap-2 text-[#71797E] hover:text-[#8E9A9F] text-sm font-medium underline underline-offset-4 transition-colors"
+            onClick={() => window.dispatchEvent(new Event("open-contact-popup"))}
+            className="inline-flex items-center gap-2 text-[#F5F5DC]/80 hover:text-white text-sm font-medium underline underline-offset-4 transition-colors"
           >
             Zapytaj o bezpłatną konsultację
           </button>

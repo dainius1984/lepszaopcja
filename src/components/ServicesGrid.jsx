@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Flame, Wind, Scroll, ArrowRight } from "lucide-react";
+import { useReservation } from "../context/ReservationContext";
 
 const services = [
   {
@@ -50,6 +51,7 @@ const cardVariants = {
 export default function ServicesGrid() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
+  const { openWidget } = useReservation();
 
   return (
     <section id="services" className="py-16 sm:py-20 md:py-28 bg-[#F5F5DC]/40">
@@ -140,13 +142,14 @@ export default function ServicesGrid() {
                   </div>
                 </div>
 
-                <a
-                  href="#contact"
+                <button
+                  type="button"
+                  onClick={() => openWidget()}
                   className="mt-5 flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-[#71797E]/30 text-[#71797E] text-sm font-medium hover:bg-[#71797E] hover:text-[#F5F5DC] transition-all duration-300 group/btn shrink-0"
                 >
-                  Umów ten zabieg
+                  Umów zabieg
                   <ArrowRight size={14} className="transition-transform group-hover/btn:translate-x-1" />
-                </a>
+                </button>
               </div>
             </motion.div>
           ))}
