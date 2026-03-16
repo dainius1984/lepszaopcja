@@ -73,7 +73,7 @@ export default function AuthWidget() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#333333]/70 backdrop-blur-sm"
+        className="fixed inset-0 z-[100] flex items-center justify-center px-3 sm:px-4 py-4 bg-[#333333]/70 backdrop-blur-sm"
         onClick={closeAuth}
       >
         <motion.div
@@ -81,10 +81,10 @@ export default function AuthWidget() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.96 }}
           transition={{ duration: 0.2 }}
-          className="relative w-full max-w-md rounded-2xl bg-[#FAFAF5] shadow-xl border border-[#71797E]/10"
+          className="relative w-full max-w-sm sm:max-w-md max-h-[90vh] overflow-y-auto rounded-2xl bg-[#FAFAF5] shadow-xl border border-[#71797E]/10"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex items-center justify-between px-5 py-4 border-b border-[#71797E]/10">
+          <div className="flex items-center justify-between px-4 sm:px-5 py-3.5 sm:py-4 border-b border-[#71797E]/10 sticky top-0 bg-[#FAFAF5] z-10">
             <h2
               className="text-xl font-bold text-[#333333]"
               style={{ fontFamily: '"Playfair Display", serif' }}
@@ -101,7 +101,7 @@ export default function AuthWidget() {
             </button>
           </div>
 
-          <div className="p-5 pb-8">
+          <div className="px-4 sm:px-5 pt-4 pb-6 sm:pb-8">
             {!configured ? (
               <p className="text-[#555555] text-sm py-4">
                 Logowanie wymaga konfiguracji Appwrite (Auth) w pliku .env.

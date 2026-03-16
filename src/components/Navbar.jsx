@@ -35,6 +35,12 @@ export default function Navbar() {
       const y = window.scrollY;
       setIsScrolled(y > 40);
 
+      // Jeśli na mobile scrollujemy, zamknij menu
+      if (isMobile.current && y !== lastScrollY.current && menuOpen) {
+        setMenuOpen(false);
+      }
+
+      // Chowaj navbar przy scrollu w dół, pokazuj przy scrollu w górę
       if (y > lastScrollY.current && y > 60) {
         setNavVisible(false);
       } else {

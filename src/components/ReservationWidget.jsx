@@ -140,7 +140,7 @@ export default function ReservationWidget() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#333333]/70 backdrop-blur-sm"
+        className="fixed inset-0 z-[100] flex items-center justify-center px-3 sm:px-4 py-4 bg-[#333333]/70 backdrop-blur-sm"
         onClick={closeWidget}
       >
         <motion.div
@@ -148,10 +148,10 @@ export default function ReservationWidget() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.96 }}
           transition={{ duration: 0.2 }}
-          className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-[#FAFAF5] shadow-xl border border-[#71797E]/10"
+          className="relative w-full max-w-sm sm:max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-[#FAFAF5] shadow-xl border border-[#71797E]/10"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="sticky top-0 z-10 flex items-center justify-between px-5 py-4 border-b border-[#71797E]/10 bg-[#FAFAF5]">
+          <div className="sticky top-0 z-10 flex items-center justify-between px-4 sm:px-5 py-3.5 sm:py-4 border-b border-[#71797E]/10 bg-[#FAFAF5]">
             <h2
               className="text-xl font-bold text-[#333333]"
               style={{ fontFamily: '"Playfair Display", serif' }}
@@ -168,7 +168,7 @@ export default function ReservationWidget() {
             </button>
           </div>
 
-          <div className="p-5 pb-8">
+          <div className="px-4 sm:px-5 pt-4 pb-6 sm:pb-8">
             {!configured ? (
               <p className="text-[#555555] text-sm py-4">
                 Konfiguracja Appwrite brakuje. Uzupełnij zmienne w pliku .env.
