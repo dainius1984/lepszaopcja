@@ -35,17 +35,23 @@ export default function Navbar() {
       const y = window.scrollY;
       setIsScrolled(y > 40);
 
-      // Jeśli na mobile scrollujemy, zamknij menu
-      if (isMobile.current && y !== lastScrollY.current && menuOpen) {
-        setMenuOpen(false);
-      }
+      const goingDown = y > lastScrollY.current;
 
-      // Chowaj navbar przy scrollu w dół, pokazuj przy scrollu w górę
-      if (y > lastScrollY.current && y > 60) {
-        setNavVisible(false);
+      // Mobile: zamknij menu przy scrollu i chowaj/pokazuj navbar wg kierunku
+      if (isMobile.current) {
+        if (y !== lastScrollY.current && menuOpen) {
+          setMenuOpen(false);
+        }
+        if (goingDown && y > 60) {
+          setNavVisible(false);
+        } else {
+          setNavVisible(true);
+        }
       } else {
+        // Desktop: zawsze widoczny (tylko zmiana stylu po scrollu)
         setNavVisible(true);
       }
+
       lastScrollY.current = y;
     };
 
