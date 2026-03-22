@@ -4,6 +4,7 @@ import ContactFooter from "../components/ContactFooter";
 import Seo from "../components/Seo";
 import { useAuth } from "../context/AuthContext";
 import { getReservationsForEmail } from "../lib/appwrite";
+import { getReservationBoxChoiceLabel } from "../data/reservationBoxChoices";
 
 export default function MyReservationsPage() {
   const { user, loading, openAuth } = useAuth();
@@ -104,6 +105,11 @@ export default function MyReservationsPage() {
                           {r.preferredDate || "data nieustalona"} ·{" "}
                           {r.preferredTime || "godzina do ustalenia"}
                         </p>
+                        {r.boxChoice ? (
+                          <p className="text-xs text-[#71797E] mt-1">
+                            {getReservationBoxChoiceLabel(r.boxChoice)}
+                          </p>
+                        ) : null}
                       </div>
                       {r.message && (
                         <p className="text-xs text-[#71797E] max-w-sm sm:text-right">

@@ -150,7 +150,13 @@ export async function updateAccountPassword(oldPassword, newPassword) {
 
 /**
  * Zapis rezerwacji w Appwrite (osoba + data + godzina osobno).
- * W kolekcji potrzebne atrybuty: name, email, phone, course, preferredDate, preferredTime, message.
+ * W kolekcji potrzebne atrybuty: name, email, phone, course, preferredDate, preferredTime, message,
+ * oraz opcjonalnie boxChoice (string) — patrz komentarz przy createReservation.
+ *
+ * --- Appwrite Console (Database → reservations) ---
+ * Dodaj atrybut: key = boxChoice, typ = String, size = 64 (wystarczy), required = false.
+ * Dozwolone wartości z aplikacji: "start_box" | "premium_box" | "unsure" | "none" | "" (puste przy innych usługach).
+ * (Supabase: analogiczna kolumna TEXT lub ENUM z tymi wartościami.)
  */
 export async function createReservation(data) {
   if (!isAppwriteConfigured() || !databases) {
@@ -168,6 +174,7 @@ export async function createReservation(data) {
       preferredDate: data.preferredDate || "",
       preferredTime: data.preferredTime || "",
       message: data.message || "",
+      boxChoice: data.boxChoice || "",
     }
   );
   return doc;

@@ -50,10 +50,11 @@ export default function HomeSectionBoxes() {
             {productBoxes.map((box, i) => (
               <motion.div
                 key={box.id}
+                id={`box-${box.slug}`}
                 initial={{ opacity: 0, y: 24 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.55, delay: 0.08 * i }}
-                className="flex flex-col rounded-2xl border border-[#71797E]/12 bg-white p-6 sm:p-8 shadow-sm"
+                className="flex flex-col rounded-2xl border border-[#71797E]/12 bg-white p-6 sm:p-8 shadow-sm scroll-mt-20 md:scroll-mt-24"
               >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                   <ImagePlaceholder label={`${box.name} — zdjęcie`} aspectClass="aspect-square sm:aspect-auto sm:min-h-[200px]" />

@@ -44,3 +44,9 @@ export function isKnownBookingId(courseId) {
     courses.some((c) => c.id === courseId)
   );
 }
+
+/** Pakiet 1–3 (Domowa Akademia Moksy) — wymaga wyboru boxa w formularzu rezerwacji. */
+export function isAcademySessionCourseId(courseId) {
+  if (!courseId) return false;
+  return academySessions.some((s) => s.id === courseId);
+}

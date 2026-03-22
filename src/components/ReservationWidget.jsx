@@ -1,8 +1,15 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Flame, Calendar, Clock } from "lucide-react";
+import { X, Send, Flame, Calendar, Clock, ImageIcon } from "lucide-react";
 import { useReservation } from "../context/ReservationContext";
-import { getBookingLabelById, bookingSelectGroups } from "../data/bookingCatalog";
+import {
+  getBookingLabelById,
+  bookingSelectGroups,
+  isAcademySessionCourseId,
+} from "../data/bookingCatalog";
+import { reservationBoxOptionsForWidget } from "../data/reservationBoxChoices";
+import { openContactPopup } from "../utils/openContactPopup";
 import { isAppwriteConfigured, createReservation, getBookedTimesForDate } from "../lib/appwrite";
 
 // Godziny co 30 min od 17:00 do 20:30 (17:00, 17:30, 18:00, …, 20:30)
@@ -46,6 +53,7 @@ export default function ReservationWidget() {
     email: "",
     phone: "",
     course: preselectedCourseId,
+    boxChoice: "",
     preferredDate: "",
     preferredTime: "",
     message: "",
@@ -76,6 +84,7 @@ export default function ReservationWidget() {
     setFormData((prev) => ({
       ...prev,
       course: preselectedCourseId || prev.course,
+      ...(preselectedCourseId ? { boxChoice: "" } : {}),
     }));
   }, [preselectedCourseId]);
 
@@ -123,13 +132,22 @@ export default function ReservationWidget() {
     setFormData((prev) => {
       const next = { ...prev, [name]: value };
       if (name === "preferredDate") next.preferredTime = "";
+      if (name === "course") {
+        next.boxChoice = isAcademySessionCourseId(value) ? prev.boxChoice : "";
+      }
       return next;
     });
   };
 
+  const showBoxChoice = isAcademySessionCourseId(formData.course);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+    if (showBoxChoice && !formData.boxChoice) {
+      setError("Wybierz jedną z opcji boxa albo „Jeszcze nie wiem” / „Nie chcę boxa”.");
+      return;
+    }
     setSubmitting(true);
     try {
       const courseLabel =
@@ -142,6 +160,7 @@ export default function ReservationWidget() {
         preferredDate: formData.preferredDate,
         preferredTime: formData.preferredTime,
         message: formData.message,
+        boxChoice: showBoxChoice ? formData.boxChoice : "",
       });
       setSubmitted(true);
       setFormData({
@@ -149,6 +168,7 @@ export default function ReservationWidget() {
         email: "",
         phone: "",
         course: "",
+        boxChoice: "",
         preferredDate: "",
         preferredTime: "",
         message: "",
@@ -181,7 +201,7 @@ export default function ReservationWidget() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.96 }}
           transition={{ duration: 0.2 }}
-          className="relative w-full max-w-sm sm:max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-[#FAFAF5] shadow-xl border border-[#71797E]/10"
+          className="relative w-full max-w-sm sm:max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl bg-[#FAFAF5] shadow-xl border border-[#71797E]/10"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="sticky top-0 z-10 flex items-center justify-between px-4 sm:px-5 py-3.5 sm:py-4 border-b border-[#71797E]/10 bg-[#FAFAF5]">
@@ -402,6 +422,125 @@ export default function ReservationWidget() {
                     </select>
                   )}
                 </div>
+
+                {showBoxChoice && (
+                  <div
+                    role="radiogroup"
+                    aria-labelledby="reservation-box-choice-heading"
+                    className="space-y-3 rounded-xl border border-[#71797E]/15 bg-[#71797E]/[0.06] p-3 sm:p-4"
+                  >
+                    <p
+                      id="reservation-box-choice-heading"
+                      className="text-xs uppercase tracking-wider text-[#71797E] font-semibold"
+                    >
+                      Box do praktyki w domu *
+                    </p>
+                    <p className="text-[11px] text-[#555555] leading-relaxed -mt-1">
+                      Przy pakietach Akademii możesz od razu wybrać zestaw albo zaznaczyć, że jeszcze się
+                      zastanawiasz / nie chcesz boxa.
+                    </p>
+                    <div className="space-y-2.5">
+                      {reservationBoxOptionsForWidget.map((opt) => {
+                        const items = opt.shortItems?.length
+                          ? opt.shortItems.slice(0, 4)
+                          : [];
+                        const hasMore = (opt.shortItems?.length || 0) > 4;
+                        return (
+                          <label
+                            key={opt.value}
+                            className="block cursor-pointer rounded-xl text-left"
+                          >
+                            <input
+                              type="radio"
+                              name="boxChoice"
+                              value={opt.value}
+                              checked={formData.boxChoice === opt.value}
+                              onChange={handleChange}
+                              className="sr-only peer"
+                            />
+                            <div className="rounded-xl border-2 border-[#71797E]/15 bg-white p-3 sm:p-3.5 transition-all peer-checked:border-[#71797E] peer-checked:bg-[#71797E]/[0.07] peer-focus-visible:ring-2 peer-focus-visible:ring-[#71797E]/25">
+                              <div className="flex gap-3">
+                                {opt.detailLinkHash ? (
+                                  <div
+                                    className="flex h-[4.5rem] w-[4.5rem] shrink-0 flex-col items-center justify-center gap-1 rounded-lg border border-[#71797E]/12 bg-gradient-to-br from-[#71797E]/10 to-[#FAFAF5]"
+                                    aria-hidden
+                                  >
+                                    <ImageIcon className="text-[#71797E]/40" size={22} strokeWidth={1.25} />
+                                    <span className="px-1 text-center text-[9px] font-medium uppercase tracking-wide text-[#71797E]/55">
+                                      Zdjęcie
+                                    </span>
+                                  </div>
+                                ) : (
+                                  <div
+                                    className="flex h-[4.5rem] w-[4.5rem] shrink-0 items-center justify-center rounded-lg border border-dashed border-[#71797E]/25 bg-[#FAFAF5]"
+                                    aria-hidden
+                                  >
+                                    <span className="text-[#71797E]/40 text-lg">?</span>
+                                  </div>
+                                )}
+                                <div className="min-w-0 flex-1">
+                                  <p className="text-sm font-semibold text-[#333333] leading-snug">
+                                    {opt.name}
+                                    {opt.price ? (
+                                      <span className="block text-[#C4862A] font-bold mt-0.5">
+                                        {opt.price}
+                                      </span>
+                                    ) : null}
+                                  </p>
+                                  {opt.helper ? (
+                                    <p className="text-xs text-[#555555] leading-relaxed mt-1.5">
+                                      {opt.helper}
+                                    </p>
+                                  ) : null}
+                                  {items.length > 0 ? (
+                                    <ul className="mt-2 space-y-1 text-[11px] text-[#555555] leading-snug list-disc pl-3.5">
+                                      {items.map((line) => (
+                                        <li key={line}>{line}</li>
+                                      ))}
+                                      {hasMore ? (
+                                        <li className="list-none pl-0 text-[#71797E]">
+                                          … więcej w szczegółach na stronie
+                                        </li>
+                                      ) : null}
+                                    </ul>
+                                  ) : null}
+                                  {opt.detailLinkHash && opt.kupInterest ? (
+                                    <div className="mt-2.5 flex flex-wrap gap-2">
+                                      <Link
+                                        to={{ pathname: "/", hash: opt.detailLinkHash }}
+                                        className="inline-flex text-xs font-medium text-[#71797E] underline underline-offset-2 hover:text-[#333333]"
+                                        onClick={() => closeWidget()}
+                                      >
+                                        Zobacz szczegóły
+                                      </Link>
+                                      <span className="text-[#71797E]/40" aria-hidden>
+                                        ·
+                                      </span>
+                                      <button
+                                        type="button"
+                                        className="inline-flex text-xs font-semibold text-[#333333] underline underline-offset-2 hover:text-[#71797E]"
+                                        onClick={(e) => {
+                                          e.preventDefault();
+                                          openContactPopup({
+                                            interest: opt.kupInterest,
+                                            message: `Chcę zamówić ${opt.name} (${opt.price}). `,
+                                          });
+                                        }}
+                                      >
+                                        KUP
+                                      </button>
+                                    </div>
+                                  ) : null}
+                                </div>
+                              </div>
+                            </div>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-[#71797E] mb-1.5 font-medium">
                     Wiadomość

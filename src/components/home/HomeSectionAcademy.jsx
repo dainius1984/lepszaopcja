@@ -103,62 +103,67 @@ export default function HomeSectionAcademy() {
             </motion.div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.2 }}
-            className="text-center mb-10"
+          <div
+            id="akademia-pakiety"
+            className="scroll-mt-20 md:scroll-mt-24"
           >
-            <span className="inline-flex items-center gap-2 text-[#D4A24A] text-sm font-medium uppercase tracking-wider">
-              <BookOpen size={16} />
-              Wybierz swoją ścieżkę
-            </span>
-            <p className="text-[#F5F5DC]/50 text-sm mt-2">
-              Każda sesja jest dopasowana indywidualnie i różni się zakresem oraz czasem.
-            </p>
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ delay: 0.2 }}
+              className="text-center mb-10"
+            >
+              <span className="inline-flex items-center gap-2 text-[#D4A24A] text-sm font-medium uppercase tracking-wider">
+                <BookOpen size={16} />
+                Wybierz swoją ścieżkę
+              </span>
+              <p className="text-[#F5F5DC]/50 text-sm mt-2">
+                Każda sesja jest dopasowana indywidualnie i różni się zakresem oraz czasem.
+              </p>
+            </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-7 md:items-stretch">
-            {academySessions.map((session, i) => (
-              <motion.article
-                key={session.id}
-                initial={{ opacity: 0, y: 28 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.55, delay: 0.08 * i }}
-                className="flex h-full min-h-0 flex-col rounded-2xl border border-[#F5F5DC]/10 bg-[#FAFAF5]/[0.06] p-6 sm:p-7 hover:bg-[#FAFAF5]/10 transition-colors"
-              >
-                <span className="text-xs text-[#71797E] font-medium mb-2">
-                  Pakiet {session.order}
-                </span>
-                <h3
-                  className="text-xl font-bold text-[#F5F5DC] mb-2 leading-snug"
-                  style={{ fontFamily: '"Playfair Display", serif' }}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-7 md:items-stretch">
+              {academySessions.map((session, i) => (
+                <motion.article
+                  key={session.id}
+                  initial={{ opacity: 0, y: 28 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.55, delay: 0.08 * i }}
+                  className="flex h-full min-h-0 flex-col rounded-2xl border border-[#F5F5DC]/10 bg-[#FAFAF5]/[0.06] p-6 sm:p-7 hover:bg-[#FAFAF5]/10 transition-colors"
                 >
-                  {session.shortTitle}
-                </h3>
-                <p className="text-sm text-[#D4A24A] font-medium mb-3 shrink-0">
-                  {session.duration} · {session.price}
-                </p>
-                <p className="text-sm text-[#F5F5DC]/60 leading-relaxed grow mb-6">
-                  {session.summary}
-                </p>
-                <div className="flex flex-col gap-2 mt-auto shrink-0">
-                  <Link
-                    to={getAcademySessionPath(session.id)}
-                    className="w-full py-3 rounded-xl border border-[#F5F5DC]/25 text-[#F5F5DC] text-sm font-medium hover:bg-[#F5F5DC]/10 transition-colors text-center"
+                  <span className="text-xs text-[#71797E] font-medium mb-2">
+                    Pakiet {session.order}
+                  </span>
+                  <h3
+                    className="text-xl font-bold text-[#F5F5DC] mb-2 leading-snug"
+                    style={{ fontFamily: '"Playfair Display", serif' }}
                   >
-                    Szczegóły
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => openWidget(session.id)}
-                    className="w-full py-3 rounded-xl bg-[#D4A24A] text-[#333333] text-sm font-semibold hover:bg-[#c9943f] transition-colors"
-                  >
-                    {session.reserveLabel}
-                  </button>
-                </div>
-              </motion.article>
-            ))}
+                    {session.shortTitle}
+                  </h3>
+                  <p className="text-sm text-[#D4A24A] font-medium mb-3 shrink-0">
+                    {session.duration} · {session.price}
+                  </p>
+                  <p className="text-sm text-[#F5F5DC]/60 leading-relaxed grow mb-6">
+                    {session.summary}
+                  </p>
+                  <div className="flex flex-col gap-2 mt-auto shrink-0">
+                    <Link
+                      to={getAcademySessionPath(session.id)}
+                      className="w-full py-3 rounded-xl border border-[#F5F5DC]/25 text-[#F5F5DC] text-sm font-medium hover:bg-[#F5F5DC]/10 transition-colors text-center"
+                    >
+                      Szczegóły
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => openWidget(session.id)}
+                      className="w-full py-3 rounded-xl bg-[#D4A24A] text-[#333333] text-sm font-semibold hover:bg-[#c9943f] transition-colors"
+                    >
+                      {session.reserveLabel}
+                    </button>
+                  </div>
+                </motion.article>
+              ))}
+            </div>
           </div>
         </div>
       </section>

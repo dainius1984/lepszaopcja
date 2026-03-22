@@ -54,7 +54,10 @@ export default function AcademySessionPage() {
                 Start
               </Link>
               <span aria-hidden>/</span>
-              <Link to="/#akademia" className="transition-colors hover:text-[#D4A24A]">
+              <Link
+                to={{ pathname: "/", hash: "akademia-pakiety" }}
+                className="transition-colors hover:text-[#D4A24A]"
+              >
                 Akademia
               </Link>
               <span aria-hidden>/</span>
@@ -141,7 +144,7 @@ export default function AcademySessionPage() {
                 {session.reserveLabel}
               </button>
               <Link
-                to="/#akademia"
+                to={{ pathname: "/", hash: "akademia-pakiety" }}
                 className="inline-flex flex-1 items-center justify-center rounded-xl border border-[#71797E]/30 py-3.5 text-sm font-medium text-[#555555] transition-colors hover:bg-[#71797E]/8"
               >
                 Porównaj pakiety
