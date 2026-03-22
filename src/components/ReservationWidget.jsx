@@ -20,6 +20,24 @@ function todayISO() {
   return d.toISOString().slice(0, 10);
 }
 
+/** Wyświetlanie daty po polsku (bez przesunięć UTC). */
+function formatDatePlLong(iso) {
+  if (!iso) return "";
+  const parts = iso.split("-").map(Number);
+  const y = parts[0];
+  const m = parts[1];
+  const day = parts[2];
+  if (!y || !m || !day) return "";
+  const dt = new Date(y, m - 1, day);
+  const s = new Intl.DateTimeFormat("pl-PL", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(dt);
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 export default function ReservationWidget() {
   const { isOpen, closeWidget, preselectedCourseId, lockCourseSelection } =
     useReservation();
@@ -247,29 +265,56 @@ export default function ReservationWidget() {
                     <Calendar size={12} />
                     Data *
                   </label>
-                  <input
-                    type="date"
-                    name="preferredDate"
-                    required
-                    min={todayISO()}
-                    value={formData.preferredDate}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#71797E]/20 bg-white text-[#333333] text-sm focus:outline-none focus:border-[#71797E] focus:ring-1 focus:ring-[#71797E]/20"
-                  />
+                  <div className="relative min-h-[3rem] rounded-xl border border-[#71797E]/20 bg-white shadow-sm transition-shadow scheme-light group focus-within:border-[#71797E] focus-within:ring-2 focus-within:ring-[#71797E]/15">
+                    <input
+                      type="date"
+                      name="preferredDate"
+                      required
+                      min={todayISO()}
+                      value={formData.preferredDate}
+                      onChange={handleChange}
+                      className="absolute inset-0 z-10 h-full min-h-[3rem] w-full cursor-pointer opacity-0 [color-scheme:light]"
+                      aria-label="Wybierz datę wizyty"
+                    />
+                    <div className="pointer-events-none flex min-h-[3rem] w-full items-center justify-between gap-3 px-4 py-2.5">
+                      <span
+                        className={`text-sm leading-snug ${
+                          formData.preferredDate
+                            ? "font-medium text-[#333333]"
+                            : "text-[#555555]/55"
+                        }`}
+                      >
+                        {formData.preferredDate
+                          ? formatDatePlLong(formData.preferredDate)
+                          : "Wybierz datę wizyty"}
+                      </span>
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#71797E]/10 text-[#71797E] group-focus-within:bg-[#71797E]/18">
+                        <Calendar size={18} strokeWidth={1.75} />
+                      </span>
+                    </div>
+                  </div>
+                  <p className="mt-1.5 text-[11px] text-[#71797E]/90 leading-relaxed">
+                    Kliknij pole — otworzy się kalendarz. Wybrana data pokaże się po polsku.
+                  </p>
                 </div>
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-[#71797E] mb-1.5 font-medium flex items-center gap-1.5">
                     <Clock size={12} />
                     Godzina (od 17:00) *
                   </label>
-                  <select
-                    name="preferredTime"
-                    required
-                    value={selectedTimeNowBooked ? "" : formData.preferredTime}
-                    onChange={handleChange}
-                    disabled={isTimeDisabled}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#71797E]/20 bg-white text-[#333333] text-sm focus:outline-none focus:border-[#71797E] focus:ring-1 focus:ring-[#71797E]/20 disabled:opacity-60 disabled:cursor-not-allowed"
+                  <div
+                    className={`relative rounded-xl border border-[#71797E]/20 bg-white shadow-sm transition-shadow focus-within:border-[#71797E] focus-within:ring-2 focus-within:ring-[#71797E]/15 ${
+                      isTimeDisabled ? "opacity-60" : ""
+                    }`}
                   >
+                    <select
+                      name="preferredTime"
+                      required
+                      value={selectedTimeNowBooked ? "" : formData.preferredTime}
+                      onChange={handleChange}
+                      disabled={isTimeDisabled}
+                      className="w-full appearance-none cursor-pointer rounded-xl bg-transparent py-3 pl-4 pr-12 text-sm text-[#333333] focus:outline-none disabled:cursor-not-allowed"
+                    >
                     <option value="">
                       {isTimeDisabled
                         ? "Wybierz najpierw datę"
@@ -284,7 +329,11 @@ export default function ReservationWidget() {
                         {t}
                       </option>
                     ))}
-                  </select>
+                    </select>
+                    <span className="pointer-events-none absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-lg bg-[#71797E]/10 text-[#71797E]">
+                      <Clock size={18} strokeWidth={1.75} />
+                    </span>
+                  </div>
                 </div>
 
                 <div>
