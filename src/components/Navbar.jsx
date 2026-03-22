@@ -105,13 +105,13 @@ export default function Navbar() {
         opacity: 1,
       }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 w-full max-w-[100vw] overflow-x-hidden transition-all duration-300
+      className={`fixed top-0 left-0 right-0 z-50 w-full max-w-[100vw] overflow-visible transition-all duration-300
         md:border-b
         ${isScrolled ? "md:bg-[#FAFAF5]/95 md:backdrop-blur-md md:shadow-sm md:border-[#71797E]/10" : "md:bg-[#333333]/60 md:backdrop-blur-md md:border-[#F5F5DC]/10"}
         md:min-h-[5rem]
       `}
     >
-      <div className="w-full max-w-[100vw] box-border mx-auto px-4 sm:px-5 md:px-6 lg:px-10 h-12 sm:h-14 md:h-20 flex items-center justify-between gap-3 min-w-0">
+      <div className="w-full max-w-[100vw] box-border mx-auto px-4 sm:px-5 md:px-6 lg:px-10 h-12 sm:h-14 md:h-20 flex items-center justify-between gap-3 min-w-0 overflow-visible">
         {/* Logo — na mobile tylko ikona (bez diva-okręgu), na desktop pełne logo */}
         <Link
           to="/"
@@ -132,7 +132,10 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8 shrink-0" aria-label="Menu główne">
+        <nav
+          className="hidden md:flex items-center gap-8 shrink-0 overflow-visible"
+          aria-label="Menu główne"
+        >
           {navLinks.map((link) =>
             link.openWidget ? (
               <button
@@ -159,11 +162,11 @@ export default function Navbar() {
                   <span className={underlineClass(isScrolled)} />
                 </a>
                 <div
-                  className="absolute left-0 top-full z-[60] pt-1.5 w-[min(20rem,calc(100vw-2rem))] opacity-0 invisible translate-y-0.5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200"
+                  className="absolute left-0 top-full z-[200] pt-1.5 w-[min(20rem,calc(100vw-2rem))] opacity-0 invisible translate-y-0.5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200"
                   role="menu"
                   aria-label="Podmenu Korzyści"
                 >
-                  <div className="rounded-xl border border-[#71797E]/20 bg-[#FAFAF5]/98 backdrop-blur-md shadow-lg py-2">
+                  <div className="rounded-xl border border-[#71797E]/20 bg-[#FAFAF5] shadow-xl py-2 backdrop-blur-md">
                     {link.items.map((item) =>
                       item.to ? (
                         <Link

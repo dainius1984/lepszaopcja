@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Flame } from "lucide-react";
 
@@ -15,21 +15,10 @@ export default function ContactFormPopup() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
-  const hasShownRef = useRef(false);
-
-  useEffect(() => {
-    if (hasShownRef.current) return;
-    const t = setTimeout(() => {
-      hasShownRef.current = true;
-      setIsOpen(true);
-    }, 15000);
-    return () => clearTimeout(t);
-  }, []);
 
   // Otwarcie programowe: Event lub CustomEvent z detail: { interest?, message? }
   useEffect(() => {
     const handler = (e) => {
-      hasShownRef.current = true;
       setSubmitError(null);
       setSubmitted(false);
       const d = e?.detail && typeof e.detail === "object" ? e.detail : {};
