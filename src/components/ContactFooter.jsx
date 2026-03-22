@@ -1,17 +1,19 @@
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { MapPin, Phone, Mail, Clock, Send, Flame } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send, Flame, Navigation } from "lucide-react";
 import { useReservation } from "../context/ReservationContext";
+import HomeSectionFaq from "./home/HomeSectionFaq";
 
 const footerNavLinks = [
-  { label: "O nas", href: "/#about" },
+  { label: "Start", href: "/#hero" },
+  { label: "O mokście", href: "/#about" },
+  { label: "Akademia", href: "/#akademia" },
   { label: "Zabiegi", href: "/zabiegi" },
-  { label: "Szkolenia", href: "/szkolenia" },
   { label: "Rezerwacja", openWidget: true },
   { label: "Kontakt", href: "/#contact" },
 ];
 
-export default function ContactFooter() {
+export default function ContactFooter({ showFaq = false }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
   const { openWidget } = useReservation();
@@ -92,8 +94,53 @@ export default function ContactFooter() {
               <span className="italic text-[#71797E]">ścieżkę uzdrowienia</span>
             </h2>
             <p className="text-[#555555] text-base sm:text-lg font-light max-w-xl mx-auto">
-              Napisz do nas — chętnie odpowiemy i dopasujemy termin.
+              Napisz do nas — chętnie odpowiemy i dopasujemy termin oraz koszt dojazdu.
             </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.45, delay: 0.05 }}
+            className="mb-10 md:mb-12 rounded-2xl border border-[#71797E]/12 bg-white p-6 sm:p-8 shadow-sm"
+          >
+            <div className="flex items-center gap-2 mb-4 text-[#333333]">
+              <Navigation size={20} className="text-[#71797E]" />
+              <h3
+                className="text-lg font-bold"
+                style={{ fontFamily: '"Playfair Display", serif' }}
+              >
+                Logistyka — zasięg Domowej Akademii
+              </h3>
+            </div>
+            <p className="text-sm text-[#555555] leading-relaxed mb-6">
+              Moja baza to Wrocław, ale jako mobilna terapeutka przyjeżdżam do Ciebie z całym ekwipunkiem.
+              Nauka moksoterapii odbywa się w komfortowych warunkach Twojego domu.
+            </p>
+            <ul className="space-y-3 text-sm text-[#555555]">
+              <li>
+                <strong className="text-[#333333]">Strefa I — Wrocław (całe miasto).</strong> Dojazd wliczony w
+                cenę sesji.
+              </li>
+              <li>
+                <strong className="text-[#333333]">Strefa II — okolice Wrocławia</strong> (np. Bielany,
+                Długołęka, Kiełczów). Dopłata paliwowa: 20–40 zł (zależnie od lokalizacji).
+              </li>
+              <li>
+                <strong className="text-[#333333]">Strefa III — inne miasta w Polsce.</strong> Dojazd ustalany
+                indywidualnie.
+              </li>
+            </ul>
+            <p className="mt-5 text-sm text-[#71797E]">
+              Przy rezerwacji podaj dokładny adres — od razu potwierdzę koszt dojazdu, bez niespodzianek.
+            </p>
+            <button
+              type="button"
+              onClick={() => openWidget()}
+              className="mt-6 px-6 py-3 rounded-full bg-[#333333] text-[#F5F5DC] text-sm font-medium hover:bg-[#71797E] transition-colors"
+            >
+              Umów sesję
+            </button>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
@@ -217,8 +264,8 @@ export default function ContactFooter() {
               className="rounded-2xl overflow-hidden shadow-lg border border-[#71797E]/10 min-h-[260px] sm:min-h-[320px] lg:min-h-[400px] bg-[#71797E]/5 relative"
             >
               <iframe
-                title="Lokalizacja — ul. Leśna 39, Wilkszyn"
-                src="https://www.google.com/maps?q=ul.+Le%C5%9Bna+39,+55-330+Wilkszyn&output=embed"
+                title="Mapa — Wrocław i okolice"
+                src="https://www.google.com/maps?q=Wroc%C5%82aw%2C+Polska&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0, position: "absolute", top: 0, left: 0 }}
@@ -228,7 +275,7 @@ export default function ContactFooter() {
                 className="w-full h-full min-h-[260px]"
               />
               <a
-                href="https://maps.app.goo.gl/h2JfKP7BGbuzMzby9"
+                href="https://www.google.com/maps/search/?api=1&query=Wroc%C5%82aw%2C+Polska"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="absolute bottom-3 right-3 inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white/95 shadow-md text-[#333333] text-xs font-medium hover:bg-white transition-colors"
@@ -240,6 +287,8 @@ export default function ContactFooter() {
           </div>
         </div>
       </section>
+
+      {showFaq && <HomeSectionFaq />}
 
       {/* Footer — uproszczony, bez Prawne/Social */}
       <footer className="bg-[#2a2a2a] text-[#F5F5DC]/70">
@@ -259,17 +308,12 @@ export default function ContactFooter() {
 
           {/* Kontakt — czytelna siatka na mobile, jedna linia na desktop */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-wrap gap-6 lg:gap-8 mb-10">
-            <a
-              href="https://maps.app.goo.gl/h2JfKP7BGbuzMzby9"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-start gap-3 group"
-            >
-              <MapPin size={18} className="text-[#71797E] shrink-0 mt-0.5 group-hover:text-[#D4A24A] transition-colors" />
-              <span className="text-sm leading-snug group-hover:text-[#F5F5DC] transition-colors">
-                ul. Leśna 39, 55-330 Wilkszyn
+            <span className="flex items-start gap-3">
+              <MapPin size={18} className="text-[#71797E] shrink-0 mt-0.5" />
+              <span className="text-sm leading-snug">
+                Mobilne sesje: Wrocław i okolice — dojazd do Ciebie
               </span>
-            </a>
+            </span>
             <a
               href="tel:+48690532778"
               className="flex items-start gap-3 group"
@@ -326,7 +370,7 @@ export default function ContactFooter() {
 
           {/* Opis + copyright w jednym bloku */}
           <p className="text-sm text-[#F5F5DC]/50 leading-relaxed max-w-xl mb-6">
-            Gabinet moksoterapii i medycyny chińskiej. Zapraszamy z Wrocławia, Wilkszyna i Dolnego Śląska.
+            Domowa Akademia Moksy — moksoterapia i nauka praktyki w domu. Wrocław i okolice.
           </p>
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs text-[#F5F5DC]/40">
             <span>© 2026 Moksy. Wszelkie prawa zastrzeżone.</span>

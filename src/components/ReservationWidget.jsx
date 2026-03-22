@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Flame, Calendar, Clock } from "lucide-react";
 import { useReservation } from "../context/ReservationContext";
-import { courses } from "../data/courses";
+import { getBookingLabelById, bookingSelectGroups } from "../data/bookingCatalog";
 import { isAppwriteConfigured, createReservation, getBookedTimesForDate } from "../lib/appwrite";
 
 // Godziny co 30 min od 17:00 do 20:30 (17:00, 17:30, 18:00, …, 20:30)
@@ -21,7 +21,8 @@ function todayISO() {
 }
 
 export default function ReservationWidget() {
-  const { isOpen, closeWidget, preselectedCourseId } = useReservation();
+  const { isOpen, closeWidget, preselectedCourseId, lockCourseSelection } =
+    useReservation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -98,9 +99,7 @@ export default function ReservationWidget() {
     setSubmitting(true);
     try {
       const courseLabel =
-        courses.find((c) => c.id === formData.course)?.title ||
-        formData.course ||
-        "Zabieg / wizyta";
+        getBookingLabelById(formData.course) || formData.course || "Zabieg / wizyta";
       await createReservation({
         name: formData.name,
         email: formData.email,
@@ -152,12 +151,19 @@ export default function ReservationWidget() {
           onClick={(e) => e.stopPropagation()}
         >
           <div className="sticky top-0 z-10 flex items-center justify-between px-4 sm:px-5 py-3.5 sm:py-4 border-b border-[#71797E]/10 bg-[#FAFAF5]">
-            <h2
-              className="text-xl font-bold text-[#333333]"
-              style={{ fontFamily: '"Playfair Display", serif' }}
-            >
-              Rezerwacja
-            </h2>
+            <div className="min-w-0 pr-2">
+              <h2
+                className="text-xl font-bold text-[#333333]"
+                style={{ fontFamily: '"Playfair Display", serif' }}
+              >
+                Rezerwacja
+              </h2>
+              {lockCourseSelection && preselectedCourseId && (
+                <p className="mt-1 text-xs text-[#555555] leading-snug line-clamp-2">
+                  {getBookingLabelById(preselectedCourseId)}
+                </p>
+              )}
+            </div>
             <button
               type="button"
               onClick={closeWidget}
@@ -285,20 +291,29 @@ export default function ReservationWidget() {
                   <label className="block text-xs uppercase tracking-wider text-[#71797E] mb-1.5 font-medium">
                     Szkolenie / usługa
                   </label>
-                  <select
-                    name="course"
-                    value={formData.course}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#71797E]/20 bg-white text-[#333333] text-sm focus:outline-none focus:border-[#71797E] focus:ring-1 focus:ring-[#71797E]/20"
-                  >
-                    <option value="">Wybierz...</option>
-                    {courses.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.title}
-                      </option>
-                    ))}
-                    <option value="zabieg">Zabieg moksoterapii (wizyta)</option>
-                  </select>
+                  {lockCourseSelection && formData.course ? (
+                    <div className="rounded-xl border border-[#71797E]/25 bg-[#71797E]/5 px-4 py-3 text-sm text-[#333333]">
+                      {getBookingLabelById(formData.course)}
+                    </div>
+                  ) : (
+                    <select
+                      name="course"
+                      value={formData.course}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2.5 rounded-xl border border-[#71797E]/20 bg-white text-[#333333] text-sm focus:outline-none focus:border-[#71797E] focus:ring-1 focus:ring-[#71797E]/20"
+                    >
+                      <option value="">Wybierz...</option>
+                      {bookingSelectGroups.map((group) => (
+                        <optgroup key={group.label} label={group.label}>
+                          {group.options.map((opt) => (
+                            <option key={opt.id} value={opt.id}>
+                              {opt.title}
+                            </option>
+                          ))}
+                        </optgroup>
+                      ))}
+                    </select>
+                  )}
                 </div>
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-[#71797E] mb-1.5 font-medium">

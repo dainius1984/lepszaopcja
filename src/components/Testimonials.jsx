@@ -77,7 +77,7 @@ export default function Testimonials() {
   const visible = testimonials.slice(activeIdx, activeIdx + visibleCount);
 
   return (
-    <section className="py-16 sm:py-20 md:py-28 bg-[#F5F5DC]/40">
+    <section id="opinie" className="py-16 sm:py-20 md:py-28 bg-[#F5F5DC]/40 scroll-mt-20 md:scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         {/* Header */}
         <motion.div
@@ -89,16 +89,19 @@ export default function Testimonials() {
         >
           <div>
             <span className="inline-block mb-4 text-xs uppercase tracking-widest text-[#71797E] font-medium">
-              Opinie
+              Opinie klientów
             </span>
             <h2
               className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#333333]"
               style={{ fontFamily: '"Playfair Display", serif' }}
             >
-              Głosy
+              Doświadczenia
               <br />
-              <span className="italic text-[#71797E]">transformacji</span>
+              <span className="italic text-[#71797E]">i relacje</span>
             </h2>
+            <p className="text-[#555555] text-sm mt-3 max-w-md font-light">
+              Miejsce na cytaty, zdjęcia lub krótkie materiały wideo — treści możesz tu podmienić w kodzie.
+            </p>
           </div>
 
           {/* Nav buttons */}

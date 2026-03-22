@@ -12,7 +12,7 @@ export function getLocalBusinessSchema() {
     name: "Moksy — Moksoterapia i medycyna chińska",
     alternateName: "LepszaOpcja",
     description:
-      "Gabinet moksoterapii i tradycyjnej medycyny chińskiej w Wilkszynie k. Wrocławia. Zabiegi moksą, terapia meridianowa, akupunktura bez igieł, szkolenia z moksoterapii.",
+      "Domowa Akademia Moksy — mobilna moksoterapia TCM we Wrocławiu i okolicach, nauka praktyki w domu, warsztaty, boxy z moksa. Konsultacje i zabiegi — także Wilkszyn / Dolny Śląsk.",
     url: SITE_URL,
     telephone: "+48690532778",
     email: "kontakt@lepszaopcja.pl",

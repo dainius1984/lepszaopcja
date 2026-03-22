@@ -6,9 +6,11 @@ import { useReservation } from "../context/ReservationContext";
 import { useAuth } from "../context/AuthContext";
 
 const navLinks = [
-  { label: "O nas", href: "/#about" },
+  { label: "O mokście", href: "/#about" },
+  { label: "Korzyści", href: "/#korzysci" },
+  { label: "Akademia", href: "/#akademia" },
+  { label: "Boxy", href: "/#boxy" },
   { label: "Zabiegi", to: "/zabiegi" },
-  { label: "Terapie Meridianowe", to: "/zabiegi#meridiany" },
   { label: "Szkolenia", to: "/szkolenia" },
   { label: "Kontakt", href: "/#contact" },
 ];

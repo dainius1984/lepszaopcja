@@ -1,5 +1,4 @@
 import { useState, useRef, useCallback } from "react";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowDown, CalendarDays } from "lucide-react";
 import { useReservation } from "../context/ReservationContext";
@@ -40,7 +39,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-12 sm:pt-14 md:pt-0"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-12 sm:pt-14 md:pt-0 scroll-mt-0"
     >
       {/* Background videos — płynny crossfade + lekkie rozmycie */}
       <div className="absolute inset-0 [filter:blur(2px)] scale-105">
@@ -121,20 +120,20 @@ export default function Hero() {
           custom={0.6}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
+          <a
+            href="#akademia"
+            className="group px-8 py-4 rounded-full bg-[#71797E] text-[#F5F5DC] font-medium text-base hover:bg-[#5A6468] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 text-center"
+          >
+            Umów sesję
+          </a>
           <button
             type="button"
             onClick={() => openWidget()}
-            className="group px-8 py-4 rounded-full bg-[#71797E] text-[#F5F5DC] font-medium text-base hover:bg-[#5A6468] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-          >
-            Umów sesję
-          </button>
-          <Link
-            to="/szkolenia"
             className="group flex items-center justify-center gap-2 px-6 sm:px-8 py-4 rounded-full border border-[#F5F5DC]/40 text-[#F5F5DC] font-medium text-sm sm:text-base hover:bg-[#F5F5DC]/10 transition-all duration-300"
           >
             <CalendarDays size={16} />
-            Zobacz szkolenia
-          </Link>
+            Szybka rezerwacja
+          </button>
         </motion.div>
 
         {/* Stats strip */}

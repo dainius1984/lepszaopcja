@@ -3,10 +3,11 @@ import { useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import AboutMoxa from "../components/AboutMoxa";
-import ServicesGrid from "../components/ServicesGrid";
-import TerapieMeridianowe from "../components/TerapieMeridianowe";
-import TrainingAcademy from "../components/TrainingAcademy";
-import Benefits from "../components/Benefits";
+import HomeSectionDeepBenefits from "../components/home/HomeSectionDeepBenefits";
+import HomeSectionFamily from "../components/home/HomeSectionFamily";
+import HomeSectionAcademy from "../components/home/HomeSectionAcademy";
+import HomeSectionBoxes from "../components/home/HomeSectionBoxes";
+import HomeSectionAboutMe from "../components/home/HomeSectionAboutMe";
 import Testimonials from "../components/Testimonials";
 import ContactFooter from "../components/ContactFooter";
 import ContactFormPopup from "../components/ContactFormPopup";
@@ -30,9 +31,9 @@ export default function Home() {
   return (
     <div className="font-sans antialiased">
       <Seo
-        title="Moksoterapia Wrocław — Naturalne leczenie, medycyna chińska Wilkszyn"
-        description="Gabinet moksoterapii i medycyny chińskiej w Wilkszynie k. Wrocławia. Naturalne leczenie moksą, zabiegi bez igieł, terapia meridianowa. Zapraszamy z Wrocławia i Dolnego Śląska. Ul. Leśna 39."
-        keywords="moksoterapia Wrocław, moksoterapia Wilkszyn, naturalne leczenie, medycyna chińska, TCM, zabiegi moksą, akupunktura bez igieł, terapia meridianowa, Dolny Śląsk"
+        title="Domowa Akademia Moksy — moksoterapia i warsztaty we Wrocławiu"
+        description="Mobilna moksoterapia TCM: nauka praktyki w domu, pakiety Start-Up Express, Złoty Standard i Akademia Długowieczności. Wrocław i okolice. Boxy startowe i premium."
+        keywords="moksoterapia Wrocław, Domowa Akademia Moksy, moksa w domu, warsztat moksy, moksoterapia mobilna, TCM, naturalne ciepło, box moksy"
         url="/"
       />
       <JsonLd schema={getLocalBusinessSchema()} />
@@ -40,12 +41,13 @@ export default function Home() {
       <Navbar />
       <Hero />
       <AboutMoxa />
-      <ServicesGrid />
-      <TerapieMeridianowe />
-      <TrainingAcademy />
-      <Benefits />
+      <HomeSectionDeepBenefits />
+      <HomeSectionFamily />
+      <HomeSectionAcademy />
+      <HomeSectionBoxes />
+      <HomeSectionAboutMe />
       <Testimonials />
-      <ContactFooter />
+      <ContactFooter showFaq />
     </div>
   );
 }
