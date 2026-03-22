@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Flame, Calendar, Clock } from "lucide-react";
 import { useReservation } from "../context/ReservationContext";
@@ -55,6 +55,22 @@ export default function ReservationWidget() {
   const [error, setError] = useState(null);
   const [bookedSlots, setBookedSlots] = useState([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
+  const dateInputRef = useRef(null);
+
+  const openDatePicker = () => {
+    const el = dateInputRef.current;
+    if (!el) return;
+    try {
+      if (typeof el.showPicker === "function") {
+        el.showPicker();
+        return;
+      }
+    } catch {
+      /* showPicker może rzucić, jeśli nie z gestu użytkownika — fallback poniżej */
+    }
+    el.focus();
+    el.click();
+  };
 
   useEffect(() => {
     setFormData((prev) => ({
@@ -261,22 +277,41 @@ export default function ReservationWidget() {
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-[#71797E] mb-1.5 font-medium flex items-center gap-1.5">
-                    <Calendar size={12} />
+                  <p
+                    id="reservation-date-label"
+                    className="block text-xs uppercase tracking-wider text-[#71797E] mb-1.5 font-medium flex items-center gap-1.5"
+                  >
+                    <Calendar size={12} aria-hidden />
                     Data *
-                  </label>
-                  <div className="relative min-h-[3rem] rounded-xl border border-[#71797E]/20 bg-white shadow-sm transition-shadow scheme-light group focus-within:border-[#71797E] focus-within:ring-2 focus-within:ring-[#71797E]/15">
+                  </p>
+                  <div className="relative min-h-[3rem] rounded-xl border border-[#71797E]/20 bg-white shadow-sm transition-shadow scheme-light group focus-within:border-[#71797E] focus-within:ring-2 focus-within:ring-[#71797E]/15 [color-scheme:light]">
+                    {/* Natywny picker: input z opacity-0 często nie otwiera UI (Safari). showPicker() z widocznego przycisku. */}
                     <input
+                      ref={dateInputRef}
+                      id="reservation-preferred-date"
                       type="date"
                       name="preferredDate"
                       required
                       min={todayISO()}
                       value={formData.preferredDate}
                       onChange={handleChange}
-                      className="absolute inset-0 z-10 h-full min-h-[3rem] w-full cursor-pointer opacity-0 [color-scheme:light]"
-                      aria-label="Wybierz datę wizyty"
+                      className="sr-only"
+                      tabIndex={-1}
                     />
-                    <div className="pointer-events-none flex min-h-[3rem] w-full items-center justify-between gap-3 px-4 py-2.5">
+                    <button
+                      type="button"
+                      onClick={openDatePicker}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          openDatePicker();
+                        }
+                      }}
+                      className="flex min-h-[3rem] w-full cursor-pointer items-center justify-between gap-3 px-4 py-2.5 text-left outline-none transition-colors hover:bg-[#71797E]/[0.04] focus-visible:ring-2 focus-visible:ring-[#71797E]/25 focus-visible:ring-inset rounded-xl"
+                      aria-labelledby="reservation-date-label"
+                      aria-haspopup="dialog"
+                      aria-describedby="reservation-date-hint"
+                    >
                       <span
                         className={`text-sm leading-snug ${
                           formData.preferredDate
@@ -288,12 +323,15 @@ export default function ReservationWidget() {
                           ? formatDatePlLong(formData.preferredDate)
                           : "Wybierz datę wizyty"}
                       </span>
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#71797E]/10 text-[#71797E] group-focus-within:bg-[#71797E]/18">
-                        <Calendar size={18} strokeWidth={1.75} />
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#71797E]/10 text-[#71797E] group-focus-within:bg-[#71797E]/18 pointer-events-none">
+                        <Calendar size={18} strokeWidth={1.75} aria-hidden />
                       </span>
-                    </div>
+                    </button>
                   </div>
-                  <p className="mt-1.5 text-[11px] text-[#71797E]/90 leading-relaxed">
+                  <p
+                    id="reservation-date-hint"
+                    className="mt-1.5 text-[11px] text-[#71797E]/90 leading-relaxed"
+                  >
                     Kliknij pole — otworzy się kalendarz. Wybrana data pokaże się po polsku.
                   </p>
                 </div>

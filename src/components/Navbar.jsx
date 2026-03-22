@@ -1,7 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Flame, LogOut, ChevronDown, UserRoundPlus } from "lucide-react";
+import {
+  Menu,
+  X,
+  Flame,
+  LogOut,
+  ChevronDown,
+  UserRoundPlus,
+  CircleUser,
+  CalendarDays,
+} from "lucide-react";
 import { useReservation } from "../context/ReservationContext";
 import { useAuth } from "../context/AuthContext";
 import { PORADNIK_MOKSOTERAPII_PATH } from "../data/poradnikMoksoterapiiMeta";
@@ -43,9 +52,18 @@ export default function Navbar() {
   const { user, loading, openAuth, logout } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [navVisible, setNavVisible] = useState(true);
   const lastScrollY = useRef(0);
   const isMobile = useRef(false);
+  const userMenuRef = useRef(null);
+
+  const accountShort = (() => {
+    const e = user?.email;
+    if (!e || typeof e !== "string") return "Konto";
+    const local = e.split("@")[0] || "Konto";
+    return local.length > 14 ? `${local.slice(0, 14)}…` : local;
+  })();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -86,6 +104,28 @@ export default function Navbar() {
       window.removeEventListener("resize", checkMobile);
     };
   }, []);
+
+  useEffect(() => {
+    setUserMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!userMenuOpen) return;
+    const onPointerDown = (e) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+        setUserMenuOpen(false);
+      }
+    };
+    const onKey = (e) => {
+      if (e.key === "Escape") setUserMenuOpen(false);
+    };
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [userMenuOpen]);
 
   const handleLogoClick = (e) => {
     setMenuOpen(false);
@@ -133,7 +173,7 @@ export default function Navbar() {
 
         {/* Desktop Nav */}
         <nav
-          className="hidden md:flex items-center gap-8 shrink-0 overflow-visible"
+          className="hidden md:flex items-center gap-5 lg:gap-7 shrink-0 overflow-visible"
           aria-label="Menu główne"
         >
           {navLinks.map((link) =>
@@ -213,37 +253,76 @@ export default function Navbar() {
           )}
           {!loading && (
             user ? (
-              <span className="ml-2 flex items-center gap-3">
-                <Link
-                  to="/moje-wizyty"
-                  className={`cursor-pointer text-xs font-medium underline underline-offset-4 ${
-                    isScrolled ? "text-[#71797E] hover:text-[#333333]" : "text-[#F5F5DC]/80 hover:text-[#F5F5DC]"
-                  }`}
-                >
-                  Moje wizyty
-                </Link>
-                <span
-                  className={`text-sm max-w-[140px] truncate ${
-                    isScrolled ? "text-[#555555]" : "text-[#F5F5DC]/90"
-                  }`}
-                  title={user.email}
-                >
-                  {user.email}
-                </span>
+              <div className="relative ml-1 shrink-0" ref={userMenuRef}>
                 <button
                   type="button"
-                  onClick={() => logout()}
-                  className={`cursor-pointer flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium transition-colors ${
+                  aria-expanded={userMenuOpen}
+                  aria-haspopup="menu"
+                  aria-label="Menu konta użytkownika"
+                  onClick={() => setUserMenuOpen((o) => !o)}
+                  className={`cursor-pointer inline-flex items-center gap-2 rounded-full border px-2.5 py-2 text-sm font-medium transition-colors ${
                     isScrolled
-                      ? "text-[#555555] hover:bg-[#71797E]/10 hover:text-[#333333]"
-                      : "text-[#F5F5DC]/80 hover:bg-[#F5F5DC]/10 hover:text-[#F5F5DC]"
-                  }`}
-                  title="Wyloguj"
+                      ? "border-[#71797E]/35 text-[#333333] hover:bg-[#71797E]/10"
+                      : "border-[#F5F5DC]/40 text-[#F5F5DC] hover:bg-[#F5F5DC]/10"
+                  } ${userMenuOpen ? (isScrolled ? "bg-[#71797E]/10" : "bg-[#F5F5DC]/15") : ""}`}
                 >
-                  <LogOut size={14} />
-                  Wyloguj
+                  <CircleUser
+                    size={20}
+                    strokeWidth={1.5}
+                    className={isScrolled ? "text-[#71797E]" : "text-[#D4A24A]"}
+                    aria-hidden
+                  />
+                  <span className="max-w-[5.5rem] lg:max-w-[7rem] truncate">{accountShort}</span>
+                  <ChevronDown
+                    size={14}
+                    className={`opacity-70 shrink-0 transition-transform duration-200 ${userMenuOpen ? "rotate-180" : ""}`}
+                    aria-hidden
+                  />
                 </button>
-              </span>
+                <AnimatePresence>
+                  {userMenuOpen && (
+                    <motion.div
+                      role="menu"
+                      aria-label="Konto"
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute right-0 top-[calc(100%+0.45rem)] z-[200] w-[min(17.5rem,calc(100vw-2rem))] overflow-hidden rounded-xl border border-[#71797E]/20 bg-[#FAFAF5] py-2 shadow-xl"
+                    >
+                      <div className="border-b border-[#71797E]/10 px-3.5 py-2.5">
+                        <p className="text-[10px] font-semibold uppercase tracking-wider text-[#71797E]">
+                          Zalogowano jako
+                        </p>
+                        <p className="mt-0.5 truncate text-xs text-[#333333]" title={user.email}>
+                          {user.email}
+                        </p>
+                      </div>
+                      <Link
+                        role="menuitem"
+                        to="/moje-wizyty"
+                        onClick={() => setUserMenuOpen(false)}
+                        className="flex cursor-pointer items-center gap-2.5 px-3.5 py-2.5 text-sm text-[#333333] transition-colors hover:bg-[#71797E]/10"
+                      >
+                        <CalendarDays size={17} className="shrink-0 text-[#71797E]" aria-hidden />
+                        Moje wizyty
+                      </Link>
+                      <button
+                        type="button"
+                        role="menuitem"
+                        onClick={() => {
+                          setUserMenuOpen(false);
+                          logout();
+                        }}
+                        className="flex w-full cursor-pointer items-center gap-2.5 px-3.5 py-2.5 text-left text-sm text-[#333333] transition-colors hover:bg-[#71797E]/10"
+                      >
+                        <LogOut size={17} className="shrink-0 text-[#71797E]" aria-hidden />
+                        Wyloguj
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             ) : (
               <button
                 type="button"
@@ -366,30 +445,39 @@ export default function Navbar() {
                   </a>
                 )
               )}
-              {!loading && user && (
-                <Link
-                  to="/moje-wizyty"
-                  onClick={() => setMenuOpen(false)}
-                  className="cursor-pointer mt-1 text-sm text-[#F5F5DC]/80 underline underline-offset-4 hover:text-[#D4A24A]"
-                >
-                  Moje wizyty
-                </Link>
-              )}
               {!loading && (
                 user ? (
-                  <div className="mt-2 flex flex-col gap-2">
-                    <span className="text-sm text-[#F5F5DC]/80 truncate px-1">
-                      {user.email}
-                    </span>
+                  <div className="mt-1 rounded-2xl border border-[#F5F5DC]/20 bg-[#F5F5DC]/[0.07] p-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F5F5DC]/15">
+                        <CircleUser size={22} className="text-[#D4A24A]" aria-hidden />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[10px] font-semibold uppercase tracking-wider text-[#F5F5DC]/50">
+                          Twoje konto
+                        </p>
+                        <p className="truncate text-sm font-medium text-[#F5F5DC]" title={user.email}>
+                          {user.email}
+                        </p>
+                      </div>
+                    </div>
+                    <Link
+                      to="/moje-wizyty"
+                      onClick={() => setMenuOpen(false)}
+                      className="mb-2 flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#F5F5DC]/15 px-4 py-3 text-sm font-medium text-[#F5F5DC] transition-colors hover:bg-[#F5F5DC]/25"
+                    >
+                      <CalendarDays size={18} className="text-[#D4A24A]" aria-hidden />
+                      Moje wizyty
+                    </Link>
                     <button
                       type="button"
                       onClick={() => {
                         setMenuOpen(false);
                         logout();
                       }}
-                      className="cursor-pointer flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-[#F5F5DC]/20 text-[#F5F5DC] text-sm hover:bg-[#F5F5DC]/10"
+                      className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-[#F5F5DC]/25 px-4 py-3 text-sm font-medium text-[#F5F5DC]/90 transition-colors hover:bg-[#F5F5DC]/10"
                     >
-                      <LogOut size={14} />
+                      <LogOut size={18} aria-hidden />
                       Wyloguj
                     </button>
                   </div>

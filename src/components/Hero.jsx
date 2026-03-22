@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, CalendarDays } from "lucide-react";
+import { ArrowDown, BookOpen } from "lucide-react";
 import { useReservation } from "../context/ReservationContext";
 
 const fadeUp = {
@@ -120,20 +120,20 @@ export default function Hero() {
           custom={0.6}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <a
-            href="#akademia"
-            className="group px-8 py-4 rounded-full bg-[#71797E] text-[#F5F5DC] font-medium text-base hover:bg-[#5A6468] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 text-center"
-          >
-            Umów sesję
-          </a>
           <button
             type="button"
             onClick={() => openWidget()}
-            className="group flex items-center justify-center gap-2 px-6 sm:px-8 py-4 rounded-full border border-[#F5F5DC]/40 text-[#F5F5DC] font-medium text-sm sm:text-base hover:bg-[#F5F5DC]/10 transition-all duration-300"
+            className="cursor-pointer group px-8 py-4 rounded-full bg-[#71797E] text-[#F5F5DC] font-medium text-base hover:bg-[#5A6468] transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 text-center"
           >
-            <CalendarDays size={16} />
-            Szybka rezerwacja
+            Umów sesję
           </button>
+          <a
+            href="#akademia"
+            className="cursor-pointer group flex items-center justify-center gap-2 px-6 sm:px-8 py-4 rounded-full border border-[#F5F5DC]/40 text-[#F5F5DC] font-medium text-sm sm:text-base hover:bg-[#F5F5DC]/10 transition-all duration-300"
+          >
+            <BookOpen size={16} aria-hidden />
+            Domowa Akademia — pakiety
+          </a>
         </motion.div>
       </div>
 
