@@ -68,12 +68,12 @@ export default function HomeSectionAboutMe() {
             initial={{ opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.65, delay: 0.05 }}
-            className="mt-8 aspect-[4/5] w-full max-w-md mx-auto overflow-hidden rounded-2xl border border-[#71797E]/10 bg-[#FAFAF5] shadow-sm sm:max-w-lg lg:mx-0 lg:mt-0 lg:aspect-auto lg:max-w-none lg:absolute lg:top-0 lg:right-0 lg:h-full lg:w-[calc(50%-2rem)]"
+            className="mt-8 aspect-[4/5] w-full max-w-md mx-auto overflow-hidden rounded-2xl border border-[#71797E]/10 bg-[#FAFAF5] shadow-sm sm:max-w-lg lg:mx-0 lg:mt-0 lg:aspect-auto lg:max-w-none lg:absolute lg:inset-y-0 lg:right-0 lg:h-auto lg:w-[calc(50%-2rem)]"
           >
             <img
               src="/img/me.jpg"
               alt="Prowadząca Domowej Akademii Moksy"
-              className="h-full w-full object-cover object-[center_20%]"
+              className="h-full min-h-[200px] w-full object-cover object-[center_22%]"
               width={960}
               height={1200}
               loading="lazy"
