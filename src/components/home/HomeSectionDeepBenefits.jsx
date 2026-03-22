@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { Sparkles, ChevronRight } from "lucide-react";
 import { PORADNIK_MOKSOTERAPII_PATH } from "../../data/poradnikMoksoterapiiMeta";
 import { KOMPENDIUM_ODZYWANIA_PATH } from "../../data/kompendiumOdzywianiaMeta";
 
@@ -62,17 +62,18 @@ export default function HomeSectionDeepBenefits() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 lg:items-stretch">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
+            className="flex min-h-0 flex-col lg:h-full"
           >
             <h3 className="text-lg font-semibold text-[#333333] mb-4 flex items-center gap-2">
               <Sparkles className="text-[#C4862A] shrink-0" size={20} />
               Co możesz poczuć i zauważyć po sesji
             </h3>
-            <ul className="space-y-3">
+            <ul className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-x-10 lg:gap-y-3">
               {feel.map((item) => (
                 <li
                   key={item}
@@ -88,9 +89,9 @@ export default function HomeSectionDeepBenefits() {
             initial={{ opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="space-y-8"
+            className="flex min-h-0 flex-col gap-8 lg:h-full lg:justify-between lg:gap-0"
           >
-            <div className="rounded-2xl bg-[#FAFAF5] border border-[#71797E]/10 p-6 sm:p-8">
+            <div className="rounded-2xl bg-[#FAFAF5] border border-[#71797E]/10 p-6 sm:p-8 shrink-0">
               <h3 className="text-lg font-semibold text-[#333333] mb-3">Dlaczego to działa?</h3>
               <p className="text-sm text-[#555555] leading-relaxed">
                 Ciepło moksy działa głęboko w ciele, poprawiając przepływ energii i krwi oraz rozluźniając
@@ -98,7 +99,7 @@ export default function HomeSectionDeepBenefits() {
                 regenerować i lepiej reagować na stres i infekcje.
               </p>
             </div>
-            <div>
+            <div className="shrink-0">
               <h3 className="text-sm font-semibold uppercase tracking-wider text-[#71797E] mb-4">
                 Mini FAQ – co możesz oczekiwać po sesji
               </h3>
@@ -114,35 +115,73 @@ export default function HomeSectionDeepBenefits() {
           </motion.div>
         </div>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5, delay: 0.25 }}
-          className="mt-14 text-center text-sm text-[#555555] max-w-2xl mx-auto leading-relaxed"
+          className="mt-14 lg:mt-16 max-w-5xl mx-auto"
         >
-          Chcesz więcej wiedzy w jednym miejscu? Przejdź do sekcji{" "}
-          <a
-            href="#przewodniki"
-            className="font-medium text-[#71797E] underline underline-offset-4 hover:text-[#333333]"
-          >
-            przewodników TCM
-          </a>{" "}
-          —{" "}
-          <Link
-            to={PORADNIK_MOKSOTERAPII_PATH}
-            className="font-medium text-[#71797E] underline underline-offset-4 hover:text-[#333333]"
-          >
-            poradnik moksoterapii (Ścieżka ciepła)
-          </Link>{" "}
-          oraz{" "}
-          <Link
-            to={KOMPENDIUM_ODZYWANIA_PATH}
-            className="font-medium text-[#71797E] underline underline-offset-4 hover:text-[#333333]"
-          >
-            kompendium żywienia i stylu życia (Rytm stołu)
-          </Link>
-          .
-        </motion.p>
+          <p className="text-center text-sm text-[#555555] leading-relaxed mb-6 px-1">
+            Chcesz więcej wiedzy w jednym miejscu? Otwórz przewodniki poniżej albo przejdź do sekcji{" "}
+            <a
+              href="#przewodniki"
+              className="font-medium text-[#333333] border-b border-[#71797E]/40 hover:border-[#C4862A] hover:text-[#C4862A] transition-colors"
+            >
+              przewodników na stronie głównej
+            </a>
+            .
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
+            <Link
+              to={PORADNIK_MOKSOTERAPII_PATH}
+              className="group flex items-start justify-between gap-3 rounded-2xl border border-[#71797E]/15 bg-[#FAFAF5]/80 p-5 sm:p-6 text-left transition-all hover:border-[#71797E]/30 hover:bg-[#FAFAF5] hover:shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#71797E]"
+            >
+              <div className="min-w-0">
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-[#71797E]">
+                  Poradnik moksoterapii
+                </span>
+                <p
+                  className="mt-1.5 text-base font-semibold text-[#333333] leading-snug"
+                  style={{ fontFamily: '"Playfair Display", serif' }}
+                >
+                  Ścieżka ciepła
+                </p>
+                <p className="mt-2 text-xs text-[#555555] leading-relaxed">
+                  Jak i kiedy wykonywać moksa — praktyczny przewodnik TCM.
+                </p>
+              </div>
+              <ChevronRight
+                className="shrink-0 text-[#71797E] transition-transform group-hover:translate-x-0.5 group-hover:text-[#C4862A]"
+                size={22}
+                aria-hidden
+              />
+            </Link>
+            <Link
+              to={KOMPENDIUM_ODZYWANIA_PATH}
+              className="group flex items-start justify-between gap-3 rounded-2xl border border-[#71797E]/15 bg-[#FAFAF5]/80 p-5 sm:p-6 text-left transition-all hover:border-[#71797E]/30 hover:bg-[#FAFAF5] hover:shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#71797E]"
+            >
+              <div className="min-w-0">
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-[#71797E]">
+                  Kompendium żywienia i stylu życia
+                </span>
+                <p
+                  className="mt-1.5 text-base font-semibold text-[#333333] leading-snug"
+                  style={{ fontFamily: '"Playfair Display", serif' }}
+                >
+                  Rytm stołu
+                </p>
+                <p className="mt-2 text-xs text-[#555555] leading-relaxed">
+                  Zasady energetyczne TCM w codziennej diecie i nawykach.
+                </p>
+              </div>
+              <ChevronRight
+                className="shrink-0 text-[#71797E] transition-transform group-hover:translate-x-0.5 group-hover:text-[#C4862A]"
+                size={22}
+                aria-hidden
+              />
+            </Link>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

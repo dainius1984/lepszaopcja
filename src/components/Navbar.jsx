@@ -21,7 +21,7 @@ const korzysciNav = {
   label: "Korzyści",
   href: "/#korzysci",
   items: [
-    { label: "Zalety moksoterapii — sekcja na stronie głównej", href: "/#korzysci" },
+    { label: "Zalety moksoterapii", href: "/#korzysci" },
     { label: "Poradnik moksoterapii — Ścieżka ciepła", to: PORADNIK_MOKSOTERAPII_PATH },
     { label: "Kompendium żywienia TCM — Rytm stołu", to: KOMPENDIUM_ODZYWANIA_PATH },
   ],
