@@ -64,17 +64,17 @@ export default function HomeSectionAcademy() {
             </div>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-stretch mb-16">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 }}
-              className="rounded-2xl overflow-hidden border border-[#F5F5DC]/20 shadow-lg aspect-[4/3] bg-[#222]"
+              className="relative min-h-[220px] overflow-hidden rounded-2xl border border-[#F5F5DC]/20 bg-[#222] shadow-lg aspect-[4/3] lg:aspect-auto lg:min-h-0 lg:h-full"
             >
               <img
                 src="/img/1.png"
                 alt="Domowa Akademia Moksy — nauka moksoterapii i praktyki w domu"
-                className="w-full h-full object-cover"
+                className="absolute inset-0 h-full w-full object-cover object-center"
                 width={1200}
                 height={900}
                 loading="lazy"
@@ -85,21 +85,21 @@ export default function HomeSectionAcademy() {
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.15 }}
-              className="rounded-2xl border border-[#F5F5DC]/10 bg-[#FAFAF5]/5 p-6 sm:p-8"
+              className="flex h-full min-h-0 flex-col rounded-2xl border border-[#F5F5DC]/10 bg-[#FAFAF5]/5 p-6 sm:p-8"
             >
-              <h3 className="text-lg font-semibold text-[#F5F5DC] mb-4 flex items-center gap-2">
-                <Package size={20} className="text-[#D4A24A]" />
-                Co przywożę na sesję i dlaczego to dla Ciebie ważne
+              <h3 className="text-lg font-semibold text-[#F5F5DC] mb-4 flex items-start gap-2.5 leading-snug">
+                <Package size={20} className="text-[#D4A24A] shrink-0 mt-0.5" aria-hidden />
+                <span>Co przywożę na sesję i dlaczego to dla Ciebie ważne</span>
               </h3>
-              <ul className="space-y-3">
+              <ul className="grow space-y-3">
                 {brings.map((line) => (
                   <li key={line} className="flex gap-2.5 text-sm text-[#F5F5DC]/70 leading-relaxed">
-                    <Sparkles size={14} className="text-[#71797E] shrink-0 mt-1" />
+                    <Sparkles size={14} className="text-[#71797E] shrink-0 mt-1" aria-hidden />
                     <span>{line}</span>
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 text-sm text-[#F5F5DC]/55 leading-relaxed border-t border-[#F5F5DC]/10 pt-6">
+              <p className="mt-6 shrink-0 text-sm text-[#F5F5DC]/55 leading-relaxed border-t border-[#F5F5DC]/10 pt-6">
                 Dzięki temu nie musisz zgadywać ani kupować wszystkiego na własną rękę — sprawdzasz,
                 uczysz się i od razu działasz, w pełnym bezpieczeństwie i wygodzie.
               </p>
@@ -121,14 +121,14 @@ export default function HomeSectionAcademy() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-7">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-7 md:items-stretch">
             {academySessions.map((session, i) => (
               <motion.article
                 key={session.id}
                 initial={{ opacity: 0, y: 28 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.55, delay: 0.08 * i }}
-                className="flex flex-col rounded-2xl border border-[#F5F5DC]/10 bg-[#FAFAF5]/[0.06] p-6 sm:p-7 hover:bg-[#FAFAF5]/10 transition-colors"
+                className="flex h-full min-h-0 flex-col rounded-2xl border border-[#F5F5DC]/10 bg-[#FAFAF5]/[0.06] p-6 sm:p-7 hover:bg-[#FAFAF5]/10 transition-colors"
               >
                 <span className="text-xs text-[#71797E] font-medium mb-2">
                   Pakiet {session.order}
@@ -139,13 +139,13 @@ export default function HomeSectionAcademy() {
                 >
                   {session.shortTitle}
                 </h3>
-                <p className="text-sm text-[#D4A24A] font-medium mb-1">
+                <p className="text-sm text-[#D4A24A] font-medium mb-3 shrink-0">
                   {session.duration} · {session.price}
                 </p>
-                <p className="text-sm text-[#F5F5DC]/60 leading-relaxed flex-1 mb-6">
+                <p className="text-sm text-[#F5F5DC]/60 leading-relaxed grow mb-6">
                   {session.summary}
                 </p>
-                <div className="flex flex-col gap-2 mt-auto">
+                <div className="flex flex-col gap-2 mt-auto shrink-0">
                   <button
                     type="button"
                     onClick={() => setActiveSessionId(session.id)}
