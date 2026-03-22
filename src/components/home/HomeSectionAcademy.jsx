@@ -4,7 +4,6 @@ import { BookOpen, Package, Sparkles } from "lucide-react";
 import { academySessions } from "../../data/academySessions";
 import { useReservation } from "../../context/ReservationContext";
 import SessionDetailModal from "./SessionDetailModal";
-import ImagePlaceholder from "./ImagePlaceholder";
 
 const brings = [
   "Różne rodzaje moksy (cygara dymne i bezdymne, moksa cięta na imbirze) — możesz od razu poczuć różnicę między technikami i wybrać, co najlepiej pasuje do Twoich potrzeb.",
@@ -70,11 +69,16 @@ export default function HomeSectionAcademy() {
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 }}
+              className="rounded-2xl overflow-hidden border border-[#F5F5DC]/20 shadow-lg aspect-[4/3] bg-[#222]"
             >
-              <ImagePlaceholder
-                label="Sesja mobilna / materiały"
-                className="border-[#F5F5DC]/20 bg-[#FAFAF5]/5 text-[#F5F5DC]/50"
-                aspectClass="aspect-[4/3]"
+              <img
+                src="/img/1.png"
+                alt="Domowa Akademia Moksy — nauka moksoterapii i praktyki w domu"
+                className="w-full h-full object-cover"
+                width={1200}
+                height={900}
+                loading="lazy"
+                decoding="async"
               />
             </motion.div>
             <motion.div

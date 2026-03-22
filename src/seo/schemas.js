@@ -1,4 +1,6 @@
-import { SITE_URL } from "../config/site";
+import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from "../config/site";
+import { PORADNIK_MOKSOTERAPII_PATH } from "../data/poradnikMoksoterapiiMeta.js";
+import { KOMPENDIUM_ODZYWANIA_PATH } from "../data/kompendiumOdzywianiaMeta.js";
 
 /**
  * LocalBusiness schema for the clinic (Schema.org).
@@ -125,4 +127,123 @@ export function getCourseSchemas() {
     },
     ...(c.numberOfCredits && { numberOfCredits: c.numberOfCredits }),
   }));
+}
+
+/**
+ * Article + BreadcrumbList dla długich przewodników (Schema.org).
+ * @param {string} path - Ścieżka kanoniczna, np. "/poradnik/..."
+ * @param {{ headline: string, description: string, articleSection: string, keywords: string[], datePublished?: string, dateModified?: string }} opts
+ */
+function buildGuideArticleSchemas(path, opts) {
+  const {
+    headline,
+    description,
+    articleSection,
+    keywords,
+    datePublished = "2026-03-01",
+    dateModified = "2026-03-22",
+  } = opts;
+  const pageUrl = `${SITE_URL}${path}`;
+  const publisher = {
+    "@type": "Organization",
+    name: SITE_NAME,
+    url: SITE_URL,
+    logo: {
+      "@type": "ImageObject",
+      url: DEFAULT_OG_IMAGE,
+    },
+  };
+
+  const article = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${pageUrl}#article`,
+    headline,
+    description,
+    image: [DEFAULT_OG_IMAGE],
+    author: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    publisher,
+    datePublished: `${datePublished}T08:00:00+01:00`,
+    dateModified: `${dateModified}T08:00:00+01:00`,
+    inLanguage: "pl-PL",
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": pageUrl,
+      url: pageUrl,
+      name: headline,
+      description,
+    },
+    articleSection,
+    keywords,
+  };
+
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Strona główna",
+        item: SITE_URL,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: headline,
+        item: pageUrl,
+      },
+    ],
+  };
+
+  return [article, breadcrumb];
+}
+
+/**
+ * @param {{ headline: string, description: string, datePublished?: string, dateModified?: string }} opts
+ */
+export function getPoradnikMoksoterapiiSchemas(opts) {
+  const { headline, description, datePublished, dateModified } = opts;
+  return buildGuideArticleSchemas(PORADNIK_MOKSOTERAPII_PATH, {
+    headline,
+    description,
+    datePublished,
+    dateModified,
+    articleSection: "Moksoterapia",
+    keywords: [
+      "moksoterapia",
+      "moksa w domu",
+      "TCM",
+      "wilgoć w organizmie",
+      "Zusanli ST36",
+      "Guanyuan CV4",
+    ],
+  });
+}
+
+/**
+ * @param {{ headline: string, description: string, datePublished?: string, dateModified?: string }} opts
+ */
+export function getKompendiumOdzywianiaSchemas(opts) {
+  const { headline, description, datePublished, dateModified } = opts;
+  return buildGuideArticleSchemas(KOMPENDIUM_ODZYWANIA_PATH, {
+    headline,
+    description,
+    datePublished,
+    dateModified,
+    articleSection: "Medycyna chińska — żywienie i styl życia",
+    keywords: [
+      "żywienie TCM",
+      "Qi",
+      "trawienie",
+      "śledziona",
+      "ciepłe posiłki",
+      "rytm dobowy",
+      "kompendium odżywiania",
+    ],
+  });
 }

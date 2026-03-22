@@ -21,6 +21,16 @@ const today = new Date().toISOString().slice(0, 10);
 const staticRoutes = [
   { path: "", changefreq: "weekly", priority: "1.0" },
   { path: "zabiegi", changefreq: "weekly", priority: "0.9" },
+  {
+    path: "poradnik/moksoterapia-jak-i-kiedy-wykonywac",
+    changefreq: "monthly",
+    priority: "0.85",
+  },
+  {
+    path: "kompendium/zdrowe-odzywianie-styl-zycia-zasady-energetyczne-tcm",
+    changefreq: "monthly",
+    priority: "0.85",
+  },
   { path: "szkolenia", changefreq: "monthly", priority: "0.9" },
   { path: "rezerwacja", changefreq: "weekly", priority: "0.8" },
 ];

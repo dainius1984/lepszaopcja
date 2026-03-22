@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Flame, LogIn, LogOut } from "lucide-react";
 import { useReservation } from "../context/ReservationContext";
 import { useAuth } from "../context/AuthContext";
+import { PORADNIK_MOKSOTERAPII_PATH } from "../data/poradnikMoksoterapiiMeta";
+import { KOMPENDIUM_ODZYWANIA_PATH } from "../data/kompendiumOdzywianiaMeta";
 
 const navLinks = [
   { label: "O mokście", href: "/#about" },
@@ -11,6 +13,8 @@ const navLinks = [
   { label: "Akademia", href: "/#akademia" },
   { label: "Boxy", href: "/#boxy" },
   { label: "Zabiegi", to: "/zabiegi" },
+  { label: "Poradnik moksy", to: PORADNIK_MOKSOTERAPII_PATH },
+  { label: "Kompendium TCM", to: KOMPENDIUM_ODZYWANIA_PATH },
   { label: "Szkolenia", to: "/szkolenia" },
   { label: "Kontakt", href: "/#contact" },
 ];
