@@ -7,7 +7,7 @@ import {
   Flame,
   LogOut,
   ChevronDown,
-  UserRoundPlus,
+  LogIn,
   CircleUser,
   CalendarDays,
   IdCard,
@@ -339,20 +339,21 @@ export default function Navbar() {
             ) : (
               <button
                 type="button"
-                onClick={() => openAuth("register")}
+                onClick={() => openAuth("login")}
+                title="Zaloguj się lub przełącz na rejestrację w oknie"
                 className={`cursor-pointer ml-2 inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-colors ${
                   isScrolled
                     ? "text-[#555555] hover:bg-[#71797E]/10 hover:text-[#333333]"
                     : "text-[#F5F5DC] hover:bg-[#F5F5DC]/10"
                 }`}
               >
-                <UserRoundPlus
+                <LogIn
                   size={18}
                   strokeWidth={1.75}
                   className={isScrolled ? "text-[#C4862A]" : "text-[#D4A24A]"}
                   aria-hidden
                 />
-                Zarejestruj
+                Konto
               </button>
             )
           )}
@@ -510,12 +511,13 @@ export default function Navbar() {
                     type="button"
                     onClick={() => {
                       setMenuOpen(false);
-                      openAuth("register");
+                      openAuth("login");
                     }}
+                    title="Zaloguj się lub przełącz na rejestrację w oknie"
                     className="cursor-pointer flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-[#F5F5DC]/20 text-[#F5F5DC] text-sm hover:bg-[#F5F5DC]/10"
                   >
-                    <UserRoundPlus size={18} strokeWidth={1.75} className="text-[#D4A24A]" aria-hidden />
-                    Zarejestruj
+                    <LogIn size={18} strokeWidth={1.75} className="text-[#D4A24A]" aria-hidden />
+                    Konto
                   </button>
                 )
               )}

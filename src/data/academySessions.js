@@ -1,6 +1,12 @@
 /**
- * Domowa Akademia Moksy — pakiety sesji mobilnych (rezerwacja + modale).
+ * Domowa Akademia Moksy — pakiety sesji mobilnych (rezerwacja + podstrony szczegółów).
  */
+export const ACADEMY_SESSION_PATH_PREFIX = "/akademia";
+
+export function getAcademySessionPath(sessionId) {
+  return `${ACADEMY_SESSION_PATH_PREFIX}/${sessionId}`;
+}
+
 export const academySessions = [
   {
     id: "moksa-startup-express",

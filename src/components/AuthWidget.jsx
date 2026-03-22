@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, LogIn, UserPlus } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { loginUser, registerUser, isAuthConfigured } from "../lib/appwrite";
 
 export default function AuthWidget() {
+  const navigate = useNavigate();
   const { authModalOpen, closeAuth, authTab, setAuthTab, refreshUser } = useAuth();
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -29,6 +31,7 @@ export default function AuthWidget() {
       closeAuth();
       setLoginEmail("");
       setLoginPassword("");
+      navigate("/", { replace: true, state: { scrollTo: "hero" } });
     } catch (err) {
       setError(err?.message || "Nieprawidłowy e-mail lub hasło.");
     } finally {
@@ -57,6 +60,7 @@ export default function AuthWidget() {
       setRegEmail("");
       setRegPassword("");
       setRegPasswordConfirm("");
+      navigate("/", { replace: true, state: { scrollTo: "hero" } });
     } catch (err) {
       setError(err?.message || "Rejestracja nie powiodła się. Sprawdź dane lub spróbuj później.");
     } finally {
@@ -135,6 +139,36 @@ export default function AuthWidget() {
                     Zarejestruj się
                   </button>
                 </div>
+
+                {authTab === "login" ? (
+                  <p className="text-xs text-[#71797E] text-center mb-4">
+                    Nie masz konta?{" "}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setAuthTab("register");
+                        setError(null);
+                      }}
+                      className="font-semibold text-[#333333] underline underline-offset-2 hover:text-[#71797E]"
+                    >
+                      Załóż konto
+                    </button>
+                  </p>
+                ) : (
+                  <p className="text-xs text-[#71797E] text-center mb-4">
+                    Masz już konto?{" "}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setAuthTab("login");
+                        setError(null);
+                      }}
+                      className="font-semibold text-[#333333] underline underline-offset-2 hover:text-[#71797E]"
+                    >
+                      Zaloguj się
+                    </button>
+                  </p>
+                )}
 
                 {error && (
                   <p className="text-sm text-red-600 font-medium mb-4">{error}</p>

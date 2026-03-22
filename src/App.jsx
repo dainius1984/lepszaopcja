@@ -12,6 +12,7 @@ import RezerwacjaPage from "./pages/RezerwacjaPage";
 import MyReservationsPage from "./pages/MyReservationsPage";
 import PoradnikMoksoterapiiPage from "./pages/PoradnikMoksoterapiiPage";
 import KompendiumOdzywianiaPage from "./pages/KompendiumOdzywianiaPage";
+import AcademySessionPage from "./pages/AcademySessionPage";
 import { PORADNIK_MOKSOTERAPII_PATH } from "./data/poradnikMoksoterapiiMeta";
 import { KOMPENDIUM_ODZYWANIA_PATH } from "./data/kompendiumOdzywianiaMeta";
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/szkolenia" element={<SzkoleniaPage />} />
           <Route path={PORADNIK_MOKSOTERAPII_PATH} element={<PoradnikMoksoterapiiPage />} />
           <Route path={KOMPENDIUM_ODZYWANIA_PATH} element={<KompendiumOdzywianiaPage />} />
+          <Route path="/akademia/:slug" element={<AcademySessionPage />} />
           <Route path="/rezerwacja" element={<RezerwacjaPage />} />
           <Route path="/moje-wizyty" element={<MyReservationsPage />} />
         </Routes>

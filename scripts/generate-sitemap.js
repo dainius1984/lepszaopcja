@@ -10,6 +10,7 @@ import { join } from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import { meridians } from "../src/data/meridians.js";
+import { academySessions } from "../src/data/academySessions.js";
 import { SITE_URL } from "../src/config/site.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -41,9 +42,16 @@ const meridianRoutes = meridians.map((m) => ({
   priority: "0.7",
 }));
 
+const academySessionRoutes = academySessions.map((s) => ({
+  path: `akademia/${s.id}`,
+  changefreq: "monthly",
+  priority: "0.85",
+}));
+
 const urls = [
   ...staticRoutes,
   ...meridianRoutes,
+  ...academySessionRoutes,
 ];
 
 function escapeXml(s) {

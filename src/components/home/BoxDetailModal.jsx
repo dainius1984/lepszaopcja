@@ -91,7 +91,7 @@ export default function BoxDetailModal({ box, onClose }) {
                 className="flex-1 inline-flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[#333333] text-[#F5F5DC] text-sm font-medium hover:bg-[#71797E] transition-colors"
               >
                 <MessageCircle size={16} />
-                Zamów — formularz kontaktowy
+                Zamów
               </button>
               <button
                 type="button"

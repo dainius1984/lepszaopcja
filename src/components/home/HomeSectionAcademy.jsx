@@ -1,9 +1,9 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { BookOpen, Package, Sparkles } from "lucide-react";
-import { academySessions } from "../../data/academySessions";
+import { academySessions, getAcademySessionPath } from "../../data/academySessions";
 import { useReservation } from "../../context/ReservationContext";
-import SessionDetailModal from "./SessionDetailModal";
 
 const brings = [
   "Różne rodzaje moksy (cygara dymne i bezdymne, moksa cięta na imbirze) — możesz od razu poczuć różnicę między technikami i wybrać, co najlepiej pasuje do Twoich potrzeb.",
@@ -17,9 +17,6 @@ export default function HomeSectionAcademy() {
   const { openWidget } = useReservation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
-  const [activeSessionId, setActiveSessionId] = useState(null);
-  const activeSession = academySessions.find((s) => s.id === activeSessionId) ?? null;
-
   return (
     <>
       <section id="akademia" className="py-16 sm:py-20 md:py-28 bg-[#333333] relative overflow-hidden scroll-mt-20 md:scroll-mt-24">
@@ -146,13 +143,12 @@ export default function HomeSectionAcademy() {
                   {session.summary}
                 </p>
                 <div className="flex flex-col gap-2 mt-auto shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => setActiveSessionId(session.id)}
-                    className="w-full py-3 rounded-xl border border-[#F5F5DC]/25 text-[#F5F5DC] text-sm font-medium hover:bg-[#F5F5DC]/10 transition-colors"
+                  <Link
+                    to={getAcademySessionPath(session.id)}
+                    className="w-full py-3 rounded-xl border border-[#F5F5DC]/25 text-[#F5F5DC] text-sm font-medium hover:bg-[#F5F5DC]/10 transition-colors text-center"
                   >
                     Szczegóły
-                  </button>
+                  </Link>
                   <button
                     type="button"
                     onClick={() => openWidget(session.id)}
@@ -166,10 +162,6 @@ export default function HomeSectionAcademy() {
           </div>
         </div>
       </section>
-
-      {activeSession && (
-        <SessionDetailModal session={activeSession} onClose={() => setActiveSessionId(null)} />
-      )}
     </>
   );
 }

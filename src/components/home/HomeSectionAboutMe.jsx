@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Heart, Shield, BookOpen } from "lucide-react";
-import ImagePlaceholder from "./ImagePlaceholder";
 
 export default function HomeSectionAboutMe() {
   const ref = useRef(null);
@@ -28,12 +27,13 @@ export default function HomeSectionAboutMe() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        {/* Na lg: wysokość bloku = wysokość tekstu; zdjęcie wypełnia prawą połowę od góry do dołu tekstu */}
+        <div className="relative">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.65 }}
-            className="space-y-6 text-[#555555] text-sm sm:text-base leading-relaxed font-light"
+            className="space-y-6 text-[#555555] text-sm sm:text-base leading-relaxed font-light lg:w-[calc(50%-2rem)]"
           >
             <p>
               Jestem pasjonatką zdrowego żywienia i samoukiem, która od lat zgłębia wpływ diety i naturalnych
@@ -68,8 +68,17 @@ export default function HomeSectionAboutMe() {
             initial={{ opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.65, delay: 0.05 }}
+            className="mt-8 aspect-[4/5] w-full max-w-md mx-auto overflow-hidden rounded-2xl border border-[#71797E]/10 bg-[#FAFAF5] shadow-sm sm:max-w-lg lg:mx-0 lg:mt-0 lg:aspect-auto lg:max-w-none lg:absolute lg:top-0 lg:right-0 lg:h-full lg:w-[calc(50%-2rem)]"
           >
-            <ImagePlaceholder label="Zdjęcie prowadzącej" aspectClass="aspect-[4/5]" />
+            <img
+              src="/img/me.jpg"
+              alt="Prowadząca Domowej Akademii Moksy"
+              className="h-full w-full object-cover object-[center_20%]"
+              width={960}
+              height={1200}
+              loading="lazy"
+              decoding="async"
+            />
           </motion.div>
         </div>
 
