@@ -1,6 +1,9 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
 import { Sparkles } from "lucide-react";
+import { PORADNIK_MOKSOTERAPII_PATH } from "../../data/poradnikMoksoterapiiMeta";
+import { KOMPENDIUM_ODZYWANIA_PATH } from "../../data/kompendiumOdzywianiaMeta";
 
 const feel = [
   "Lepsza regeneracja — ciało szybciej odpoczywa i wraca do formy po wysiłku lub stresie",
@@ -110,6 +113,36 @@ export default function HomeSectionDeepBenefits() {
             </div>
           </motion.div>
         </div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.25 }}
+          className="mt-14 text-center text-sm text-[#555555] max-w-2xl mx-auto leading-relaxed"
+        >
+          Chcesz więcej wiedzy w jednym miejscu? Przejdź do sekcji{" "}
+          <a
+            href="#przewodniki"
+            className="font-medium text-[#71797E] underline underline-offset-4 hover:text-[#333333]"
+          >
+            przewodników TCM
+          </a>{" "}
+          —{" "}
+          <Link
+            to={PORADNIK_MOKSOTERAPII_PATH}
+            className="font-medium text-[#71797E] underline underline-offset-4 hover:text-[#333333]"
+          >
+            poradnik moksoterapii (Ścieżka ciepła)
+          </Link>{" "}
+          oraz{" "}
+          <Link
+            to={KOMPENDIUM_ODZYWANIA_PATH}
+            className="font-medium text-[#71797E] underline underline-offset-4 hover:text-[#333333]"
+          >
+            kompendium żywienia i stylu życia (Rytm stołu)
+          </Link>
+          .
+        </motion.p>
       </div>
     </section>
   );

@@ -1,25 +1,44 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Flame, LogIn, LogOut } from "lucide-react";
+import { Menu, X, Flame, LogOut, ChevronDown, UserRoundPlus } from "lucide-react";
 import { useReservation } from "../context/ReservationContext";
 import { useAuth } from "../context/AuthContext";
 import { PORADNIK_MOKSOTERAPII_PATH } from "../data/poradnikMoksoterapiiMeta";
 import { KOMPENDIUM_ODZYWANIA_PATH } from "../data/kompendiumOdzywianiaMeta";
 
+const korzysciNav = {
+  label: "Korzyści",
+  href: "/#korzysci",
+  items: [
+    { label: "Zalety moksoterapii — sekcja na stronie głównej", href: "/#korzysci" },
+    { label: "Poradnik moksoterapii — Ścieżka ciepła", to: PORADNIK_MOKSOTERAPII_PATH },
+    { label: "Kompendium żywienia TCM — Rytm stołu", to: KOMPENDIUM_ODZYWANIA_PATH },
+  ],
+};
+
 const navLinks = [
   { label: "O mokście", href: "/#about" },
-  { label: "Korzyści", href: "/#korzysci" },
+  korzysciNav,
   { label: "Akademia", href: "/#akademia" },
   { label: "Boxy", href: "/#boxy" },
   { label: "Zabiegi", to: "/zabiegi" },
-  { label: "Poradnik moksy", to: PORADNIK_MOKSOTERAPII_PATH },
-  { label: "Kompendium TCM", to: KOMPENDIUM_ODZYWANIA_PATH },
   { label: "Szkolenia", to: "/szkolenia" },
   { label: "Kontakt", href: "/#contact" },
 ];
 
+const linkClassDesktop = (isScrolled) =>
+  `cursor-pointer text-sm font-medium transition-colors duration-200 relative group flex items-center gap-1 ${
+    isScrolled ? "text-[#555555] hover:text-[#71797E]" : "text-[#F5F5DC] hover:text-[#D4A24A]"
+  }`;
+
+const underlineClass = (isScrolled) =>
+  `absolute -bottom-0.5 left-0 w-0 h-px transition-all duration-300 group-hover:w-full ${
+    isScrolled ? "bg-[#71797E]" : "bg-[#D4A24A]"
+  }`;
+
 export default function Navbar() {
+  const location = useLocation();
   const { openWidget } = useReservation();
   const { user, loading, openAuth, logout } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -68,6 +87,16 @@ export default function Navbar() {
     };
   }, []);
 
+  const handleLogoClick = (e) => {
+    setMenuOpen(false);
+    if (location.pathname !== "/") return;
+    e.preventDefault();
+    document.getElementById("hero")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (location.hash) {
+      window.history.replaceState(null, "", "/");
+    }
+  };
+
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
@@ -84,7 +113,12 @@ export default function Navbar() {
     >
       <div className="w-full max-w-[100vw] box-border mx-auto px-4 sm:px-5 md:px-6 lg:px-10 h-12 sm:h-14 md:h-20 flex items-center justify-between gap-3 min-w-0">
         {/* Logo — na mobile tylko ikona (bez diva-okręgu), na desktop pełne logo */}
-        <Link to="/" className="flex items-center gap-2 sm:gap-2.5 group min-w-0 shrink-0">
+        <Link
+          to="/"
+          onClick={handleLogoClick}
+          className="flex items-center gap-2 sm:gap-2.5 group min-w-0 shrink-0 cursor-pointer"
+          aria-label="Moksy — strona główna, sekcja hero"
+        >
           <span className={`md:flex md:w-9 md:h-9 md:rounded-full md:items-center md:justify-center hidden ${isScrolled ? "md:bg-[#71797E]" : "md:bg-[#F5F5DC]/20"}`}>
             <Flame size={18} className={isScrolled ? "text-[#F5F5DC]" : "text-[#F5F5DC]"} />
           </span>
@@ -98,41 +132,79 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8 shrink-0">
+        <nav className="hidden md:flex items-center gap-8 shrink-0" aria-label="Menu główne">
           {navLinks.map((link) =>
             link.openWidget ? (
               <button
                 key={link.label}
                 type="button"
                 onClick={() => openWidget()}
-                className={`text-sm font-medium transition-colors duration-200 relative group ${
+                className={`cursor-pointer text-sm font-medium transition-colors duration-200 relative group ${
                   isScrolled ? "text-[#555555] hover:text-[#71797E]" : "text-[#F5F5DC] hover:text-[#D4A24A]"
                 }`}
               >
                 {link.label}
-                <span className={`absolute -bottom-0.5 left-0 w-0 h-px transition-all duration-300 group-hover:w-full ${isScrolled ? "bg-[#71797E]" : "bg-[#D4A24A]"}`} />
+                <span className={underlineClass(isScrolled)} />
               </button>
+            ) : link.items ? (
+              <div key={link.label} className="relative group py-1">
+                <a
+                  href={link.href}
+                  className={`${linkClassDesktop(isScrolled)} relative py-2`}
+                  aria-haspopup="menu"
+                  aria-label={`${link.label} — menu z linkami do przewodników`}
+                >
+                  {link.label}
+                  <ChevronDown size={14} className="opacity-75 shrink-0" aria-hidden />
+                  <span className={underlineClass(isScrolled)} />
+                </a>
+                <div
+                  className="absolute left-0 top-full z-[60] pt-1.5 w-[min(20rem,calc(100vw-2rem))] opacity-0 invisible translate-y-0.5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200"
+                  role="menu"
+                  aria-label="Podmenu Korzyści"
+                >
+                  <div className="rounded-xl border border-[#71797E]/20 bg-[#FAFAF5]/98 backdrop-blur-md shadow-lg py-2">
+                    {link.items.map((item) =>
+                      item.to ? (
+                        <Link
+                          key={item.to}
+                          to={item.to}
+                          role="menuitem"
+                          className="block cursor-pointer px-4 py-2.5 text-sm text-[#333333] hover:bg-[#71797E]/10 rounded-lg mx-1 leading-snug"
+                        >
+                          {item.label}
+                        </Link>
+                      ) : (
+                        <a
+                          key={item.href}
+                          href={item.href}
+                          role="menuitem"
+                          className="block cursor-pointer px-4 py-2.5 text-sm text-[#333333] hover:bg-[#71797E]/10 rounded-lg mx-1 leading-snug"
+                        >
+                          {item.label}
+                        </a>
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
             ) : link.to ? (
               <Link
                 key={link.label}
                 to={link.to}
-                className={`text-sm font-medium transition-colors duration-200 relative group ${
-                  isScrolled ? "text-[#555555] hover:text-[#71797E]" : "text-[#F5F5DC] hover:text-[#D4A24A]"
-                }`}
+                className={`${linkClassDesktop(isScrolled)} relative py-2`}
               >
                 {link.label}
-                <span className={`absolute -bottom-0.5 left-0 w-0 h-px transition-all duration-300 group-hover:w-full ${isScrolled ? "bg-[#71797E]" : "bg-[#D4A24A]"}`} />
+                <span className={underlineClass(isScrolled)} />
               </Link>
             ) : (
               <a
                 key={link.label}
                 href={link.href}
-                className={`text-sm font-medium transition-colors duration-200 relative group ${
-                  isScrolled ? "text-[#555555] hover:text-[#71797E]" : "text-[#F5F5DC] hover:text-[#D4A24A]"
-                }`}
+                className={`${linkClassDesktop(isScrolled)} relative py-2`}
               >
                 {link.label}
-                <span className={`absolute -bottom-0.5 left-0 w-0 h-px transition-all duration-300 group-hover:w-full ${isScrolled ? "bg-[#71797E]" : "bg-[#D4A24A]"}`} />
+                <span className={underlineClass(isScrolled)} />
               </a>
             )
           )}
@@ -141,7 +213,7 @@ export default function Navbar() {
               <span className="ml-2 flex items-center gap-3">
                 <Link
                   to="/moje-wizyty"
-                  className={`text-xs font-medium underline underline-offset-4 ${
+                  className={`cursor-pointer text-xs font-medium underline underline-offset-4 ${
                     isScrolled ? "text-[#71797E] hover:text-[#333333]" : "text-[#F5F5DC]/80 hover:text-[#F5F5DC]"
                   }`}
                 >
@@ -158,7 +230,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => logout()}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium transition-colors ${
+                  className={`cursor-pointer flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-medium transition-colors ${
                     isScrolled
                       ? "text-[#555555] hover:bg-[#71797E]/10 hover:text-[#333333]"
                       : "text-[#F5F5DC]/80 hover:bg-[#F5F5DC]/10 hover:text-[#F5F5DC]"
@@ -173,13 +245,18 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => openAuth("register")}
-                className={`ml-2 flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-medium transition-colors ${
+                className={`cursor-pointer ml-2 inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-colors ${
                   isScrolled
                     ? "text-[#555555] hover:bg-[#71797E]/10 hover:text-[#333333]"
                     : "text-[#F5F5DC] hover:bg-[#F5F5DC]/10"
                 }`}
               >
-                <LogIn size={14} />
+                <UserRoundPlus
+                  size={18}
+                  strokeWidth={1.75}
+                  className={isScrolled ? "text-[#C4862A]" : "text-[#D4A24A]"}
+                  aria-hidden
+                />
                 Zarejestruj
               </button>
             )
@@ -187,7 +264,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => openWidget()}
-            className={`ml-2 px-5 py-2.5 rounded-full text-sm font-medium transition-colors duration-200 shadow-sm ${
+            className={`cursor-pointer ml-2 px-5 py-2.5 rounded-full text-sm font-medium transition-colors duration-200 shadow-sm ${
               isScrolled ? "bg-[#71797E] text-[#F5F5DC] hover:bg-[#5A6468]" : "bg-[#F5F5DC] text-[#333333] hover:bg-white"
             }`}
           >
@@ -197,7 +274,8 @@ export default function Navbar() {
 
         {/* Mobile Hamburger */}
         <button
-          className={`md:hidden p-2 -mr-1 shrink-0 touch-manipulation ${isScrolled ? "text-[#333333]" : "text-[#F5F5DC]"}`}
+          type="button"
+          className={`cursor-pointer md:hidden p-2 -mr-1 shrink-0 touch-manipulation ${isScrolled ? "text-[#333333]" : "text-[#F5F5DC]"}`}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Otwórz menu"
         >
@@ -225,16 +303,52 @@ export default function Navbar() {
                       setMenuOpen(false);
                       openWidget();
                     }}
-                    className="text-left text-base font-medium text-[#F5F5DC] hover:text-[#D4A24A] transition-colors"
+                    className="cursor-pointer text-left text-base font-medium text-[#F5F5DC] hover:text-[#D4A24A] transition-colors"
                   >
                     {link.label}
                   </button>
+                ) : link.items ? (
+                  <div key={link.label} className="flex flex-col gap-2">
+                    <a
+                      href={link.href}
+                      onClick={() => setMenuOpen(false)}
+                      className="cursor-pointer text-base font-medium text-[#F5F5DC] hover:text-[#D4A24A] transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                    <div className="flex flex-col gap-2 pl-3 ml-0.5 border-l border-[#F5F5DC]/20">
+                      <span className="text-xs uppercase tracking-wider text-[#F5F5DC]/45 pl-2">
+                        Przewodniki i sekcja
+                      </span>
+                      {link.items.map((item) =>
+                        item.to ? (
+                          <Link
+                            key={item.to}
+                            to={item.to}
+                            onClick={() => setMenuOpen(false)}
+                            className="cursor-pointer text-sm text-[#F5F5DC]/90 hover:text-[#D4A24A] transition-colors pl-2 leading-snug"
+                          >
+                            {item.label}
+                          </Link>
+                        ) : (
+                          <a
+                            key={item.href}
+                            href={item.href}
+                            onClick={() => setMenuOpen(false)}
+                            className="cursor-pointer text-sm text-[#F5F5DC]/90 hover:text-[#D4A24A] transition-colors pl-2 leading-snug"
+                          >
+                            {item.label}
+                          </a>
+                        )
+                      )}
+                    </div>
+                  </div>
                 ) : link.to ? (
                   <Link
                     key={link.label}
                     to={link.to}
                     onClick={() => setMenuOpen(false)}
-                    className="text-base font-medium text-[#F5F5DC] hover:text-[#D4A24A] transition-colors"
+                    className="cursor-pointer text-base font-medium text-[#F5F5DC] hover:text-[#D4A24A] transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -243,7 +357,7 @@ export default function Navbar() {
                     key={link.label}
                     href={link.href}
                     onClick={() => setMenuOpen(false)}
-                    className="text-base font-medium text-[#F5F5DC] hover:text-[#D4A24A] transition-colors"
+                    className="cursor-pointer text-base font-medium text-[#F5F5DC] hover:text-[#D4A24A] transition-colors"
                   >
                     {link.label}
                   </a>
@@ -253,7 +367,7 @@ export default function Navbar() {
                 <Link
                   to="/moje-wizyty"
                   onClick={() => setMenuOpen(false)}
-                  className="mt-1 text-sm text-[#F5F5DC]/80 underline underline-offset-4"
+                  className="cursor-pointer mt-1 text-sm text-[#F5F5DC]/80 underline underline-offset-4 hover:text-[#D4A24A]"
                 >
                   Moje wizyty
                 </Link>
@@ -270,7 +384,7 @@ export default function Navbar() {
                         setMenuOpen(false);
                         logout();
                       }}
-                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-[#F5F5DC]/20 text-[#F5F5DC] text-sm hover:bg-[#F5F5DC]/10"
+                      className="cursor-pointer flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-[#F5F5DC]/20 text-[#F5F5DC] text-sm hover:bg-[#F5F5DC]/10"
                     >
                       <LogOut size={14} />
                       Wyloguj
@@ -283,9 +397,9 @@ export default function Navbar() {
                       setMenuOpen(false);
                       openAuth("register");
                     }}
-                    className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-[#F5F5DC]/20 text-[#F5F5DC] text-sm hover:bg-[#F5F5DC]/10"
+                    className="cursor-pointer flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-[#F5F5DC]/20 text-[#F5F5DC] text-sm hover:bg-[#F5F5DC]/10"
                   >
-                    <LogIn size={14} />
+                    <UserRoundPlus size={18} strokeWidth={1.75} className="text-[#D4A24A]" aria-hidden />
                     Zarejestruj
                   </button>
                 )
@@ -296,7 +410,7 @@ export default function Navbar() {
                   setMenuOpen(false);
                   openWidget();
                 }}
-                className="mt-2 px-5 py-3 rounded-full bg-[#F5F5DC] text-[#333333] text-sm font-medium text-center hover:bg-white transition-colors"
+                className="cursor-pointer mt-2 px-5 py-3 rounded-full bg-[#F5F5DC] text-[#333333] text-sm font-medium text-center hover:bg-white transition-colors"
               >
                 Umów wizytę
               </button>

@@ -247,3 +247,29 @@ export function getKompendiumOdzywianiaSchemas(opts) {
     ],
   });
 }
+
+/** ItemList przewodników na stronie głównej (wewnętrzne linkowanie w SERP / zrozumienie struktury). */
+export function getHomeGuidesItemListSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Przewodniki TCM — moksoterapia i żywienie",
+    description:
+      "Darmowe kompendia: poradnik moksoterapii w domu oraz zasady żywienia i stylu życia wg medycyny chińskiej.",
+    numberOfItems: 2,
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Poradnik moksoterapii — Ścieżka ciepła",
+        url: `${SITE_URL}${PORADNIK_MOKSOTERAPII_PATH}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Kompendium żywienia TCM — Rytm stołu",
+        url: `${SITE_URL}${KOMPENDIUM_ODZYWANIA_PATH}`,
+      },
+    ],
+  };
+}

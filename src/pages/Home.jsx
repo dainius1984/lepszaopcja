@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import AboutMoxa from "../components/AboutMoxa";
 import HomeSectionDeepBenefits from "../components/home/HomeSectionDeepBenefits";
+import HomeSectionGuides from "../components/home/HomeSectionGuides";
 import HomeSectionFamily from "../components/home/HomeSectionFamily";
 import HomeSectionAcademy from "../components/home/HomeSectionAcademy";
 import HomeSectionBoxes from "../components/home/HomeSectionBoxes";
@@ -14,7 +15,7 @@ import ScrollRevealSection from "../components/home/ScrollRevealSection";
 import ContactFormPopup from "../components/ContactFormPopup";
 import Seo from "../components/Seo";
 import JsonLd from "../components/JsonLd";
-import { getLocalBusinessSchema } from "../seo/schemas";
+import { getLocalBusinessSchema, getHomeGuidesItemListSchema } from "../seo/schemas";
 
 export default function Home() {
   const location = useLocation();
@@ -33,11 +34,11 @@ export default function Home() {
     <div className="font-sans antialiased">
       <Seo
         title="Domowa Akademia Moksy — moksoterapia i warsztaty we Wrocławiu"
-        description="Mobilna moksoterapia TCM: nauka praktyki w domu, pakiety Start-Up Express, Złoty Standard i Akademia Długowieczności. Wrocław i okolice. Boxy startowe i premium."
-        keywords="moksoterapia Wrocław, Domowa Akademia Moksy, moksa w domu, warsztat moksy, moksoterapia mobilna, TCM, naturalne ciepło, box moksy"
+        description="Mobilna moksoterapia TCM we Wrocławiu: nauka moksy w domu, pakiety sesji, boxy. Darmowe przewodniki: poradnik moksoterapii (Ścieżka ciepła) oraz kompendium żywienia i stylu życia wg TCM (Rytm stołu)."
+        keywords="moksoterapia Wrocław, Domowa Akademia Moksy, moksa w domu, poradnik moksoterapii, kompendium żywienia TCM, warsztat moksy, moksoterapia mobilna, TCM, naturalne ciepło, box moksy, przewodnik moksa"
         url="/"
       />
-      <JsonLd schema={getLocalBusinessSchema()} />
+      <JsonLd schema={[getLocalBusinessSchema(), getHomeGuidesItemListSchema()]} />
       <ContactFormPopup />
       <Navbar />
       <Hero />
@@ -46,6 +47,9 @@ export default function Home() {
       </ScrollRevealSection>
       <ScrollRevealSection>
         <HomeSectionDeepBenefits />
+      </ScrollRevealSection>
+      <ScrollRevealSection>
+        <HomeSectionGuides />
       </ScrollRevealSection>
       <ScrollRevealSection>
         <HomeSectionFamily />
