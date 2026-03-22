@@ -10,6 +10,7 @@ import {
   UserRoundPlus,
   CircleUser,
   CalendarDays,
+  IdCard,
 } from "lucide-react";
 import { useReservation } from "../context/ReservationContext";
 import { useAuth } from "../context/AuthContext";
@@ -49,7 +50,7 @@ const underlineClass = (isScrolled) =>
 export default function Navbar() {
   const location = useLocation();
   const { openWidget } = useReservation();
-  const { user, loading, openAuth, logout } = useAuth();
+  const { user, loading, openAuth, openProfileModal, logout } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -312,6 +313,18 @@ export default function Navbar() {
                         role="menuitem"
                         onClick={() => {
                           setUserMenuOpen(false);
+                          openProfileModal();
+                        }}
+                        className="flex w-full cursor-pointer items-center gap-2.5 px-3.5 py-2.5 text-left text-sm text-[#333333] transition-colors hover:bg-[#71797E]/10"
+                      >
+                        <IdCard size={17} className="shrink-0 text-[#71797E]" aria-hidden />
+                        Moje dane
+                      </button>
+                      <button
+                        type="button"
+                        role="menuitem"
+                        onClick={() => {
+                          setUserMenuOpen(false);
                           logout();
                         }}
                         className="flex w-full cursor-pointer items-center gap-2.5 px-3.5 py-2.5 text-left text-sm text-[#333333] transition-colors hover:bg-[#71797E]/10"
@@ -469,6 +482,17 @@ export default function Navbar() {
                       <CalendarDays size={18} className="text-[#D4A24A]" aria-hidden />
                       Moje wizyty
                     </Link>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMenuOpen(false);
+                        openProfileModal();
+                      }}
+                      className="mb-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-[#F5F5DC]/25 px-4 py-3 text-sm font-medium text-[#F5F5DC]/90 transition-colors hover:bg-[#F5F5DC]/10"
+                    >
+                      <IdCard size={18} className="text-[#D4A24A]" aria-hidden />
+                      Moje dane
+                    </button>
                     <button
                       type="button"
                       onClick={() => {

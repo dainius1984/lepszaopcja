@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { ReservationProvider } from "./context/ReservationContext";
 import AuthWidget from "./components/AuthWidget";
+import ProfileModal from "./components/ProfileModal";
 import ReservationWidget from "./components/ReservationWidget";
 import Home from "./pages/Home";
 import ZabiegiPage from "./pages/ZabiegiPage";
@@ -19,6 +20,7 @@ function App() {
     <AuthProvider>
       <ReservationProvider>
         <AuthWidget />
+        <ProfileModal />
         <ReservationWidget />
         <Routes>
           <Route path="/" element={<Home />} />

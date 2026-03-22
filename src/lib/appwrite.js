@@ -49,7 +49,12 @@ export async function loginUser(email, password) {
   if (!account) throw new Error("Appwrite nie jest skonfigurowany. Uzupełnij plik .env.");
   await account.createEmailPasswordSession({ email, password });
   const user = await account.get();
-  return { id: user.$id, email: user.email, name: user.name };
+  return {
+    id: user.$id,
+    email: user.email,
+    name: user.name || "",
+    phone: user.phone || "",
+  };
 }
 
 /**
@@ -71,10 +76,76 @@ export async function getCurrentUser() {
   if (!account) return null;
   try {
     const user = await account.get();
-    return { id: user.$id, email: user.email, name: user.name };
+    return {
+      id: user.$id,
+      email: user.email,
+      name: user.name || "",
+      phone: user.phone || "",
+    };
   } catch {
     return null;
   }
+}
+
+/** Rozdziela pojedyncze pole `name` z Appwrite na imię i nazwisko (pierwsze słowo / reszta). */
+export function splitFullName(name) {
+  const n = (name || "").trim();
+  if (!n) return { firstName: "", lastName: "" };
+  const i = n.indexOf(" ");
+  if (i === -1) return { firstName: n, lastName: "" };
+  return { firstName: n.slice(0, i).trim(), lastName: n.slice(i + 1).trim() };
+}
+
+/** E.164 z plusem — dla pustego zwraca "". */
+export function normalizePhoneForAppwrite(raw) {
+  const s = String(raw || "").trim().replace(/\s/g, "");
+  if (!s) return "";
+  if (s.startsWith("+")) {
+    const digits = s.slice(1).replace(/\D/g, "");
+    return digits ? `+${digits}` : "";
+  }
+  const digits = s.replace(/\D/g, "");
+  if (!digits) return "";
+  if (digits.startsWith("48") && digits.length >= 11) return `+${digits}`;
+  if (digits.length === 9) return `+48${digits}`;
+  return `+${digits}`;
+}
+
+/**
+ * Aktualizuje imię i nazwisko (jedno pole `name` w Appwrite).
+ * @param {{ firstName: string, lastName: string }} p
+ */
+export async function updateAccountName(firstName, lastName) {
+  if (!account) throw new Error("Appwrite nie jest skonfigurowany.");
+  const name = `${(firstName || "").trim()} ${(lastName || "").trim()}`.trim();
+  if (!name) throw new Error("Podaj imię lub nazwisko.");
+  await account.updateName({ name });
+}
+
+/**
+ * Numer telefonu w Appwrite wymaga hasła. Pusty `phone` — pomija aktualizację (nie usuwa numeru w konsoli).
+ */
+export async function updateAccountPhone(phone, password) {
+  if (!account) throw new Error("Appwrite nie jest skonfigurowany.");
+  const normalized = normalizePhoneForAppwrite(phone);
+  if (!normalized) {
+    throw new Error("Podaj numer w formacie z kodem kraju, np. +48123456789.");
+  }
+  if (!password || password.length < 8) {
+    throw new Error("Aby zmienić telefon, podaj aktualne hasło (min. 8 znaków).");
+  }
+  await account.updatePhone({ phone: normalized, password });
+}
+
+/**
+ * @param {{ oldPassword: string, newPassword: string }} p
+ */
+export async function updateAccountPassword(oldPassword, newPassword) {
+  if (!account) throw new Error("Appwrite nie jest skonfigurowany.");
+  if (!newPassword || newPassword.length < 8) {
+    throw new Error("Nowe hasło musi mieć co najmniej 8 znaków.");
+  }
+  await account.updatePassword({ password: newPassword, oldPassword });
 }
 
 /**

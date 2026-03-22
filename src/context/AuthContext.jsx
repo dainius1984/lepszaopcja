@@ -7,6 +7,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [authTab, setAuthTab] = useState("login"); // "login" | "register"
   const AUTO_LOGOUT_MS = 5 * 60 * 1000; // 5 minut
 
@@ -87,15 +88,26 @@ export function AuthProvider({ children }) {
     setAuthModalOpen(false);
   }, []);
 
+  const openProfileModal = useCallback(() => {
+    setProfileModalOpen(true);
+  }, []);
+
+  const closeProfileModal = useCallback(() => {
+    setProfileModalOpen(false);
+  }, []);
+
   const value = {
     user,
     loading,
     authModalOpen,
+    profileModalOpen,
     authTab,
     setAuthTab,
     openAuth,
     closeAuth,
     setAuthModalOpen,
+    openProfileModal,
+    closeProfileModal,
     refreshUser,
     logout,
   };
@@ -110,11 +122,14 @@ export function useAuth() {
       user: null,
       loading: false,
       authModalOpen: false,
+      profileModalOpen: false,
       authTab: "login",
       setAuthTab: () => {},
       openAuth: () => {},
       closeAuth: () => {},
       setAuthModalOpen: () => {},
+      openProfileModal: () => {},
+      closeProfileModal: () => {},
       refreshUser: async () => {},
       logout: async () => {},
     };
