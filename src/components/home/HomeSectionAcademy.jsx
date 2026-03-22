@@ -51,12 +51,18 @@ export default function HomeSectionAcademy() {
             <p className="text-[#D4A24A] text-lg sm:text-xl font-medium mb-4">
               Jedna wizyta, wiedza na całe życie
             </p>
-            <p className="text-[#F5F5DC]/65 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
-              Nie przyjeżdżam, by wykonać jeden zabieg — przyjeżdżam, aby pokazać Ci, jak samodzielnie
-              korzystać z moksoterapii w domu. Podczas sesji skupiamy się na Tobie i Twoim ciele: uczysz
-              się technik krok po kroku, poznajesz różne rodzaje moksy i odkrywasz, jak bezpiecznie ją
-              stosować.
-            </p>
+            <div className="text-[#F5F5DC]/65 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed space-y-4">
+              <p>
+                Nie przyjeżdżam, by wykonać jeden zabieg – przyjeżdżam, aby pokazać Ci, jak samodzielnie
+                korzystać z moksoterapii w domu.
+              </p>
+              <p>
+                Podczas sesji skupiamy się na Tobie i Twoim ciele: uczysz się technik krok po kroku,
+                poznajesz różne rodzaje moksy, odkrywasz, jak bezpiecznie ją stosować i jak kontrolować
+                ciepło w każdym momencie. To doświadczenie, po którym stajesz się samodzielnym praktykiem
+                – w swoim domu, w swoim tempie.
+              </p>
+            </div>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start mb-16">

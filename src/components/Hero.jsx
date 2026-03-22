@@ -108,9 +108,9 @@ export default function Hero() {
           custom={0.45}
           className="text-base sm:text-lg md:text-xl text-[#F5F5DC]/75 max-w-2xl mx-auto mb-10 leading-relaxed font-light px-2"
         >
-          Zakorzeniona w tysiącach lat tradycyjnej medycyny chińskiej,
-          moksoterapia wykorzystuje uzdrawiającą energię ciepła, by przywrócić
-          równowagę, witalność i głęboką harmonię.
+          Zakorzeniona w tysiącach lat tradycji medycyny chińskiej, moksoterapia
+          wykorzystuje leczniczą energię ciepła, by przywrócić równowagę, witalność i
+          głęboką harmonię całego ciała.
         </motion.p>
 
         <motion.div
@@ -134,33 +134,6 @@ export default function Hero() {
             <CalendarDays size={16} />
             Szybka rezerwacja
           </button>
-        </motion.div>
-
-        {/* Stats strip */}
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={0.8}
-          className="mt-16 sm:mt-20 grid grid-cols-3 gap-4 sm:gap-6 max-w-lg mx-auto"
-        >
-          {[
-            { number: "15+", label: "Lat praktyki" },
-            { number: "2 000+", label: "Pacjentów" },
-            { number: "300+", label: "Uczestników szkoleń" },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div
-                className="text-2xl font-bold text-[#D4A24A] mb-1"
-                style={{ fontFamily: '"Playfair Display", serif' }}
-              >
-                {stat.number}
-              </div>
-              <div className="text-xs text-[#F5F5DC]/60 leading-tight">
-                {stat.label}
-              </div>
-            </div>
-          ))}
         </motion.div>
       </div>
 

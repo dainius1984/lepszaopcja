@@ -131,8 +131,9 @@ export default function ContactFooter({ showFaq = false }) {
                 indywidualnie.
               </li>
             </ul>
-            <p className="mt-5 text-sm text-[#71797E]">
-              Przy rezerwacji podaj dokładny adres — od razu potwierdzę koszt dojazdu, bez niespodzianek.
+            <p className="mt-5 text-sm text-[#555555] leading-relaxed">
+              <span className="font-medium text-[#333333]">Tip:</span> Przy rezerwacji podaj dokładny adres,
+              a ja od razu potwierdzę koszt dojazdu. Dzięki temu wszystko jest jasne i bez niespodzianek.
             </p>
             <button
               type="button"

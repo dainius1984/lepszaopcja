@@ -57,9 +57,10 @@ export default function HomeSectionAboutMe() {
             </p>
             <p>
               W Domowej Akademii Moksy uczę, jak w pełni samodzielnie korzystać z moksoterapii w domu. Moim
-              celem jest „dać wędkę” — jedno spotkanie, po którym wiesz, jak bezpiecznie i skutecznie stosować
+              celem jest „dać wędkę” – jedno spotkanie, po którym wiesz, jak bezpiecznie i skutecznie stosować
               moksa dla siebie i bliskich. Jestem pasjonatką nauki przez praktykę: podczas sesji pokazuję
-              różne akcesoria, materiały i techniki, aby każdy mógł dopasować narzędzia do swoich potrzeb.
+              różne akcesoria, materiały i techniki, aby każdy mógł dopasować narzędzia do swoich potrzeb i
+              rozpocząć swoją codzienną praktykę w domu.
             </p>
           </motion.div>
 

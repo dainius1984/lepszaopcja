@@ -65,7 +65,7 @@ export const academySessions = [
       "Pokaz ogrzewania punktów z pomocą akcesoriów (pudełka, rolery, uchwyty, pokrowce)",
       "Instrukcja z punktami akupunkturowymi, z zaznaczeniem indywidualnych punktów podczas sesji",
       "Miesięczna opieka zdalna po sesji — możesz pytać, konsultować i upewnić się, że praktyka przebiega prawidłowo",
-      "Rozpoczęte cygara pozostają u Ciebie do dalszej praktyki",
+      "Rozpoczęte cygara pozostają u uczestników do dalszej praktyki",
       "Instrukcja z punktami akupunkturowymi dla każdego uczestnika, gdzie zaznaczamy w trakcie sesji indywidualne punkty",
     ],
     reserveLabel: "Zarezerwuj Akademię Długowieczności",

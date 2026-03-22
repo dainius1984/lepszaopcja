@@ -26,10 +26,25 @@ export default function ContactFormPopup() {
     return () => clearTimeout(t);
   }, []);
 
-  // Pozwala otworzyć popup programowo (np. z przycisku "Zapytaj o bezpłatną konsultację")
+  // Otwarcie programowe: Event lub CustomEvent z detail: { interest?, message? }
   useEffect(() => {
-    const handler = () => {
+    const handler = (e) => {
       hasShownRef.current = true;
+      setSubmitError(null);
+      setSubmitted(false);
+      const d = e?.detail && typeof e.detail === "object" ? e.detail : {};
+      const hasDetail = Object.keys(d).length > 0;
+      if (!hasDetail) {
+        setFormData({ name: "", email: "", interest: "", message: "" });
+      } else {
+        setFormData({
+          name: "",
+          email: "",
+          interest:
+            d.interest != null && String(d.interest).length > 0 ? d.interest : "",
+          message: d.message != null ? d.message : "",
+        });
+      }
       setIsOpen(true);
     };
     window.addEventListener("open-contact-popup", handler);
@@ -201,6 +216,8 @@ export default function ContactFormPopup() {
                           className="w-full px-4 py-3 rounded-xl border border-[#71797E]/20 bg-white text-[#333333] text-sm focus:outline-none focus:border-[#71797E] focus:ring-1 focus:ring-[#71797E]/20 transition-colors appearance-none cursor-pointer"
                         >
                           <option value="" disabled>Wybierz...</option>
+                          <option value="box-start">Zakup — Start Box</option>
+                          <option value="box-premium">Zakup — Premium Box</option>
                           <option value="therapy">Zabieg terapeutyczny</option>
                           <option value="foundation">Kurs podstawowy</option>
                           <option value="advanced">Kurs zaawansowany</option>

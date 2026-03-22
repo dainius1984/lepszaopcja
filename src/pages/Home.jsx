@@ -10,6 +10,7 @@ import HomeSectionBoxes from "../components/home/HomeSectionBoxes";
 import HomeSectionAboutMe from "../components/home/HomeSectionAboutMe";
 import Testimonials from "../components/Testimonials";
 import ContactFooter from "../components/ContactFooter";
+import ScrollRevealSection from "../components/home/ScrollRevealSection";
 import ContactFormPopup from "../components/ContactFormPopup";
 import Seo from "../components/Seo";
 import JsonLd from "../components/JsonLd";
@@ -40,14 +41,30 @@ export default function Home() {
       <ContactFormPopup />
       <Navbar />
       <Hero />
-      <AboutMoxa />
-      <HomeSectionDeepBenefits />
-      <HomeSectionFamily />
-      <HomeSectionAcademy />
-      <HomeSectionBoxes />
-      <HomeSectionAboutMe />
-      <Testimonials />
-      <ContactFooter showFaq />
+      <ScrollRevealSection>
+        <AboutMoxa />
+      </ScrollRevealSection>
+      <ScrollRevealSection>
+        <HomeSectionDeepBenefits />
+      </ScrollRevealSection>
+      <ScrollRevealSection>
+        <HomeSectionFamily />
+      </ScrollRevealSection>
+      <ScrollRevealSection>
+        <HomeSectionAcademy />
+      </ScrollRevealSection>
+      <ScrollRevealSection>
+        <HomeSectionBoxes />
+      </ScrollRevealSection>
+      <ScrollRevealSection>
+        <HomeSectionAboutMe />
+      </ScrollRevealSection>
+      <ScrollRevealSection>
+        <Testimonials />
+      </ScrollRevealSection>
+      <ScrollRevealSection>
+        <ContactFooter showFaq />
+      </ScrollRevealSection>
     </div>
   );
 }

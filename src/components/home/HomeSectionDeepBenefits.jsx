@@ -50,7 +50,7 @@ export default function HomeSectionDeepBenefits() {
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#333333] mb-5 max-w-3xl mx-auto leading-tight"
             style={{ fontFamily: '"Playfair Display", serif' }}
           >
-            Zalety moksoterapii
+            Dlaczego warto – Zalety moksoterapii
           </h2>
           <p className="text-[#555555] text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
             Moksoterapia to naturalna terapia ciepłem, która pomaga Twojemu ciału odzyskać równowagę
@@ -97,7 +97,7 @@ export default function HomeSectionDeepBenefits() {
             </div>
             <div>
               <h3 className="text-sm font-semibold uppercase tracking-wider text-[#71797E] mb-4">
-                Mini FAQ — czego możesz oczekiwać po sesji
+                Mini FAQ – co możesz oczekiwać po sesji
               </h3>
               <div className="space-y-4">
                 {miniFaq.map((item) => (

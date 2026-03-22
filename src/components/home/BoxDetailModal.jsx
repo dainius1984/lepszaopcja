@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Mail } from "lucide-react";
+import { X, MessageCircle } from "lucide-react";
+import { openContactPopup } from "../../utils/openContactPopup";
 
 export default function BoxDetailModal({ box, onClose }) {
   useEffect(() => {
@@ -17,9 +18,13 @@ export default function BoxDetailModal({ box, onClose }) {
 
   if (!box) return null;
 
-  const mailHref = `mailto:kontakt@lepszaopcja.pl?subject=${encodeURIComponent(
-    `Zamówienie: ${box.name}`
-  )}`;
+  const handlePurchase = () => {
+    onClose();
+    openContactPopup({
+      interest: box.id === "start-box" ? "box-start" : "box-premium",
+      message: `Chcę zamówić ${box.name} (${box.price}). `,
+    });
+  };
 
   return (
     <AnimatePresence>
@@ -80,13 +85,14 @@ export default function BoxDetailModal({ box, onClose }) {
               <p className="text-sm text-[#555555] leading-relaxed">{box.why}</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 pt-1">
-              <a
-                href={mailHref}
+              <button
+                type="button"
+                onClick={handlePurchase}
                 className="flex-1 inline-flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[#333333] text-[#F5F5DC] text-sm font-medium hover:bg-[#71797E] transition-colors"
               >
-                <Mail size={16} />
-                Zapytaj o zakup (e-mail)
-              </a>
+                <MessageCircle size={16} />
+                Zamów — formularz kontaktowy
+              </button>
               <button
                 type="button"
                 onClick={onClose}

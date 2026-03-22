@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Lightbulb } from "lucide-react";
 import { productBoxes } from "../../data/productBoxes";
+import { openContactPopup } from "../../utils/openContactPopup";
 import BoxDetailModal from "./BoxDetailModal";
 import ImagePlaceholder from "./ImagePlaceholder";
 
@@ -11,8 +12,12 @@ export default function HomeSectionBoxes() {
   const [activeBoxId, setActiveBoxId] = useState(null);
   const activeBox = productBoxes.find((b) => b.id === activeBoxId) ?? null;
 
-  const mailtoOrder = (box) =>
-    `mailto:kontakt@lepszaopcja.pl?subject=${encodeURIComponent(`Zamówienie: ${box.name}`)}`;
+  const handlePurchaseBox = (box) => {
+    openContactPopup({
+      interest: box.id === "start-box" ? "box-start" : "box-premium",
+      message: `Chcę zamówić ${box.name} (${box.price}). `,
+    });
+  };
 
   return (
     <>
@@ -75,12 +80,13 @@ export default function HomeSectionBoxes() {
                   >
                     Zobacz szczegóły {box.id === "start-box" ? "Start Box" : "Premium Box"}
                   </button>
-                  <a
-                    href={mailtoOrder(box)}
+                  <button
+                    type="button"
+                    onClick={() => handlePurchaseBox(box)}
                     className="flex-1 py-3 rounded-xl bg-[#333333] text-[#F5F5DC] text-sm font-medium hover:bg-[#71797E] transition-colors text-center"
                   >
                     KUP {box.id === "start-box" ? "Start Box" : "Premium Box"}
-                  </a>
+                  </button>
                 </div>
               </motion.div>
             ))}
