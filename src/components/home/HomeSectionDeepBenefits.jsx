@@ -62,18 +62,19 @@ export default function HomeSectionDeepBenefits() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 lg:items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-x-12 lg:items-stretch">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="flex min-h-0 flex-col lg:h-full"
+            className="flex min-h-0 min-w-0 flex-col lg:h-full"
           >
             <h3 className="text-lg font-semibold text-[#333333] mb-4 flex items-center gap-2">
               <Sparkles className="text-[#C4862A] shrink-0" size={20} />
               Co możesz poczuć i zauważyć po sesji
             </h3>
-            <ul className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-x-10 lg:gap-y-3">
+            {/* Jedna kolumna: ta sama linia końca co prawa strona, gdy rząd siatki ma wspólną wysokość */}
+            <ul className="w-full space-y-3.5">
               {feel.map((item) => (
                 <li
                   key={item}
@@ -89,9 +90,9 @@ export default function HomeSectionDeepBenefits() {
             initial={{ opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="flex min-h-0 flex-col gap-8 lg:h-full lg:justify-between lg:gap-0"
+            className="flex min-h-0 min-w-0 flex-col gap-8 lg:h-full lg:min-h-0 lg:justify-between lg:gap-0"
           >
-            <div className="rounded-2xl bg-[#FAFAF5] border border-[#71797E]/10 p-6 sm:p-8 shrink-0">
+            <div className="rounded-2xl bg-[#FAFAF5] border border-[#71797E]/10 p-6 sm:p-7 shrink-0 w-full">
               <h3 className="text-lg font-semibold text-[#333333] mb-3">Dlaczego to działa?</h3>
               <p className="text-sm text-[#555555] leading-relaxed">
                 Ciepło moksy działa głęboko w ciele, poprawiając przepływ energii i krwi oraz rozluźniając
@@ -99,13 +100,13 @@ export default function HomeSectionDeepBenefits() {
                 regenerować i lepiej reagować na stres i infekcje.
               </p>
             </div>
-            <div className="shrink-0">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-[#71797E] mb-4">
+            <div className="shrink-0 w-full">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-[#71797E] mb-3">
                 Mini FAQ – co możesz oczekiwać po sesji
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {miniFaq.map((item) => (
-                  <div key={item.q} className="rounded-xl border border-[#71797E]/12 bg-white p-4">
+                  <div key={item.q} className="rounded-xl border border-[#71797E]/12 bg-white p-3.5 sm:p-4">
                     <p className="text-sm font-medium text-[#333333] mb-1">{item.q}</p>
                     <p className="text-sm text-[#555555] leading-relaxed">{item.a}</p>
                   </div>
@@ -119,7 +120,7 @@ export default function HomeSectionDeepBenefits() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5, delay: 0.25 }}
-          className="mt-14 lg:mt-16 max-w-5xl mx-auto"
+          className="mt-14 lg:mt-16 w-full min-w-0"
         >
           <p className="text-center text-sm text-[#555555] leading-relaxed mb-6 px-1">
             Chcesz więcej wiedzy w jednym miejscu? Otwórz przewodniki poniżej albo przejdź do sekcji{" "}

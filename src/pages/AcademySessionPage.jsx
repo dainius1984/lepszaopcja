@@ -42,8 +42,9 @@ export default function AcademySessionPage() {
       />
       <Navbar />
 
-      <main className="flex-1 pt-24 md:pt-28">
-        <section className="bg-[#333333] text-[#F5F5DC] pb-12 md:pb-16">
+      <main className="flex-1">
+        {/* Odstęp pod fixed navbar — tutaj wewnątrz ciemnej sekcji, żeby nie świeciło tło #FAFAF5 strony */}
+        <section className="bg-[#333333] text-[#F5F5DC] pt-24 md:pt-28 pb-12 md:pb-16">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-10">
             <nav
               className="mb-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[#F5F5DC]/50"
