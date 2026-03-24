@@ -62,37 +62,52 @@ export default function HomeSectionDeepBenefits() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-x-12 lg:items-stretch">
+        {/* Na mobile: zdjęcie + „Dlaczego to działa” nad listą; na lg: dwie kolumny o tej samej wysokości — zdjęcie rozciąga się w pionie */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-x-12 lg:items-stretch lg:gap-y-0">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="flex min-h-0 min-w-0 flex-col lg:h-full"
+            className="order-2 lg:order-1 flex min-h-0 min-w-0 flex-col gap-8"
           >
-            <h3 className="text-lg font-semibold text-[#333333] mb-4 flex items-center gap-2">
-              <Sparkles className="text-[#C4862A] shrink-0" size={20} />
-              Co możesz poczuć i zauważyć po sesji
-            </h3>
-            {/* Jedna kolumna: ta sama linia końca co prawa strona, gdy rząd siatki ma wspólną wysokość */}
-            <ul className="w-full space-y-3.5">
-              {feel.map((item) => (
-                <li
-                  key={item}
-                  className="text-sm text-[#555555] leading-relaxed pl-4 border-l-2 border-[#71797E]/25"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
+            <div>
+              <h3 className="text-lg font-semibold text-[#333333] mb-4 flex items-center gap-2">
+                <Sparkles className="text-[#C4862A] shrink-0" size={20} />
+                Co możesz poczuć i zauważyć po sesji
+              </h3>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-8 gap-y-3.5 w-full">
+                {feel.map((item) => (
+                  <li
+                    key={item}
+                    className="text-sm text-[#555555] leading-relaxed pl-4 border-l-2 border-[#71797E]/25"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="w-full">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-[#71797E] mb-3">
+                Mini FAQ – co możesz oczekiwać po sesji
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
+                {miniFaq.map((item) => (
+                  <div key={item.q} className="rounded-xl border border-[#71797E]/12 bg-[#FAFAF5] p-3.5 sm:p-4">
+                    <p className="text-sm font-medium text-[#333333] mb-1">{item.q}</p>
+                    <p className="text-sm text-[#555555] leading-relaxed">{item.a}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="flex min-h-0 min-w-0 flex-col gap-6 lg:gap-8 lg:h-full lg:min-h-0"
+            className="order-1 lg:order-2 flex min-h-0 min-w-0 flex-col gap-6 lg:h-full"
           >
-            <div className="relative overflow-hidden rounded-2xl border border-[#71797E]/10 bg-[#FAFAF5] aspect-[4/3] w-full shrink-0 shadow-sm">
+            <div className="relative flex-1 min-h-[220px] lg:min-h-[300px] overflow-hidden rounded-2xl border border-[#71797E]/10 bg-[#FAFAF5] shadow-sm">
               <img
                 src="/img/6.jpg"
                 alt="Moksa na plastrach imbiru — delikatne ciepło TCM"
@@ -111,19 +126,6 @@ export default function HomeSectionDeepBenefits() {
                 napięcia mięśni. Dzięki temu organizm sam może wrócić do stanu równowagi, szybciej się
                 regenerować i lepiej reagować na stres i infekcje.
               </p>
-            </div>
-            <div className="shrink-0 w-full">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-[#71797E] mb-3">
-                Mini FAQ – co możesz oczekiwać po sesji
-              </h3>
-              <div className="space-y-3">
-                {miniFaq.map((item) => (
-                  <div key={item.q} className="rounded-xl border border-[#71797E]/12 bg-white p-3.5 sm:p-4">
-                    <p className="text-sm font-medium text-[#333333] mb-1">{item.q}</p>
-                    <p className="text-sm text-[#555555] leading-relaxed">{item.a}</p>
-                  </div>
-                ))}
-              </div>
             </div>
           </motion.div>
         </div>
