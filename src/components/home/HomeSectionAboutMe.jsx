@@ -71,7 +71,7 @@ export default function HomeSectionAboutMe() {
             className="mt-8 aspect-[4/5] w-full max-w-md mx-auto overflow-hidden rounded-2xl border border-[#71797E]/10 bg-[#FAFAF5] shadow-sm sm:max-w-lg lg:mx-0 lg:mt-0 lg:aspect-auto lg:max-w-none lg:absolute lg:inset-y-0 lg:right-0 lg:h-auto lg:w-[calc(50%-2rem)]"
           >
             <img
-              src="/img/me.jpg"
+              src="/img/Me.jpg"
               alt="Prowadząca Domowej Akademii Moksy"
               className="h-full min-h-[200px] w-full object-cover object-[center_22%]"
               width={960}

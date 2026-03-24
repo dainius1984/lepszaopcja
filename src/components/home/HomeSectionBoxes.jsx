@@ -4,8 +4,6 @@ import { Lightbulb } from "lucide-react";
 import { productBoxes } from "../../data/productBoxes";
 import { openContactPopup } from "../../utils/openContactPopup";
 import BoxDetailModal from "./BoxDetailModal";
-import ImagePlaceholder from "./ImagePlaceholder";
-
 export default function HomeSectionBoxes() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
@@ -57,7 +55,17 @@ export default function HomeSectionBoxes() {
                 className="flex flex-col rounded-2xl border border-[#71797E]/12 bg-white p-6 sm:p-8 shadow-sm scroll-mt-20 md:scroll-mt-24"
               >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-                  <ImagePlaceholder label={`${box.name} — zdjęcie`} aspectClass="aspect-square sm:aspect-auto sm:min-h-[200px]" />
+                  <div className="overflow-hidden rounded-xl border border-[#71797E]/10 bg-[#FAFAF5] aspect-square sm:aspect-auto sm:min-h-[200px]">
+                    <img
+                      src={box.imageSrc}
+                      alt={box.imageAlt}
+                      className="h-full w-full object-cover object-center min-h-[200px]"
+                      width={600}
+                      height={600}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
                   <div>
                     <h3
                       className="text-xl font-bold text-[#333333] mb-1"

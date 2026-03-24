@@ -69,8 +69,8 @@ export default function HomeSectionAcademy() {
               className="relative min-h-[220px] overflow-hidden rounded-2xl border border-[#F5F5DC]/20 bg-[#222] shadow-lg aspect-[4/3] lg:aspect-auto lg:min-h-0 lg:h-full"
             >
               <img
-                src="/img/1.png"
-                alt="Domowa Akademia Moksy — nauka moksoterapii i praktyki w domu"
+                src="/img/8.jpg"
+                alt="Domowa Akademia Moksy — przygotowanie i praktyka moksy w domu"
                 className="absolute inset-0 h-full w-full object-cover object-center"
                 width={1200}
                 height={900}

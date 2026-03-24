@@ -14,6 +14,8 @@ const guides = [
       "Kiedy stosować moksa, przygotowanie i pielęgnacja po zabiegu, częstotliwość, wilgoć w TCM, moksa dymna i bezdymna, bezpieczeństwo oraz dobór punktów — praktyczny przewodnik krok po kroku.",
     icon: BookOpen,
     cta: "Czytaj poradnik moksoterapii",
+    imageSrc: "/img/3.jpg",
+    imageAlt: "Moksa i delikatna praca z ciałem w domu",
   },
   {
     to: KOMPENDIUM_ODZYWANIA_PATH,
@@ -23,6 +25,8 @@ const guides = [
       "Temperatura posiłków, owoce a klimat, pory roku, sen i rytm dnia, śniadanie kleikowe, zupy, herbata na śledzionę oraz aktywność wspierająca Qi — zasady energetyczne w zrozumiałej formie.",
     icon: Leaf,
     cta: "Czytaj kompendium żywienia TCM",
+    imageSrc: "/img/4.jpg",
+    imageAlt: "Imbir i przygotowanie pod moksę — żywienie i TCM",
   },
 ];
 
@@ -74,8 +78,20 @@ export default function HomeSectionGuides() {
                 >
                   <Link
                     to={g.to}
-                    className="group flex flex-col h-full rounded-2xl border border-[#71797E]/15 bg-white p-6 sm:p-8 shadow-sm hover:border-[#71797E]/30 hover:shadow-md transition-all duration-300"
+                    className="group flex flex-col h-full rounded-2xl border border-[#71797E]/15 bg-white overflow-hidden shadow-sm hover:border-[#71797E]/30 hover:shadow-md transition-all duration-300"
                   >
+                    <div className="relative aspect-[16/10] w-full shrink-0 bg-[#FAFAF5] border-b border-[#71797E]/10">
+                      <img
+                        src={g.imageSrc}
+                        alt={g.imageAlt}
+                        className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.02]"
+                        width={640}
+                        height={400}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <div className="flex flex-col flex-1 p-6 sm:p-8 pt-5 sm:pt-6">
                     <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#C4862A] mb-3">
                       <Icon size={16} className="text-[#71797E]" aria-hidden />
                       {g.kicker}
@@ -92,6 +108,7 @@ export default function HomeSectionGuides() {
                         aria-hidden
                       />
                     </span>
+                    </div>
                   </Link>
                 </motion.li>
               );

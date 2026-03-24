@@ -85,27 +85,42 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 25 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6"
+          className="flex flex-col lg:flex-row lg:items-end justify-between mb-14 gap-8"
         >
-          <div>
-            <span className="inline-block mb-4 text-xs uppercase tracking-widest text-[#71797E] font-medium">
-              Opinie klientów
-            </span>
-            <h2
-              className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#333333]"
-              style={{ fontFamily: '"Playfair Display", serif' }}
-            >
-              Doświadczenia
-              <br />
-              <span className="italic text-[#71797E]">i relacje</span>
-            </h2>
-            <p className="text-[#555555] text-sm mt-3 max-w-md font-light">
-              Miejsce na cytaty, zdjęcia lub krótkie materiały wideo — treści możesz tu podmienić w kodzie.
-            </p>
+          <div className="flex flex-col sm:flex-row sm:items-end gap-6 lg:gap-10 min-w-0">
+            <div>
+              <span className="inline-block mb-4 text-xs uppercase tracking-widest text-[#71797E] font-medium">
+                Opinie klientów
+              </span>
+              <h2
+                className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#333333]"
+                style={{ fontFamily: '"Playfair Display", serif' }}
+              >
+                Doświadczenia
+                <br />
+                <span className="italic text-[#71797E]">i relacje</span>
+              </h2>
+              <p className="text-[#555555] text-sm mt-3 max-w-md font-light">
+                Relacje osób, które poczuły ulgę i większy komfort dzięki moksoterapii.
+              </p>
+            </div>
+            <div className="hidden sm:block shrink-0 w-36 md:w-40 lg:w-44">
+              <div className="overflow-hidden rounded-2xl border border-[#71797E]/15 bg-[#FAFAF5] shadow-sm aspect-[4/5]">
+                <img
+                  src="/img/13.jpg"
+                  alt="Spokojna praktyka i troska o siebie w domu"
+                  className="h-full w-full object-cover object-center"
+                  width={352}
+                  height={440}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </div>
           </div>
 
           {/* Nav buttons */}
-          <div className="flex gap-3">
+          <div className="flex gap-3 shrink-0 self-start sm:self-end lg:self-auto">
             <button
               onClick={prev}
               disabled={activeIdx === 0}

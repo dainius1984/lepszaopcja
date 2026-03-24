@@ -1,8 +1,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Heart, Home } from "lucide-react";
-import ImagePlaceholder from "./ImagePlaceholder";
-
 export default function HomeSectionFamily() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
@@ -74,8 +72,17 @@ export default function HomeSectionFamily() {
             initial={{ opacity: 0, x: 24 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.65, delay: 0.1 }}
+            className="relative overflow-hidden rounded-2xl border border-[#71797E]/10 bg-[#FAFAF5] shadow-sm aspect-[4/5]"
           >
-            <ImagePlaceholder label="Rodzina / domowa praktyka — zdjęcie" aspectClass="aspect-[4/5]" />
+            <img
+              src="/img/5.jpg"
+              alt="Delikatna moksoterapia dla dziecka w domu"
+              className="h-full w-full object-cover object-center"
+              width={960}
+              height={1200}
+              loading="lazy"
+              decoding="async"
+            />
           </motion.div>
         </div>
       </div>

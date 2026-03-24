@@ -7,6 +7,8 @@ export const productBoxes = [
     slug: "start-box",
     name: "Start Box — Pierwsze Ciepło",
     price: "137 zł",
+    imageSrc: "/img/11.jpg",
+    imageAlt: "Cygaro moksy, imbir z moksą i akcesoria do moksoterapii w domu",
     tagline: "Twój pierwszy krok w domu",
     shortItems: [
       "5 cygar moksy (do wyboru dymnej lub bezdymnej)",
@@ -57,6 +59,8 @@ export const productBoxes = [
     slug: "premium-box",
     name: "Premium Box — Pełnia Ciepła",
     price: "267 zł",
+    imageSrc: "/img/12.jpg",
+    imageAlt: "Domek / uchwyt do moksy na przedramieniu — praktyka w domu",
     tagline: "Kompletny zestaw do samodzielnej praktyki moksy w domu",
     shortItems: [
       "5 cygar moksy bezdymnej",

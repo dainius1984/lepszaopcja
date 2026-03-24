@@ -90,8 +90,20 @@ export default function HomeSectionDeepBenefits() {
             initial={{ opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="flex min-h-0 min-w-0 flex-col gap-8 lg:h-full lg:min-h-0 lg:justify-between lg:gap-0"
+            className="flex min-h-0 min-w-0 flex-col gap-6 lg:gap-8 lg:h-full lg:min-h-0"
           >
+            <div className="relative overflow-hidden rounded-2xl border border-[#71797E]/10 bg-[#FAFAF5] aspect-[4/3] w-full shrink-0 shadow-sm">
+              <img
+                src="/img/6.jpg"
+                alt="Moksa na plastrach imbiru — delikatne ciepło TCM"
+                className="absolute inset-0 h-full w-full object-cover object-center"
+                width={800}
+                height={600}
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/25 to-transparent pointer-events-none" />
+            </div>
             <div className="rounded-2xl bg-[#FAFAF5] border border-[#71797E]/10 p-6 sm:p-7 shrink-0 w-full">
               <h3 className="text-lg font-semibold text-[#333333] mb-3">Dlaczego to działa?</h3>
               <p className="text-sm text-[#555555] leading-relaxed">

@@ -86,9 +86,13 @@ export default function AboutMoxa() {
           >
             <div className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl bg-[#71797E]/10">
               <img
-                src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900&auto=format&fit=crop"
-                alt="Moksoterapia — ciepło i relaks"
+                src="/img/2.jpg"
+                alt="Moksoterapia — cygaro moksy przy łokciu"
                 className="w-full h-full object-cover"
+                width={900}
+                height={1125}
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#333333]/30 to-transparent" />
             </div>
