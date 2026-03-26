@@ -1,6 +1,9 @@
 import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from "../config/site";
 import { PORADNIK_MOKSOTERAPII_PATH } from "../data/poradnikMoksoterapiiMeta.js";
 import { KOMPENDIUM_ODZYWANIA_PATH } from "../data/kompendiumOdzywianiaMeta.js";
+import { MOKSA_WROCLAW_PATH } from "../data/moksaWroclawPath.js";
+
+export { MOKSA_WROCLAW_PATH };
 
 /**
  * LocalBusiness schema for the clinic (Schema.org).
@@ -249,6 +252,85 @@ export function getKompendiumOdzywianiaSchemas(opts) {
 }
 
 /** ItemList przewodników na stronie głównej (wewnętrzne linkowanie w SERP / zrozumienie struktury). */
+/**
+ * WebPage + MedicalTherapy (Service) + BreadcrumbList — strona „Moksa Wrocław”.
+ * Dostawca powiązany z LocalBusiness przez @id.
+ */
+export function getMoksaWroclawSchemas() {
+  const pageUrl = `${SITE_URL}${MOKSA_WROCLAW_PATH}`;
+  const localBusinessId = `${SITE_URL}/#localbusiness`;
+
+  const webPage = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${pageUrl}#webpage`,
+    url: pageUrl,
+    name: "Profesjonalna Moksoterapia we Wrocławiu — Moksa Wrocław",
+    description:
+      "Profesjonalna moksoterapia we Wrocławiu i okolicach. Tradycyjna Medycyna Chińska, zabiegi moksy, wsparcie odporności. Rezerwacja wizyty.",
+    inLanguage: "pl-PL",
+    isPartOf: {
+      "@type": "WebSite",
+      url: SITE_URL,
+      name: SITE_NAME,
+    },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: DEFAULT_OG_IMAGE,
+    },
+    mainEntity: { "@id": `${pageUrl}#moksa-wroclaw-service` },
+  };
+
+  const service = {
+    "@context": "https://schema.org",
+    "@type": "MedicalTherapy",
+    "@id": `${pageUrl}#moksa-wroclaw-service`,
+    name: "Moksoterapia (moksa) — Wrocław",
+    description:
+      "Zabiegi moksoterapii w ujęciu TCM: ciepło moksy na punktach akupunkturowych, techniki pośrednie i bezpośrednie. Usługa skierowana do osób z Wrocławia i okolic.",
+    url: pageUrl,
+    provider: { "@id": localBusinessId },
+    areaServed: [
+      {
+        "@type": "City",
+        name: "Wrocław",
+        containedInPlace: { "@type": "AdministrativeArea", name: "Dolny Śląsk" },
+      },
+    ],
+    relevantSpecialty: {
+      "@type": "MedicalSpecialty",
+      name: "Traditional Chinese Medicine",
+    },
+  };
+
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Strona główna",
+        item: SITE_URL,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Zabiegi",
+        item: `${SITE_URL}/zabiegi`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: "Moksa Wrocław",
+        item: pageUrl,
+      },
+    ],
+  };
+
+  return [webPage, service, breadcrumb];
+}
+
 export function getHomeGuidesItemListSchema() {
   return {
     "@context": "https://schema.org",

@@ -14,6 +14,7 @@ const DEFAULT_DESCRIPTION =
  * @param {string} [url] - Canonical URL path (e.g. "/zabiegi") or full URL; defaults to SITE_URL + pathname
  * @param {string} [image] - OG/Twitter image URL
  * @param {string} [type] - og:type (default "website")
+ * @param {boolean} [omitTitleSuffix] - if true, use `title` as the full document title (no automatic suffix)
  */
 export default function Seo({
   title,
@@ -22,8 +23,14 @@ export default function Seo({
   url,
   image = DEFAULT_OG_IMAGE,
   type = "website",
+  omitTitleSuffix = false,
 }) {
-  const fullTitle = title ? `${title} ${TITLE_SUFFIX}` : `${SITE_NAME} ${TITLE_SUFFIX}`;
+  const fullTitle =
+    title && omitTitleSuffix
+      ? title
+      : title
+        ? `${title} ${TITLE_SUFFIX}`
+        : `${SITE_NAME} ${TITLE_SUFFIX}`;
   const canonicalUrl = url ? (url.startsWith("http") ? url : `${SITE_URL}${url}`) : SITE_URL;
 
   return (

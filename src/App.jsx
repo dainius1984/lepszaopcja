@@ -6,6 +6,7 @@ import ProfileModal from "./components/ProfileModal";
 import ReservationWidget from "./components/ReservationWidget";
 import Home from "./pages/Home";
 import ZabiegiPage from "./pages/ZabiegiPage";
+import MoksaWroclawPage from "./pages/MoksaWroclawPage";
 import SzkoleniaPage from "./pages/SzkoleniaPage";
 import MeridianPage from "./pages/zabiegi/MeridianPage";
 import RezerwacjaPage from "./pages/RezerwacjaPage";
@@ -15,6 +16,7 @@ import KompendiumOdzywianiaPage from "./pages/KompendiumOdzywianiaPage";
 import AcademySessionPage from "./pages/AcademySessionPage";
 import { PORADNIK_MOKSOTERAPII_PATH } from "./data/poradnikMoksoterapiiMeta";
 import { KOMPENDIUM_ODZYWANIA_PATH } from "./data/kompendiumOdzywianiaMeta";
+import { MOKSA_WROCLAW_PATH } from "./data/moksaWroclawPath";
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/zabiegi" element={<ZabiegiPage />} />
+          <Route path={MOKSA_WROCLAW_PATH} element={<MoksaWroclawPage />} />
           <Route path="/zabiegi/:slug" element={<MeridianPage />} />
           <Route path="/szkolenia" element={<SzkoleniaPage />} />
           <Route path={PORADNIK_MOKSOTERAPII_PATH} element={<PoradnikMoksoterapiiPage />} />

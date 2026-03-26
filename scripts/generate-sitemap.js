@@ -12,6 +12,7 @@ import { dirname } from "path";
 import { meridians } from "../src/data/meridians.js";
 import { academySessions } from "../src/data/academySessions.js";
 import { SITE_URL } from "../src/config/site.js";
+import { MOKSA_WROCLAW_PATH } from "../src/data/moksaWroclawPath.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -22,6 +23,11 @@ const today = new Date().toISOString().slice(0, 10);
 const staticRoutes = [
   { path: "", changefreq: "weekly", priority: "1.0" },
   { path: "zabiegi", changefreq: "weekly", priority: "0.9" },
+  {
+    path: MOKSA_WROCLAW_PATH.replace(/^\//, ""),
+    changefreq: "monthly",
+    priority: "0.92",
+  },
   {
     path: "poradnik/moksoterapia-jak-i-kiedy-wykonywac",
     changefreq: "monthly",
